@@ -5,7 +5,7 @@ package br.unb.shooter.state;
  * @author brunobernardi
  *
  */
-public class MenuState implements IState {
+public class GameState implements IState {
 
     @Override
     public void create(final StateMachine machine) {
