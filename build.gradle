@@ -110,6 +110,8 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         
         compile "com.esotericsoftware:kryonet:2.22.0-RC1"
+        
+        testCompile "junit:junit:4.12"
     }
 }
 
