@@ -10,7 +10,7 @@ public class StateMachine {
     /**
      * 
      */
-    private IState state = new StartState();
+    private IState state = new GameState();
 
     /**
      * 

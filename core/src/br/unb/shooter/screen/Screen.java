@@ -5,25 +5,25 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class Screen {
 
-	private Stage stage;
+    private Stage stage;
 
-	public Screen() {
-		setStage(new Stage());
+    public Screen() {
+        setStage(new Stage());
 
-		Gdx.input.setInputProcessor(stage);
-	}
+        Gdx.input.setInputProcessor(stage);
+    }
 
-	public void draw() {
-		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-		stage.draw();
-	}
+    public void draw() {
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
+    }
 
-	public Stage getStage() {
-		return stage;
-	}
+    public Stage getStage() {
+        return stage;
+    }
 
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
 }

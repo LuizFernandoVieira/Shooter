@@ -1,11 +1,15 @@
 package br.unb.shooter.state;
 
+import br.unb.shooter.screen.GameScreen;
+
 /**
  * 
  * @author brunobernardi
  *
  */
 public class GameState implements IState {
+
+    private GameScreen screen;
 
     @Override
     public void create(final StateMachine machine) {
@@ -21,6 +25,14 @@ public class GameState implements IState {
 
     @Override
     public void dispose() {
+    }
+
+    public GameScreen getScreen() {
+        return screen;
+    }
+
+    public void setScreen(GameScreen screen) {
+        this.screen = screen;
     }
 
 }
