@@ -1,11 +1,30 @@
 package br.unb.shooter.state;
 
+/**
+ * State Interface.
+ * 
+ * @author brunobernardi
+ *
+ */
 public interface IState {
-	public void create(StateMachine machine);
+    /**
+     * 
+     * @param machine
+     */
+    void create(StateMachine machine);
 
-	public void update();
+    /**
+     * 
+     */
+    void update();
 
-	public void draw();
+    /**
+     * 
+     */
+    void draw();
 
-	public void dispose();
+    /**
+     * 
+     */
+    void dispose();
 }
