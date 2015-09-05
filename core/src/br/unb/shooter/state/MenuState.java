@@ -1,5 +1,7 @@
 package br.unb.shooter.state;
 
+import br.unb.shooter.screen.MenuScreen;
+
 /**
  * 
  * @author brunobernardi
@@ -7,8 +9,11 @@ package br.unb.shooter.state;
  */
 public class MenuState implements IState {
 
+    private MenuScreen screen;
+
     @Override
     public void create(final StateMachine machine) {
+        screen = new MenuScreen();
     }
 
     @Override
@@ -17,6 +22,7 @@ public class MenuState implements IState {
 
     @Override
     public void draw() {
+        screen.draw();
     }
 
     @Override
