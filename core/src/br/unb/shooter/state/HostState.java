@@ -1,29 +1,28 @@
 package br.unb.shooter.state;
 
+import br.unb.shooter.screen.HostScreen;
+
 public class HostState implements IState {
+
+    private HostScreen screen;
 
     @Override
     public void create(StateMachine machine) {
-        // TODO Auto-generated method stub
-
+        screen = new HostScreen();
     }
 
     @Override
     public void update() {
-        // TODO Auto-generated method stub
-
+        screen.update();
     }
 
     @Override
     public void draw() {
-        // TODO Auto-generated method stub
-
+        screen.draw();
     }
 
     @Override
     public void dispose() {
-        // TODO Auto-generated method stub
-
     }
 
 }

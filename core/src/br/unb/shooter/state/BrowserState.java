@@ -1,29 +1,29 @@
 package br.unb.shooter.state;
 
+import br.unb.shooter.screen.BrowserScreen;
+
 public class BrowserState implements IState {
+
+    private BrowserScreen screen;
 
     @Override
     public void create(StateMachine machine) {
-        // TODO Auto-generated method stub
-
+        screen = new BrowserScreen();
+        screen.setMachine(machine);
     }
 
     @Override
     public void update() {
-        // TODO Auto-generated method stub
-
+        screen.update();
     }
 
     @Override
     public void draw() {
-        // TODO Auto-generated method stub
-
+        screen.draw();
     }
 
     @Override
     public void dispose() {
-        // TODO Auto-generated method stub
-
     }
 
 }

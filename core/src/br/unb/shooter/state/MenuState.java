@@ -14,6 +14,7 @@ public class MenuState implements IState {
     @Override
     public void create(final StateMachine machine) {
         screen = new MenuScreen();
+        screen.setMachine(machine);
     }
 
     @Override
