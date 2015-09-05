@@ -61,6 +61,6 @@ public class HostScreen extends Screen {
     }
 
     public void concat(String text) {
-        this.text.concat(text);
+        this.text = this.text.concat(text);
     }
 }
