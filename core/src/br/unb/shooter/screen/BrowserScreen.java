@@ -1,6 +1,7 @@
 package br.unb.shooter.screen;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -9,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import br.unb.shooter.controller.NetController;
-import br.unb.shooter.net.message.ConnectMessage;
+import br.unb.shooter.controller.GameController;
+import br.unb.shooter.entity.Player;
 import br.unb.shooter.state.LobbyClientState;
 
 public class BrowserScreen extends Screen {
@@ -54,13 +55,10 @@ public class BrowserScreen extends Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Player player = new Player(new Vector2(0, 0));
+                player.setName(textFieldName.getText());
+                GameController.getInstance().setPlayer(player);
                 getMachine().changeState(new LobbyClientState());
-
-                ConnectMessage msg = new ConnectMessage();
-
-                msg.setName(textFieldName.getText());
-
-                NetController.getInstance().getClient().sendTCP(msg.toString());
             }
 
         });

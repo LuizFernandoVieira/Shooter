@@ -4,8 +4,10 @@ import java.io.IOException;
 
 import com.esotericsoftware.kryonet.Client;
 
+import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.NetController;
 import br.unb.shooter.net.ClientListener;
+import br.unb.shooter.net.message.ConnectMessage;
 import br.unb.shooter.screen.LobbyScreen;
 
 public class LobbyClientState implements IState {
@@ -32,7 +34,11 @@ public class LobbyClientState implements IState {
 
         client.addListener(listener);
 
-        client.sendTCP("connect");
+        ConnectMessage msg = new ConnectMessage();
+
+        msg.setName(GameController.getInstance().getPlayer().getName());
+
+        client.sendTCP(msg.toString());
 
         NetController.getInstance().setClient(client);
     }

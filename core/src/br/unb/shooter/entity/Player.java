@@ -44,6 +44,9 @@ public class Player extends Entity {
 
     private Integer connectionId;
 
+    public Player() {
+    }
+
     /**
      * Constructor.
      * 

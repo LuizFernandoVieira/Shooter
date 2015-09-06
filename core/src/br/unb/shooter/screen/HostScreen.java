@@ -64,9 +64,9 @@ public class HostScreen extends Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                getMachine().changeState(new LobbyServerState());
                 GameController.getInstance().setServerName(textFieldServerName.getText());
                 GameController.getInstance().createServerPlayer(textFieldPlayerName.getText());
+                getMachine().changeState(new LobbyServerState());
             }
 
         });

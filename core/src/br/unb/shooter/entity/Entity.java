@@ -9,6 +9,9 @@ public abstract class Entity {
 
     protected Vector2 position;
 
+    public Entity() {
+    }
+
     public Entity(Vector2 position) {
         this.position = position;
     }

@@ -59,7 +59,7 @@ public class GameController {
      */
     public void createClientPlayer(String name) {
         if (playersMap != null) {
-            Player player = new Player(new Vector2(0, 0));
+            Player player = new Player();
             player.setName(name);
             player.setId(playersMap.size() + 1);
             playersMap.put(player.getId(), player);

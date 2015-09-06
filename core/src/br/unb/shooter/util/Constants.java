@@ -6,4 +6,5 @@ public class Constants {
     public static final String ONE = "1";
     public static final int CAMERA_WIDTH = 600;
     public static final int CAMERA_HEIGHT = 600;
+    public static final String NEW_LINE = "\n";
 }
