@@ -89,7 +89,7 @@ public class Player extends Entity {
         case IDLE:
             if(velocity.x >= -0.8 && velocity.x <= 0.8)
                 if(velocity.y >= -0.8 && velocity.y <= 0.8)
-                currentFrame = idle_animation.getKeyFrame(stateTime, true);
+                    currentFrame = idle_animation.getKeyFrame(stateTime, true);
             else
                 currentFrame = walking_animation.getKeyFrame(stateTime, true);
             break;
