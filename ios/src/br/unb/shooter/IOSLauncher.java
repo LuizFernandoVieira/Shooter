@@ -5,7 +5,6 @@ import org.robovm.apple.uikit.UIApplication;
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
-import br.unb.shooter.Shooter;
 
 public class IOSLauncher extends IOSApplication.Delegate {
     @Override
@@ -14,6 +13,11 @@ public class IOSLauncher extends IOSApplication.Delegate {
         return new IOSApplication(new Shooter(), config);
     }
 
+    /**
+     * Main method.
+     * 
+     * @param argv arguments
+     */
     public static void main(String[] argv) {
         NSAutoreleasePool pool = new NSAutoreleasePool();
         UIApplication.main(argv, null, IOSLauncher.class);
