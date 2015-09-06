@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Player extends Entity {
 
+    private static Player instance;
+
     public enum State {
         IDLE, WALKING
     }
@@ -33,6 +35,11 @@ public class Player extends Entity {
     private int width;
     private int height;
 
+    private Boolean moveUp = false;
+    private Boolean moveRight = false;
+    private Boolean moveDown = false;
+    private Boolean moveLeft = false;
+
     /**
      * Constructor.
      * 
@@ -53,6 +60,19 @@ public class Player extends Entity {
 
         width = currentFrame.getRegionWidth();
         height = currentFrame.getRegionHeight();
+    }
+
+    /**
+     * Returns a single instance of the player.
+     * 
+     * @return player
+     */
+    public static Player getInstance() {
+        if (instance == null) {
+            instance = new Player(new Vector2(0, 0));
+        }
+
+        return instance;
     }
 
     private void initGraphics() {
@@ -79,6 +99,23 @@ public class Player extends Entity {
     @Override
     public void update(float deltaTime) {
         stateTime += deltaTime;
+
+        if (moveUp) {
+            velocity.y += 10;
+        }
+
+        if (moveRight) {
+            velocity.x += 10;
+        }
+
+        if (moveDown) {
+            velocity.y -= 10;
+        }
+
+        if (moveLeft) {
+            velocity.x -= 10;
+        }
+
         handleVelocity(deltaTime);
     }
 
@@ -179,6 +216,38 @@ public class Player extends Entity {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public Boolean getMoveUp() {
+        return moveUp;
+    }
+
+    public void setMoveUp(Boolean moveUp) {
+        this.moveUp = moveUp;
+    }
+
+    public Boolean getMoveRight() {
+        return moveRight;
+    }
+
+    public void setMoveRight(Boolean moveRight) {
+        this.moveRight = moveRight;
+    }
+
+    public Boolean getMoveDown() {
+        return moveDown;
+    }
+
+    public void setMoveDown(Boolean moveDown) {
+        this.moveDown = moveDown;
+    }
+
+    public Boolean getMoveLeft() {
+        return moveLeft;
+    }
+
+    public void setMoveLeft(Boolean moveLeft) {
+        this.moveLeft = moveLeft;
     }
 
 }
