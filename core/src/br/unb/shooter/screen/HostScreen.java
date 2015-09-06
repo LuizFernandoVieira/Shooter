@@ -17,6 +17,9 @@ public class HostScreen extends Screen {
 
     private String text;
 
+    /**
+     * Constructor.
+     */
     public HostScreen() {
         getStage().clear();
 

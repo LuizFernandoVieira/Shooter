@@ -11,9 +11,12 @@ public class Screen {
     private Stage stage;
 
     private Skin skin;
-    
+
     private StateMachine machine;
 
+    /**
+     * Constructor.
+     */
     public Screen() {
         setStage(new Stage());
 
@@ -43,16 +46,10 @@ public class Screen {
         this.skin = skin;
     }
 
-    /**
-     * @return the machine
-     */
     public StateMachine getMachine() {
         return machine;
     }
 
-    /**
-     * @param machine the machine to set
-     */
     public void setMachine(StateMachine machine) {
         this.machine = machine;
     }

@@ -2,11 +2,6 @@ package br.unb.shooter.state;
 
 import br.unb.shooter.screen.MenuScreen;
 
-/**
- * 
- * @author brunobernardi
- *
- */
 public class MenuState implements IState {
 
     private MenuScreen screen;

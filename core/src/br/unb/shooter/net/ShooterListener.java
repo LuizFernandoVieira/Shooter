@@ -7,10 +7,11 @@ import br.unb.shooter.net.message.Message;
 
 public class ShooterListener extends Listener {
 
-    public void received(Connection c, Object p) {
-        Message m = Message.makeMessage(p.toString());
-        if (m != null) {
-            m.execute();
+    @Override
+    public void received(Connection connection, Object object) {
+        Message message = Message.makeMessage(object.toString());
+        if (message != null) {
+            message.execute();
         }
     }
 

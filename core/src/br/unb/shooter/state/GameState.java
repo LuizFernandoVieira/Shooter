@@ -2,11 +2,6 @@ package br.unb.shooter.state;
 
 import br.unb.shooter.screen.GameScreen;
 
-/**
- * 
- * @author brunobernardi
- *
- */
 public class GameState implements IState {
 
     private GameScreen screen;

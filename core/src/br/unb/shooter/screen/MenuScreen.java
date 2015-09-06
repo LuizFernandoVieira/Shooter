@@ -12,6 +12,9 @@ import br.unb.shooter.state.HostState;
 
 public class MenuScreen extends Screen {
 
+    /**
+     * Constructor.
+     */
     public MenuScreen() {
         Table table = new Table();
         table.setWidth(640);

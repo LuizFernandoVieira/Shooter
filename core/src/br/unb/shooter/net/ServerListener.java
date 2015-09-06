@@ -7,11 +7,13 @@ import br.unb.shooter.screen.HostScreen;
 public class ServerListener extends ShooterListener {
     private HostScreen screen;
 
-    public void connected(Connection c) {
+    @Override
+    public void connected(Connection connection) {
         System.out.println("Conectou");
     }
 
-    public void disconnected(Connection c) {
+    @Override
+    public void disconnected(Connection connection) {
         System.out.println("Desconectou");
     }
 

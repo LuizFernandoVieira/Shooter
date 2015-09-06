@@ -24,6 +24,9 @@ public class BrowserScreen extends Screen {
 
     private String text;
 
+    /**
+     * Constructor.
+     */
     public BrowserScreen() {
         getStage().clear();
 
@@ -75,7 +78,8 @@ public class BrowserScreen extends Screen {
         try {
             client.connect(5000, "127.0.0.1", 5000);
         } catch (IOException e) {
-
+            // TODO: handle exception properly
+            System.out.println("Erro");
         }
 
         ClientListener listener = new ClientListener();

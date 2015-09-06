@@ -7,24 +7,11 @@ package br.unb.shooter.state;
  *
  */
 public interface IState {
-    /**
-     * 
-     * @param machine
-     */
     void create(StateMachine machine);
 
-    /**
-     * 
-     */
     void update();
 
-    /**
-     * 
-     */
     void draw();
 
-    /**
-     * 
-     */
     void dispose();
 }
