@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.esotericsoftware.kryonet.Client;
 
+import br.unb.shooter.controller.NetController;
 import br.unb.shooter.net.ClientListener;
 import br.unb.shooter.screen.LobbyScreen;
 
@@ -32,6 +33,8 @@ public class LobbyClientState implements IState {
         client.addListener(listener);
 
         client.sendTCP("connect");
+
+        NetController.getInstance().setClient(client);
     }
 
     @Override

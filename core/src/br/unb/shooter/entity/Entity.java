@@ -5,7 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class Entity {
 
-    Vector2 position;
+    private Integer id;
+
+    protected Vector2 position;
 
     public Entity(Vector2 position) {
         this.position = position;
@@ -23,6 +25,14 @@ public abstract class Entity {
 
     public void setPosition(Vector2 position) {
         this.position = position;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
 }

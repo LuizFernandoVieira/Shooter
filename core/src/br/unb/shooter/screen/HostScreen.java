@@ -9,9 +9,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+import br.unb.shooter.controller.GameController;
 import br.unb.shooter.state.LobbyServerState;
 
 public class HostScreen extends Screen {
+
+    private TextField textFieldServerName;
+
+    private TextField textFieldPlayerName;
 
     /**
      * Constructor.
@@ -27,12 +32,21 @@ public class HostScreen extends Screen {
                 getSkin().getDrawable("cursor"), getSkin().getDrawable("selection"),
                 getSkin().getDrawable("textfield"));
 
-        TextField textFieldName = new TextField("", style);
+        textFieldServerName = new TextField("", style);
 
-        textFieldName.setMessageText("Nome");
-        textFieldName.setMaxLength(10);
+        textFieldServerName.setMessageText("Server Name");
+        textFieldServerName.setMaxLength(10);
 
-        table.add(textFieldName).width(150);
+        table.add(textFieldServerName).width(150);
+
+        table.row();
+
+        textFieldPlayerName = new TextField("", style);
+
+        textFieldPlayerName.setMessageText("Player Name");
+        textFieldPlayerName.setMaxLength(10);
+
+        table.add(textFieldPlayerName).width(150);
 
         table.row();
 
@@ -51,6 +65,8 @@ public class HostScreen extends Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 getMachine().changeState(new LobbyServerState());
+                GameController.getInstance().setServerName(textFieldServerName.getText());
+                GameController.getInstance().createServerPlayer(textFieldPlayerName.getText());
             }
 
         });

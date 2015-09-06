@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
+import br.unb.shooter.controller.NetController;
 import br.unb.shooter.net.ServerListener;
 import br.unb.shooter.screen.LobbyScreen;
 
@@ -29,6 +30,8 @@ public class LobbyServerState implements IState {
         } catch (IOException e) {
             return;
         }
+
+        NetController.getInstance().setServer(server);
     }
 
     @Override

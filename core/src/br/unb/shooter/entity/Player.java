@@ -40,6 +40,10 @@ public class Player extends Entity {
     private Boolean moveDown = false;
     private Boolean moveLeft = false;
 
+    private String name;
+
+    private Integer connectionId;
+
     /**
      * Constructor.
      * 
@@ -248,6 +252,22 @@ public class Player extends Entity {
 
     public void setMoveLeft(Boolean moveLeft) {
         this.moveLeft = moveLeft;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getConnectionId() {
+        return connectionId;
+    }
+
+    public void setConnectionId(Integer connectionId) {
+        this.connectionId = connectionId;
     }
 
 }
