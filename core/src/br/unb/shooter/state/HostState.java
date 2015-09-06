@@ -9,6 +9,7 @@ public class HostState implements IState {
     @Override
     public void create(StateMachine machine) {
         screen = new HostScreen();
+        screen.setMachine(machine);
     }
 
     @Override

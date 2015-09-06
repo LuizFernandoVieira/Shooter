@@ -8,14 +8,18 @@ public class GameState implements IState {
 
     @Override
     public void create(final StateMachine machine) {
+        screen = new GameScreen();
+        screen.setMachine(machine);
     }
 
     @Override
     public void update() {
+        screen.update();
     }
 
     @Override
     public void draw() {
+        screen.draw();
     }
 
     @Override
