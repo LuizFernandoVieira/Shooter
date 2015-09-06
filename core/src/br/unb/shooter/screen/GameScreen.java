@@ -9,30 +9,33 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import br.unb.shooter.util.Constants;
 
 public class GameScreen extends Screen {
-    
+
     SpriteBatch batch;
-    OrthographicCamera camera;  
+    OrthographicCamera camera;
     Viewport viewport;
-    
+
+    /**
+     * Constructor.
+     */
     public GameScreen() {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewport = new ExtendViewport(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT,camera);
+        viewport = new ExtendViewport(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT, camera);
     }
-    
+
     public void draw() {
         super.draw();
     }
 
     public void update() {
-        
+
     }
-    
+
     public void dispose() {
         batch.dispose();
     }
-    
+
     public void resize() {
         viewport.update(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
     }
