@@ -1,21 +1,17 @@
 package br.unb.shooter.screen;
 
-import java.io.IOException;
-
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
-import com.esotericsoftware.kryonet.Listener;
-import com.esotericsoftware.kryonet.Server;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import br.unb.shooter.net.ServerListener;
+import br.unb.shooter.state.LobbyServerState;
 
 public class HostScreen extends Screen {
-
-    private TextArea textAreaConsole;
-
-    private String text;
 
     /**
      * Constructor.
@@ -23,36 +19,41 @@ public class HostScreen extends Screen {
     public HostScreen() {
         getStage().clear();
 
-        text = "";
-
         Table table = new Table();
-        table.setBounds(0, 0, 640, 300);
+        table.setBounds(0, 0, 640, 480);
         getStage().addActor(table);
 
         TextFieldStyle style = new TextFieldStyle(getSkin().getFont("default-font"), Color.WHITE,
                 getSkin().getDrawable("cursor"), getSkin().getDrawable("selection"),
                 getSkin().getDrawable("textfield"));
 
-        textAreaConsole = new TextArea("", style);
-        textAreaConsole.setPrefRows(8);
-        textAreaConsole.setDisabled(true);
+        TextField textFieldName = new TextField("", style);
 
-        table.add(textAreaConsole).width(500);
+        textFieldName.setMessageText("Nome");
+        textFieldName.setMaxLength(10);
 
-        Server server = new Server();
+        table.add(textFieldName).width(150);
 
-        try {
-            server.bind(5000);
-            server.start();
+        table.row();
 
-            Listener listener = new ServerListener();
+        TextButtonStyle btnStyle = new TextButtonStyle(getSkin().getDrawable("default-round"),
+                getSkin().getDrawable("default-round-down"), getSkin().getDrawable("default-round-down"),
+                getSkin().getFont("default-font"));
 
-            ((ServerListener) listener).setScreen(this);
+        btnStyle.fontColor = Color.WHITE;
 
-            server.addListener(listener);
-        } catch (IOException e) {
-            return;
-        }
+        TextButton buttonStart = new TextButton("Start Server", btnStyle);
+
+        table.add(buttonStart).width(130);
+
+        buttonStart.addListener(new ChangeListener() {
+
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                getMachine().changeState(new LobbyServerState());
+            }
+
+        });
     }
 
     public void draw() {
@@ -60,10 +61,6 @@ public class HostScreen extends Screen {
     }
 
     public void update() {
-        textAreaConsole.setText(text);
     }
 
-    public void concat(String text) {
-        this.text = this.text.concat(text);
-    }
 }

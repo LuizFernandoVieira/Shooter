@@ -2,7 +2,7 @@ package br.unb.shooter.state;
 
 public class StateMachine {
 
-    private IState state = new GameState();
+    private IState state = new MenuState();
 
     public void create() {
         state.create(this);

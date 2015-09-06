@@ -1,29 +1,28 @@
 package br.unb.shooter.state;
 
+import br.unb.shooter.screen.MultiplayerScreen;
+
 public class MultiplayerState implements IState {
+
+    private MultiplayerScreen screen;
 
     @Override
     public void create(StateMachine machine) {
-        // TODO Auto-generated method stub
-
+        screen = new MultiplayerScreen();
+        screen.setMachine(machine);
     }
 
     @Override
     public void update() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void draw() {
-        // TODO Auto-generated method stub
-
+        screen.draw();
     }
 
     @Override
     public void dispose() {
-        // TODO Auto-generated method stub
-
     }
 
 }

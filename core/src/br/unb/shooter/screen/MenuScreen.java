@@ -1,5 +1,6 @@
 package br.unb.shooter.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -7,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import br.unb.shooter.state.BrowserState;
-import br.unb.shooter.state.HostState;
+import br.unb.shooter.state.GameState;
+import br.unb.shooter.state.MultiplayerState;
 
 public class MenuScreen extends Screen {
 
@@ -18,7 +19,7 @@ public class MenuScreen extends Screen {
     public MenuScreen() {
         Table table = new Table();
         table.setWidth(640);
-        table.setHeight(400);
+        table.setHeight(480);
         getStage().addActor(table);
 
         TextButtonStyle btnStyle = new TextButtonStyle(getSkin().getDrawable("default-round"),
@@ -27,28 +28,43 @@ public class MenuScreen extends Screen {
 
         btnStyle.fontColor = Color.WHITE;
 
-        TextButton buttonClient = new TextButton("Browse Games", btnStyle);
-        buttonClient.setHeight(20);
-        TextButton buttonServer = new TextButton("Host", btnStyle);
-        buttonServer.setHeight(20);
+        TextButton buttonPlay = new TextButton("Singleplayer", btnStyle);
 
-        table.add(buttonClient).width(130).spaceRight(100);
-        table.add(buttonServer).width(130).spaceLeft(100);
+        table.add(buttonPlay).width(130);
+        table.row();
 
-        buttonClient.addListener(new ChangeListener() {
+        TextButton buttonMultiplayer = new TextButton("Multiplayer", btnStyle);
+
+        table.add(buttonMultiplayer).width(130);
+        table.row();
+
+        TextButton buttonQuit = new TextButton("Quit", btnStyle);
+
+        table.add(buttonQuit).width(130);
+
+        buttonPlay.addListener(new ChangeListener() {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                getMachine().changeState(new BrowserState());
+                getMachine().changeState(new GameState());
             }
 
         });
 
-        buttonServer.addListener(new ChangeListener() {
+        buttonMultiplayer.addListener(new ChangeListener() {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                getMachine().changeState(new HostState());
+                getMachine().changeState(new MultiplayerState());
+            }
+
+        });
+
+        buttonQuit.addListener(new ChangeListener() {
+
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
             }
 
         });

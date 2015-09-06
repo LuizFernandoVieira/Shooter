@@ -14,7 +14,6 @@ public class BrowserState implements IState {
 
     @Override
     public void update() {
-        screen.update();
     }
 
     @Override
