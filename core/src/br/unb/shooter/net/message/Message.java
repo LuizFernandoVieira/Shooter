@@ -20,6 +20,8 @@ public abstract class Message {
 
         if (code.equals(MessageEnum.INPUT.getId())) {
             return new InputMessage(message);
+        } else if (code.equals(MessageEnum.CONNECT.getId())) {
+            return new ConnectMessage(message);
         }
 
         return msg;

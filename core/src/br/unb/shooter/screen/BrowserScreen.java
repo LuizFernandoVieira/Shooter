@@ -9,9 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+import br.unb.shooter.controller.NetController;
+import br.unb.shooter.net.message.ConnectMessage;
 import br.unb.shooter.state.LobbyClientState;
 
 public class BrowserScreen extends Screen {
+
+    private TextField textFieldName;
 
     /**
      * Constructor.
@@ -27,7 +31,7 @@ public class BrowserScreen extends Screen {
                 getSkin().getDrawable("cursor"), getSkin().getDrawable("selection"),
                 getSkin().getDrawable("textfield"));
 
-        TextField textFieldName = new TextField("", style);
+        textFieldName = new TextField("", style);
 
         textFieldName.setMessageText("Nome");
         textFieldName.setMaxLength(10);
@@ -51,6 +55,12 @@ public class BrowserScreen extends Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 getMachine().changeState(new LobbyClientState());
+
+                ConnectMessage msg = new ConnectMessage();
+
+                msg.setName(textFieldName.getText());
+
+                NetController.getInstance().getClient().sendTCP(msg.toString());
             }
 
         });

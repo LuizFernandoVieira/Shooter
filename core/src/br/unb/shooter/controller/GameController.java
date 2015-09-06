@@ -52,6 +52,20 @@ public class GameController {
         playersMap.put(player.getId(), player);
     }
 
+    /**
+     * Create a player from a connect message.
+     * 
+     * @param name Player's name
+     */
+    public void createClientPlayer(String name) {
+        if (playersMap != null) {
+            Player player = new Player(new Vector2(0, 0));
+            player.setName(name);
+            player.setId(playersMap.size() + 1);
+            playersMap.put(player.getId(), player);
+        }
+    }
+
     public Player getPlayer() {
         return player;
     }
