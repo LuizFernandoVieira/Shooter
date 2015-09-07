@@ -25,7 +25,13 @@ public class NetController {
 
     private List<InetAddress> ips;
 
+    private Boolean isMultiplayer;
+
     private static NetController instance;
+
+    public NetController() {
+        isMultiplayer = false;
+    }
 
     /**
      * Create a singleton from NetController.
@@ -130,6 +136,14 @@ public class NetController {
 
     public void setIps(List<InetAddress> ips) {
         this.ips = ips;
+    }
+
+    public Boolean getIsMultiplayer() {
+        return isMultiplayer;
+    }
+
+    public void setIsMultiplayer(Boolean isMultiplayer) {
+        this.isMultiplayer = isMultiplayer;
     }
 
 }

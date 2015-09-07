@@ -1,5 +1,6 @@
 package br.unb.shooter.state;
 
+import br.unb.shooter.controller.NetController;
 import br.unb.shooter.screen.MultiplayerScreen;
 
 public class MultiplayerState implements IState {
@@ -10,6 +11,8 @@ public class MultiplayerState implements IState {
     public void create(StateMachine machine) {
         screen = new MultiplayerScreen();
         screen.setMachine(machine);
+
+        NetController.getInstance().setIsMultiplayer(true);
     }
 
     @Override

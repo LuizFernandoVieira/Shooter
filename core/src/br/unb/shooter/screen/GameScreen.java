@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import br.unb.shooter.entity.player.Player;
+import br.unb.shooter.controller.GameController;
+import br.unb.shooter.entity.graphic.player.PlayerLibgdx;
 import br.unb.shooter.input.ShooterInputProcessor;
 import br.unb.shooter.util.Constants;
 
@@ -16,7 +17,7 @@ public class GameScreen extends Screen {
     private OrthographicCamera camera;
     private Viewport viewport;
 
-    private Player player;
+    private PlayerLibgdx playerLibgdx;
 
     /**
      * Constructor.
@@ -27,7 +28,9 @@ public class GameScreen extends Screen {
         camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new ExtendViewport(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT, camera);
 
-        player = Player.getInstance();
+        playerLibgdx = new PlayerLibgdx();
+
+        playerLibgdx.initGraphics();
 
         Gdx.input.setInputProcessor(new ShooterInputProcessor());
     }
@@ -39,14 +42,15 @@ public class GameScreen extends Screen {
         super.draw();
 
         batch.begin();
-
-        player.render(batch);
-
+        playerLibgdx.draw(batch, GameController.getInstance().getPlayer());
         batch.end();
     }
 
+    /**
+     * Update state.
+     */
     public void update() {
-        player.update(Gdx.graphics.getDeltaTime());
+        playerLibgdx.update(GameController.getInstance().getPlayer(), Gdx.graphics.getDeltaTime());
     }
 
     public void dispose() {

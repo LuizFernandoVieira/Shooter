@@ -1,5 +1,6 @@
 package br.unb.shooter.state;
 
+import br.unb.shooter.controller.NetController;
 import br.unb.shooter.screen.MenuScreen;
 
 public class MenuState implements IState {
@@ -10,6 +11,8 @@ public class MenuState implements IState {
     public void create(final StateMachine machine) {
         screen = new MenuScreen();
         screen.setMachine(machine);
+
+        NetController.getInstance().setIsMultiplayer(false);
     }
 
     @Override

@@ -1,33 +1,14 @@
 package br.unb.shooter.entity;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-
-public abstract class Entity {
+public class Entity {
 
     private Integer id;
-
-    protected Vector2 position;
+    protected Integer positionX;
+    protected Integer positionY;
+    protected Integer width;
+    protected Integer height;
 
     public Entity() {
-    }
-
-    public Entity(Vector2 position) {
-        this.position = position;
-    }
-
-    public abstract void update(float deltaTime);
-
-    public abstract void render(SpriteBatch batch);
-
-    public abstract boolean isDead();
-
-    public Vector2 getPosition() {
-        return position;
-    }
-
-    public void setPosition(Vector2 position) {
-        this.position = position;
     }
 
     public Integer getId() {
@@ -36,6 +17,38 @@ public abstract class Entity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(Integer positionX) {
+        this.positionX = positionX;
+    }
+
+    public Integer getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(Integer positionY) {
+        this.positionY = positionY;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 
 }

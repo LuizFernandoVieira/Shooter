@@ -1,16 +1,16 @@
 package br.unb.shooter.input;
 
 import com.badlogic.gdx.Input.Keys;
-
-import br.unb.shooter.entity.player.Player;
-
 import com.badlogic.gdx.InputProcessor;
+
+import br.unb.shooter.controller.GameController;
+import br.unb.shooter.entity.Player;
 
 public class ShooterInputProcessor implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        Player player = Player.getInstance();
+        Player player = GameController.getInstance().getPlayer();
 
         if (keycode == Keys.W) {
             player.setMoveUp(true);
@@ -24,12 +24,15 @@ public class ShooterInputProcessor implements InputProcessor {
         if (keycode == Keys.D) {
             player.setMoveRight(true);
         }
+
+        player.setMovingState();
+
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        Player player = Player.getInstance();
+        Player player = GameController.getInstance().getPlayer();
 
         if (keycode == Keys.W) {
             player.setMoveUp(false);
@@ -43,6 +46,9 @@ public class ShooterInputProcessor implements InputProcessor {
         if (keycode == Keys.D) {
             player.setMoveRight(false);
         }
+
+        player.setMovingState();
+
         return false;
     }
 

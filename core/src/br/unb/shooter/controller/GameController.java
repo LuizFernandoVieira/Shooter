@@ -2,11 +2,9 @@ package br.unb.shooter.controller;
 
 import java.util.HashMap;
 
-import com.badlogic.gdx.math.Vector2;
-
 import br.unb.shooter.entity.Enemy;
+import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
-import br.unb.shooter.entity.player.Player;
 
 public class GameController {
 
@@ -41,7 +39,7 @@ public class GameController {
      * @param name Player's name
      */
     public void createServerPlayer(String name) {
-        player = new Player(new Vector2(0, 0));
+        player = new Player();
         player.setName(name);
         player.setId(1);
 
