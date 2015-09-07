@@ -16,16 +16,16 @@ public class BrowseState implements IState {
         screen = new BrowseScreen();
         screen.setMachine(machine);
 
-        NetController.getInstance().createClient();
+        System.setProperty("java.net.preferIPv4Stack", "true");
 
-        NetController.getInstance().discoverHosts();
+        NetController.getInstance().createClient();
 
         updateTime = TimeUtils.millis();
     }
 
     @Override
     public void update() {
-        if (TimeUtils.timeSinceMillis(updateTime) > 5000L) {
+        if (TimeUtils.timeSinceMillis(updateTime) > 1000L) {
             NetController.getInstance().discoverHosts();
             NetController.getInstance().askServerNames();
             updateTime = TimeUtils.millis();
