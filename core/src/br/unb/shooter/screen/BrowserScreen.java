@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import br.unb.shooter.controller.GameController;
-import br.unb.shooter.entity.Player;
+import br.unb.shooter.entity.player.Player;
 import br.unb.shooter.state.LobbyClientState;
 
 public class BrowserScreen extends Screen {

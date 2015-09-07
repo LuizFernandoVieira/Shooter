@@ -105,7 +105,7 @@ public class NetController {
     public void discoverHosts() {
         // TODO: Implement the discover host feature
 
-        ips = client.discoverHosts(udpPort, 5000);
+        // ips = client.discoverHosts(udpPort, 5000);
     }
 
     public Client getClient() {

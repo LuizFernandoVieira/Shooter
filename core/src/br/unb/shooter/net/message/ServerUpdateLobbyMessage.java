@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.unb.shooter.controller.GameController;
-import br.unb.shooter.entity.Player;
+import br.unb.shooter.entity.player.Player;
 import br.unb.shooter.util.Constants;
 
 public class ServerUpdateLobbyMessage extends Message {

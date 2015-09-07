@@ -9,7 +9,7 @@ public class LobbyServerState implements IState {
 
     @Override
     public void create(StateMachine machine) {
-        screen = new LobbyScreen();
+        screen = new LobbyScreen(true);
         screen.setMachine(machine);
 
         NetController.getInstance().createServer();

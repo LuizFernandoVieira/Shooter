@@ -1,9 +1,10 @@
 package br.unb.shooter.input;
 
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
 
-import br.unb.shooter.entity.Player;
+import br.unb.shooter.entity.player.Player;
+
+import com.badlogic.gdx.InputProcessor;
 
 public class ShooterInputProcessor implements InputProcessor {
 

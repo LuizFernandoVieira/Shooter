@@ -5,8 +5,8 @@ import java.util.HashMap;
 import com.badlogic.gdx.math.Vector2;
 
 import br.unb.shooter.entity.Enemy;
-import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
+import br.unb.shooter.entity.player.Player;
 
 public class GameController {
 
