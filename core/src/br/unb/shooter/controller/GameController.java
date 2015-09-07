@@ -3,6 +3,7 @@ package br.unb.shooter.controller;
 import java.util.HashMap;
 
 import br.unb.shooter.entity.Enemy;
+import br.unb.shooter.entity.GameServer;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
 
@@ -17,6 +18,8 @@ public class GameController {
     private HashMap<Integer, Enemy> enemiesMap;
 
     private HashMap<Integer, Shot> shotsMap;
+
+    private HashMap<String, GameServer> servers;
 
     private static GameController instance;
 
@@ -102,6 +105,14 @@ public class GameController {
 
     public void setServerName(String serverName) {
         this.serverName = serverName;
+    }
+
+    public HashMap<String, GameServer> getServers() {
+        return servers;
+    }
+
+    public void setServers(HashMap<String, GameServer> servers) {
+        this.servers = servers;
     }
 
 }

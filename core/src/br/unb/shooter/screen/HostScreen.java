@@ -59,7 +59,7 @@ public class HostScreen extends Screen {
 
         TextButton buttonStart = new TextButton("Start Server", btnStyle);
 
-        table.add(buttonStart).width(130);
+        table.add(buttonStart).width(130).height(30);
 
         buttonStart.addListener(new ChangeListener() {
 

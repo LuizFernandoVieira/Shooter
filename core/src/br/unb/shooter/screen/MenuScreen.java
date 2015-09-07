@@ -1,12 +1,9 @@
 package br.unb.shooter.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import br.unb.shooter.state.GameState;
@@ -16,17 +13,11 @@ public class MenuScreen extends Screen {
 
     private Table table;
 
-    private ShapeRenderer shapes;
-
     /**
      * Constructor.
      */
     public MenuScreen() {
         super();
-
-        shapes = new ShapeRenderer();
-
-        shapes.setAutoShapeType(true);
 
         table = new Table();
         table.setWidth(600);
@@ -34,25 +25,19 @@ public class MenuScreen extends Screen {
 
         getStage().addActor(table);
 
-        TextButtonStyle btnStyle = new TextButtonStyle(getSkin().getDrawable("default-round"),
-                getSkin().getDrawable("default-round-down"), getSkin().getDrawable("default-round-down"),
-                getSkin().getFont("default-font"));
+        TextButton buttonPlay = new TextButton("Singleplayer", getSkin());
 
-        btnStyle.fontColor = Color.WHITE;
-
-        TextButton buttonPlay = new TextButton("Singleplayer", btnStyle);
-
-        table.add(buttonPlay).width(130);
+        table.add(buttonPlay).width(130).height(30);
         table.row();
 
-        TextButton buttonMultiplayer = new TextButton("Multiplayer", btnStyle);
+        TextButton buttonMultiplayer = new TextButton("Multiplayer", getSkin());
 
-        table.add(buttonMultiplayer).width(130);
+        table.add(buttonMultiplayer).width(130).height(30);
         table.row();
 
-        TextButton buttonQuit = new TextButton("Quit", btnStyle);
+        TextButton buttonQuit = new TextButton("Quit", getSkin());
 
-        table.add(buttonQuit).width(130);
+        table.add(buttonQuit).width(130).height(30);
 
         buttonPlay.addListener(new ChangeListener() {
 

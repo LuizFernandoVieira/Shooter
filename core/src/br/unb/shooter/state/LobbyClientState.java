@@ -12,9 +12,9 @@ public class LobbyClientState implements IState {
         screen = new LobbyScreen(false);
         screen.setMachine(machine);
 
-        NetController.getInstance().createClient();
+        NetController.getInstance().addClientListener();
 
-        NetController.getInstance().connectClient();
+        NetController.getInstance().connectClient(NetController.getInstance().getSelectedServerIp());
     }
 
     @Override

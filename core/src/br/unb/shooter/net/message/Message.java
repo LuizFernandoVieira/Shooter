@@ -24,6 +24,8 @@ public abstract class Message {
             return new ClientConnectMessage(message);
         } else if (code.equals(MessageEnum.SERVER_UPDATE_LOBBY.getId())) {
             return new ServerUpdateLobbyMessage(message);
+        } else if (code.equals(MessageEnum.CLIENT_SERVER_NAME.getId())) {
+            return new ClientServerNameMessage(message);
         }
 
         return msg;

@@ -1,21 +1,23 @@
 package br.unb.shooter.screen;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import br.unb.shooter.controller.GameController;
+import br.unb.shooter.controller.NetController;
+import br.unb.shooter.entity.GameServer;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.state.LobbyClientState;
 
 public class BrowseScreen extends Screen {
 
     private TextField textFieldName;
+
+    private List<GameServer> listServers;
 
     /**
      * Constructor.
@@ -30,11 +32,13 @@ public class BrowseScreen extends Screen {
         table.setHeight(600);
         getStage().addActor(table);
 
-        TextFieldStyle style = new TextFieldStyle(getSkin().getFont("default-font"), Color.WHITE,
-                getSkin().getDrawable("cursor"), getSkin().getDrawable("selection"),
-                getSkin().getDrawable("textfield"));
+        listServers = new List<GameServer>(getSkin());
 
-        textFieldName = new TextField("", style);
+        table.add(listServers);
+
+        table.row();
+
+        textFieldName = new TextField("", getSkin());
 
         textFieldName.setMessageText("Nome");
         textFieldName.setMaxLength(10);
@@ -43,15 +47,9 @@ public class BrowseScreen extends Screen {
 
         table.row();
 
-        TextButtonStyle btnStyle = new TextButtonStyle(getSkin().getDrawable("default-round"),
-                getSkin().getDrawable("default-round-down"), getSkin().getDrawable("default-round-down"),
-                getSkin().getFont("default-font"));
+        TextButton buttonJoin = new TextButton("Join", getSkin());
 
-        btnStyle.fontColor = Color.WHITE;
-
-        TextButton buttonJoin = new TextButton("Join", btnStyle);
-
-        table.add(buttonJoin).width(130);
+        table.add(buttonJoin).width(130).height(30);
 
         buttonJoin.addListener(new ChangeListener() {
 
@@ -61,12 +59,35 @@ public class BrowseScreen extends Screen {
                 player.setName(textFieldName.getText());
                 GameController.getInstance().setPlayer(player);
                 getMachine().changeState(new LobbyClientState());
+                NetController.getInstance().setSelectedServerIp(listServers.getSelected().getIp());
             }
 
         });
     }
 
+    /**
+     * Draw screen.
+     */
     public void draw() {
         super.draw();
+    }
+
+    /**
+     * Updates screen.
+     */
+    public void update() {
+        if (GameController.getInstance().getServers() != null) {
+            GameServer[] serversArray = new GameServer[GameController.getInstance().getServers().size()];
+
+            int index = 0;
+
+            for (GameServer server : GameController.getInstance().getServers().values()) {
+                serversArray[index] = server;
+
+                index++;
+            }
+
+            listServers.setItems(serversArray);
+        }
     }
 }

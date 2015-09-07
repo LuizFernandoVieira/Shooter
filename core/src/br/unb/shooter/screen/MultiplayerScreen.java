@@ -32,17 +32,17 @@ public class MultiplayerScreen extends Screen {
 
         TextButton buttonHost = new TextButton("Host Game", btnStyle);
 
-        table.add(buttonHost).width(130);
+        table.add(buttonHost).width(130).height(30);
         table.row();
 
         TextButton buttonBrowse = new TextButton("Browse Games", btnStyle);
 
-        table.add(buttonBrowse).width(130);
+        table.add(buttonBrowse).width(130).height(30);
         table.row();
 
         TextButton buttonBack = new TextButton("Back", btnStyle);
 
-        table.add(buttonBack).width(130);
+        table.add(buttonBack).width(130).height(30);
 
         buttonHost.addListener(new ChangeListener() {
 

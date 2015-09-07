@@ -2,6 +2,8 @@ package br.unb.shooter.controller;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.esotericsoftware.kryonet.Client;
@@ -11,19 +13,22 @@ import com.esotericsoftware.kryonet.Server;
 import br.unb.shooter.net.ClientListener;
 import br.unb.shooter.net.ServerListener;
 import br.unb.shooter.net.message.ClientConnectMessage;
+import br.unb.shooter.net.message.ClientServerNameMessage;
 import br.unb.shooter.net.message.ServerUpdateLobbyMessage;
 
 public class NetController {
+
+    private static final Integer TCP_PORT = 5000;
+
+    private static final Integer UDP_PORT = 6000;
 
     private Client client;
 
     private Server server;
 
-    private Integer tcpPort = 5000;
-
-    private Integer udpPort = 6000;
-
     private List<InetAddress> ips;
+
+    private String selectedServerIp;
 
     private Boolean isMultiplayer;
 
@@ -52,27 +57,17 @@ public class NetController {
         client = new Client();
 
         client.start();
-
-        try {
-            client.connect(5000, "127.0.0.1", tcpPort);
-        } catch (IOException e) {
-            // TODO: handle exception properly
-            System.out.println("Erro");
-        }
-
-        ClientListener listener = new ClientListener();
-
-        client.addListener(listener);
     }
 
     /**
      * Create server.
      */
-    public void createServer() {
+    public void createServerAndListener() {
         server = new Server();
 
         try {
-            server.bind(5000);
+            server.bind(TCP_PORT, UDP_PORT);
+
             server.start();
 
             Listener listener = new ServerListener();
@@ -87,12 +82,27 @@ public class NetController {
     /**
      * Connect client.
      */
-    public void connectClient() {
+    public void connectClient(String serverIp) {
+        try {
+            client.connect(5000, serverIp, TCP_PORT);
+        } catch (IOException e) {
+            return;
+        }
+
         ClientConnectMessage msg = new ClientConnectMessage();
 
         msg.setName(GameController.getInstance().getPlayer().getName());
 
         client.sendTCP(msg.toString());
+    }
+
+    /**
+     * Add client listener.
+     */
+    public void addClientListener() {
+        ClientListener listener = new ClientListener();
+
+        client.addListener(listener);
     }
 
     /**
@@ -109,9 +119,47 @@ public class NetController {
      * Discover hosts on client.
      */
     public void discoverHosts() {
-        // TODO: Implement the discover host feature
+        ips = client.discoverHosts(UDP_PORT, 5000);
 
-        // ips = client.discoverHosts(udpPort, 5000);
+        if (ips != null && !ips.isEmpty()) {
+            NetController.getInstance().setIps(new ArrayList<InetAddress>());
+            for (InetAddress ip : ips) {
+                NetController.getInstance().getIps().add(ip);
+            }
+        }
+    }
+
+    /**
+     * Ask server names.
+     */
+    public void askServerNames() {
+        try {
+            client.sendUDP(
+                    new ClientServerNameMessage(this.ips, InetAddress.getLocalHost().getHostAddress()).toString());
+        } catch (UnknownHostException e) {
+            return;
+        }
+    }
+
+    /**
+     * Validates server ip.
+     * 
+     * @param ip Server's ip
+     * @return Boolean
+     */
+    public Boolean isServerIp(String ip) {
+        try {
+            if (InetAddress.getLocalHost().getHostAddress().equals(ip)) {
+                return true;
+            }
+        } catch (UnknownHostException e) {
+            return false;
+        }
+        return false;
+    }
+
+    public void tellClientServerName(String clientIp) {
+
     }
 
     public Client getClient() {
@@ -144,6 +192,14 @@ public class NetController {
 
     public void setIsMultiplayer(Boolean isMultiplayer) {
         this.isMultiplayer = isMultiplayer;
+    }
+
+    public String getSelectedServerIp() {
+        return selectedServerIp;
+    }
+
+    public void setSelectedServerIp(String selectedServerIp) {
+        this.selectedServerIp = selectedServerIp;
     }
 
 }

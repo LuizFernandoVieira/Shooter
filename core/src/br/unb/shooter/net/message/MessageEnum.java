@@ -4,7 +4,9 @@ public enum MessageEnum {
     INPUT("input", "Input"), //
     TELL("tell", "Tell"), //
     CLIENT_CONNECT("client_connect", "Client Connect"), //
+    CLIENT_SERVER_NAME("client_server_name", "Client Server Name"), //
     SERVER_UPDATE_LOBBY("server_update_lobby", "Server Update Lobby"), //
+    SERVER_NAME("server_name", "Server Name"), //
     UPDATE("update", "Update"); // server update message every 100 ms
 
     private String id;

@@ -64,7 +64,7 @@ public class LobbyScreen extends Screen {
 
         });
 
-        table.add(buttonPlay).width(130);
+        table.add(buttonPlay).width(130).height(30);
 
         table.row();
     }
