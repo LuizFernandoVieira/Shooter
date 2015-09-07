@@ -20,8 +20,10 @@ public abstract class Message {
 
         if (code.equals(MessageEnum.INPUT.getId())) {
             return new InputMessage(message);
-        } else if (code.equals(MessageEnum.CONNECT.getId())) {
-            return new ConnectMessage(message);
+        } else if (code.equals(MessageEnum.CLIENT_CONNECT.getId())) {
+            return new ClientConnectMessage(message);
+        } else if (code.equals(MessageEnum.SERVER_UPDATE_LOBBY.getId())) {
+            return new ServerUpdateLobbyMessage(message);
         }
 
         return msg;

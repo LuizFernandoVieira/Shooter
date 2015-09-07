@@ -53,7 +53,7 @@ public class GameController {
     }
 
     /**
-     * Create a player from a connect message.
+     * Create a player on server from a connect message.
      * 
      * @param name Player's name
      */

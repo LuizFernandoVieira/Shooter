@@ -18,7 +18,7 @@ public class LobbyScreen extends Screen {
 
     private TextArea textAreaPlayers;
 
-    private String text;
+    private Label labelServerName;
 
     /**
      * Constructor.
@@ -29,7 +29,7 @@ public class LobbyScreen extends Screen {
         table.setHeight(480);
         getStage().addActor(table);
 
-        Label labelServerName = new Label(GameController.getInstance().getServerName(), getSkin(), "default-font",
+        labelServerName = new Label(GameController.getInstance().getServerName(), getSkin(), "default-font",
                 Color.WHITE);
 
         table.add(labelServerName);
@@ -48,8 +48,6 @@ public class LobbyScreen extends Screen {
 
         table.row();
 
-        text = "";
-
         TextButtonStyle btnStyle = new TextButtonStyle(getSkin().getDrawable("default-round"),
                 getSkin().getDrawable("default-round-down"), getSkin().getDrawable("default-round-down"),
                 getSkin().getFont("default-font"));
@@ -67,23 +65,19 @@ public class LobbyScreen extends Screen {
      * Update screen.
      */
     public void update() {
-        text = "";
+        String text = "";
 
-        Collection<Player> players = GameController.getInstance().getPlayersMap().values();
+        if (GameController.getInstance().getPlayersMap() != null) {
+            Collection<Player> players = GameController.getInstance().getPlayersMap().values();
 
-        for (Player player : players) {
-            text += (player.getName() + Constants.NEW_LINE);
+            for (Player player : players) {
+                text += (player.getName() + Constants.NEW_LINE);
+            }
+
+            textAreaPlayers.setText(text);
         }
 
-        textAreaPlayers.setText(text);
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
+        labelServerName.setText(GameController.getInstance().getServerName());
     }
 
 }

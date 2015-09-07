@@ -1,19 +1,20 @@
 package br.unb.shooter.net.message;
 
 import br.unb.shooter.controller.GameController;
+import br.unb.shooter.controller.NetController;
 import br.unb.shooter.util.Constants;
 
-public class ConnectMessage extends Message {
+public class ClientConnectMessage extends Message {
 
     private String name;
 
-    public ConnectMessage(String message) {
-        this.id = MessageEnum.CONNECT.getId();
+    public ClientConnectMessage(String message) {
+        this.id = MessageEnum.CLIENT_CONNECT.getId();
         translate(message);
     }
 
-    public ConnectMessage() {
-        this.id = MessageEnum.CONNECT.getId();
+    public ClientConnectMessage() {
+        this.id = MessageEnum.CLIENT_CONNECT.getId();
     }
 
     private void translate(String message) {
@@ -26,6 +27,8 @@ public class ConnectMessage extends Message {
     @Override
     public void execute() {
         GameController.getInstance().createClientPlayer(name);
+
+        NetController.getInstance().updateLobby();
     }
 
     @Override

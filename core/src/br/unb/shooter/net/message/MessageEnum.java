@@ -3,7 +3,8 @@ package br.unb.shooter.net.message;
 public enum MessageEnum {
     INPUT("input", "Input"), //
     TELL("tell", "Tell"), //
-    CONNECT("connect", "Connect"), //
+    CLIENT_CONNECT("client_connect", "Client Connect"), //
+    SERVER_UPDATE_LOBBY("server_update_lobby", "Server Update Lobby"), //
     UPDATE("update", "Update"); // server update message every 100 ms
 
     private String id;
