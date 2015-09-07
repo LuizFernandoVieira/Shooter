@@ -1,15 +1,15 @@
 package br.unb.shooter.state;
 
 import br.unb.shooter.controller.NetController;
-import br.unb.shooter.screen.BrowserScreen;
+import br.unb.shooter.screen.BrowseScreen;
 
-public class BrowserState implements IState {
+public class BrowseState implements IState {
 
-    private BrowserScreen screen;
+    private BrowseScreen screen;
 
     @Override
     public void create(StateMachine machine) {
-        screen = new BrowserScreen();
+        screen = new BrowseScreen();
         screen.setMachine(machine);
 
         NetController.getInstance().discoverHosts();
@@ -28,6 +28,7 @@ public class BrowserState implements IState {
 
     @Override
     public void dispose() {
+        screen.dispose();
     }
 
 }

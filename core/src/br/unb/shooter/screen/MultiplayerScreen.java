@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import br.unb.shooter.state.BrowserState;
+import br.unb.shooter.state.BrowseState;
 import br.unb.shooter.state.HostState;
 import br.unb.shooter.state.MenuState;
 
@@ -17,9 +17,11 @@ public class MultiplayerScreen extends Screen {
      * Constructor.
      */
     public MultiplayerScreen() {
+        super();
+
         Table table = new Table();
-        table.setWidth(640);
-        table.setHeight(480);
+        table.setWidth(600);
+        table.setHeight(600);
         getStage().addActor(table);
 
         TextButtonStyle btnStyle = new TextButtonStyle(getSkin().getDrawable("default-round"),
@@ -55,7 +57,7 @@ public class MultiplayerScreen extends Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                getMachine().changeState(new BrowserState());
+                getMachine().changeState(new BrowseState());
             }
 
         });

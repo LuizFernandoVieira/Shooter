@@ -31,6 +31,7 @@ public class GameState implements IState {
 
     @Override
     public void dispose() {
+        screen.dispose();
     }
 
     public GameScreen getScreen() {

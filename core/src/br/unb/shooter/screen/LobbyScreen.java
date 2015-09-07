@@ -5,21 +5,19 @@ import java.util.Collection;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.state.GameState;
-import br.unb.shooter.util.Constants;
 
 public class LobbyScreen extends Screen {
 
-    private TextArea textAreaPlayers;
+    private List<Player> listPlayers;
 
     private Label labelServerName;
 
@@ -27,9 +25,11 @@ public class LobbyScreen extends Screen {
      * Constructor.
      */
     public LobbyScreen(Boolean isServer) {
+        super();
+
         Table table = new Table();
-        table.setWidth(640);
-        table.setHeight(480);
+        table.setWidth(600);
+        table.setHeight(600);
         getStage().addActor(table);
 
         labelServerName = new Label(GameController.getInstance().getServerName(), getSkin(), "default-font",
@@ -39,15 +39,9 @@ public class LobbyScreen extends Screen {
 
         table.row();
 
-        TextFieldStyle style = new TextFieldStyle(getSkin().getFont("default-font"), Color.WHITE,
-                getSkin().getDrawable("cursor"), getSkin().getDrawable("selection"),
-                getSkin().getDrawable("textfield"));
+        listPlayers = new List<Player>(getSkin());
 
-        textAreaPlayers = new TextArea("", style);
-        textAreaPlayers.setPrefRows(4);
-        textAreaPlayers.setDisabled(true);
-
-        table.add(textAreaPlayers).width(500).colspan(2);
+        table.add(listPlayers).width(500);
 
         table.row();
 
@@ -79,16 +73,15 @@ public class LobbyScreen extends Screen {
      * Update screen.
      */
     public void update() {
-        String text = "";
-
         if (GameController.getInstance().getPlayersMap() != null) {
             Collection<Player> players = GameController.getInstance().getPlayersMap().values();
-
+            Player[] playersArray = new Player[players.size()];
+            int index = 0;
             for (Player player : players) {
-                text += (player.getName() + Constants.NEW_LINE);
+                playersArray[index] = player;
+                index++;
             }
-
-            textAreaPlayers.setText(text);
+            listPlayers.setItems(playersArray);
         }
 
         labelServerName.setText(GameController.getInstance().getServerName());

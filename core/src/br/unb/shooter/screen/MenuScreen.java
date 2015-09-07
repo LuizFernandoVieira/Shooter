@@ -2,6 +2,7 @@ package br.unb.shooter.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -13,13 +14,24 @@ import br.unb.shooter.state.MultiplayerState;
 
 public class MenuScreen extends Screen {
 
+    private Table table;
+
+    private ShapeRenderer shapes;
+
     /**
      * Constructor.
      */
     public MenuScreen() {
-        Table table = new Table();
-        table.setWidth(640);
-        table.setHeight(480);
+        super();
+
+        shapes = new ShapeRenderer();
+
+        shapes.setAutoShapeType(true);
+
+        table = new Table();
+        table.setWidth(600);
+        table.setHeight(600);
+
         getStage().addActor(table);
 
         TextButtonStyle btnStyle = new TextButtonStyle(getSkin().getDrawable("default-round"),
@@ -70,6 +82,9 @@ public class MenuScreen extends Screen {
         });
     }
 
+    /**
+     * Draw screen.
+     */
     public void draw() {
         super.draw();
     }

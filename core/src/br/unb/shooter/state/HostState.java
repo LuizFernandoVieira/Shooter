@@ -24,6 +24,7 @@ public class HostState implements IState {
 
     @Override
     public void dispose() {
+        screen.dispose();
     }
 
 }

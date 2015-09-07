@@ -13,18 +13,21 @@ import br.unb.shooter.controller.GameController;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.state.LobbyClientState;
 
-public class BrowserScreen extends Screen {
+public class BrowseScreen extends Screen {
 
     private TextField textFieldName;
 
     /**
      * Constructor.
      */
-    public BrowserScreen() {
+    public BrowseScreen() {
+        super();
+
         getStage().clear();
 
         Table table = new Table();
-        table.setBounds(0, 0, 640, 480);
+        table.setWidth(600);
+        table.setHeight(600);
         getStage().addActor(table);
 
         TextFieldStyle style = new TextFieldStyle(getSkin().getFont("default-font"), Color.WHITE,

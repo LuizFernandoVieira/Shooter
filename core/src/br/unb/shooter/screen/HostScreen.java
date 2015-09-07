@@ -22,10 +22,11 @@ public class HostScreen extends Screen {
      * Constructor.
      */
     public HostScreen() {
-        getStage().clear();
+        super();
 
         Table table = new Table();
-        table.setBounds(0, 0, 640, 480);
+        table.setWidth(600);
+        table.setHeight(600);
         getStage().addActor(table);
 
         TextFieldStyle style = new TextFieldStyle(getSkin().getFont("default-font"), Color.WHITE,

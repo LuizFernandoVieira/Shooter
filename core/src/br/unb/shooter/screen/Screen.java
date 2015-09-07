@@ -30,6 +30,10 @@ public class Screen {
         stage.draw();
     }
 
+    public void dispose() {
+        stage.dispose();
+    }
+
     public Stage getStage() {
         return stage;
     }

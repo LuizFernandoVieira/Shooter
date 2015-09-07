@@ -27,6 +27,7 @@ public class LobbyServerState implements IState {
 
     @Override
     public void dispose() {
+        screen.dispose();
     }
 
 }

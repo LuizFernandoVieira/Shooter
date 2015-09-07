@@ -1,15 +1,15 @@
 package br.unb.shooter.net;
 
-import br.unb.shooter.screen.BrowserScreen;
+import br.unb.shooter.screen.BrowseScreen;
 
 public class ClientListener extends ShooterListener {
-    private BrowserScreen screen;
+    private BrowseScreen screen;
 
-    public BrowserScreen getScreen() {
+    public BrowseScreen getScreen() {
         return screen;
     }
 
-    public void setScreen(BrowserScreen screen) {
+    public void setScreen(BrowseScreen screen) {
         this.screen = screen;
     }
 

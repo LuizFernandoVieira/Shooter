@@ -26,6 +26,7 @@ public class MultiplayerState implements IState {
 
     @Override
     public void dispose() {
+        screen.dispose();
     }
 
 }

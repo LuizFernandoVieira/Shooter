@@ -122,4 +122,9 @@ public class Player extends Entity {
         this.isMoving = isMoving;
     }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
 }

@@ -3,6 +3,8 @@ package br.unb.shooter.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -19,10 +21,16 @@ public class GameScreen extends Screen {
 
     private PlayerLibgdx playerLibgdx;
 
+    private Table table;
+
+    private Label labelFps;
+
     /**
      * Constructor.
      */
     public GameScreen() {
+        super();
+
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -33,6 +41,16 @@ public class GameScreen extends Screen {
         playerLibgdx.initGraphics();
 
         Gdx.input.setInputProcessor(new ShooterInputProcessor());
+
+        table = new Table();
+        table.setWidth(600);
+        table.setHeight(600);
+
+        getStage().addActor(table);
+
+        labelFps = new Label("", getSkin());
+
+        table.add(labelFps);
     }
 
     /**
@@ -51,6 +69,8 @@ public class GameScreen extends Screen {
      */
     public void update() {
         playerLibgdx.update(GameController.getInstance().getPlayer(), Gdx.graphics.getDeltaTime());
+
+        labelFps.setText(Gdx.graphics.getFramesPerSecond() + " fps");
     }
 
     public void dispose() {
