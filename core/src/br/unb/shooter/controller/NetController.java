@@ -1,6 +1,8 @@
 package br.unb.shooter.controller;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.util.List;
 
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Listener;
@@ -16,6 +18,12 @@ public class NetController {
     private Client client;
 
     private Server server;
+
+    private Integer tcpPort = 5000;
+
+    private Integer udpPort = 6000;
+
+    private List<InetAddress> ips;
 
     private static NetController instance;
 
@@ -40,7 +48,7 @@ public class NetController {
         client.start();
 
         try {
-            client.connect(5000, "127.0.0.1", 5000);
+            client.connect(5000, "127.0.0.1", tcpPort);
         } catch (IOException e) {
             // TODO: handle exception properly
             System.out.println("Erro");
@@ -91,6 +99,15 @@ public class NetController {
         server.sendToAllTCP(msg.toString());
     }
 
+    /**
+     * Discover hosts on client.
+     */
+    public void discoverHosts() {
+        // TODO: Implement the discover host feature
+
+        ips = client.discoverHosts(udpPort, 5000);
+    }
+
     public Client getClient() {
         return client;
     }
@@ -105,6 +122,14 @@ public class NetController {
 
     public void setServer(Server server) {
         this.server = server;
+    }
+
+    public List<InetAddress> getIps() {
+        return ips;
+    }
+
+    public void setIps(List<InetAddress> ips) {
+        this.ips = ips;
     }
 
 }
