@@ -3,7 +3,7 @@ package br.unb.shooter.controller;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.esotericsoftware.kryonet.Client;
@@ -13,7 +13,6 @@ import com.esotericsoftware.kryonet.Server;
 import br.unb.shooter.net.ClientListener;
 import br.unb.shooter.net.ServerListener;
 import br.unb.shooter.net.message.ClientConnectMessage;
-import br.unb.shooter.net.message.ClientServerNameMessage;
 import br.unb.shooter.net.message.ServerUpdateLobbyMessage;
 
 public class NetController {
@@ -26,7 +25,7 @@ public class NetController {
 
     private Server server;
 
-    private List<InetAddress> ips;
+    private HashMap<String, InetAddress> ips;
 
     private String selectedServerIp;
 
@@ -119,25 +118,18 @@ public class NetController {
      * Discover hosts on client.
      */
     public void discoverHosts() {
-        ips = client.discoverHosts(UDP_PORT, 5000);
+        List<InetAddress> ips = client.discoverHosts(UDP_PORT, 2000);
 
         if (ips != null && !ips.isEmpty()) {
-            NetController.getInstance().setIps(new ArrayList<InetAddress>());
-            for (InetAddress ip : ips) {
-                NetController.getInstance().getIps().add(ip);
+            if (this.ips == null) {
+                this.ips = new HashMap<String, InetAddress>();
             }
-        }
-    }
 
-    /**
-     * Ask server names.
-     */
-    public void askServerNames() {
-        try {
-            client.sendUDP(
-                    new ClientServerNameMessage(this.ips, InetAddress.getLocalHost().getHostAddress()).toString());
-        } catch (UnknownHostException e) {
-            return;
+            for (InetAddress address : ips) {
+                if (!this.ips.containsKey(address.getHostAddress())) {
+                    this.ips.put(address.getHostAddress(), address);
+                }
+            }
         }
     }
 
@@ -158,10 +150,6 @@ public class NetController {
         return false;
     }
 
-    public void tellClientServerName(String clientIp) {
-
-    }
-
     public Client getClient() {
         return client;
     }
@@ -178,11 +166,11 @@ public class NetController {
         this.server = server;
     }
 
-    public List<InetAddress> getIps() {
+    public HashMap<String, InetAddress> getIps() {
         return ips;
     }
 
-    public void setIps(List<InetAddress> ips) {
+    public void setIps(HashMap<String, InetAddress> ips) {
         this.ips = ips;
     }
 

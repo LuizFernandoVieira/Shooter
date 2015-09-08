@@ -1,5 +1,7 @@
 package br.unb.shooter.screen;
 
+import java.net.InetAddress;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -9,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.NetController;
-import br.unb.shooter.entity.GameServer;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.state.LobbyClientState;
 
@@ -17,7 +18,7 @@ public class BrowseScreen extends Screen {
 
     private TextField textFieldName;
 
-    private List<GameServer> listServers;
+    private List<String> listServers;
 
     /**
      * Constructor.
@@ -32,9 +33,9 @@ public class BrowseScreen extends Screen {
         table.setHeight(600);
         getStage().addActor(table);
 
-        listServers = new List<GameServer>(getSkin());
+        listServers = new List<String>(getSkin());
 
-        table.add(listServers);
+        table.add(listServers).width(500);
 
         table.row();
 
@@ -59,7 +60,7 @@ public class BrowseScreen extends Screen {
                 player.setName(textFieldName.getText());
                 GameController.getInstance().setPlayer(player);
                 getMachine().changeState(new LobbyClientState());
-                NetController.getInstance().setSelectedServerIp(listServers.getSelected().getIp());
+                NetController.getInstance().setSelectedServerIp(listServers.getSelected());
             }
 
         });
@@ -76,13 +77,13 @@ public class BrowseScreen extends Screen {
      * Updates screen.
      */
     public void update() {
-        if (GameController.getInstance().getServers() != null) {
-            GameServer[] serversArray = new GameServer[GameController.getInstance().getServers().size()];
+        if (NetController.getInstance().getIps() != null) {
+            String[] serversArray = new String[NetController.getInstance().getIps().size()];
 
             int index = 0;
 
-            for (GameServer server : GameController.getInstance().getServers().values()) {
-                serversArray[index] = server;
+            for (InetAddress ip : NetController.getInstance().getIps().values()) {
+                serversArray[index] = ip.getHostAddress();
 
                 index++;
             }

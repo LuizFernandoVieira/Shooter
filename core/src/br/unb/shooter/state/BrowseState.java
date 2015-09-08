@@ -1,15 +1,16 @@
 package br.unb.shooter.state;
 
-import com.badlogic.gdx.utils.TimeUtils;
-
 import br.unb.shooter.controller.NetController;
+import br.unb.shooter.net.ServerDiscoverer;
 import br.unb.shooter.screen.BrowseScreen;
 
 public class BrowseState implements IState {
 
     private BrowseScreen screen;
 
-    private long updateTime;
+    private Thread thread;
+
+    private ServerDiscoverer discoverer;
 
     @Override
     public void create(StateMachine machine) {
@@ -20,16 +21,16 @@ public class BrowseState implements IState {
 
         NetController.getInstance().createClient();
 
-        updateTime = TimeUtils.millis();
+        discoverer = new ServerDiscoverer();
+
+        thread = new Thread(discoverer);
+
+        thread.start();
     }
 
     @Override
     public void update() {
-        if (TimeUtils.timeSinceMillis(updateTime) > 1000L) {
-            NetController.getInstance().discoverHosts();
-            NetController.getInstance().askServerNames();
-            updateTime = TimeUtils.millis();
-        }
+        screen.update();
     }
 
     @Override
@@ -40,6 +41,7 @@ public class BrowseState implements IState {
     @Override
     public void dispose() {
         screen.dispose();
+        discoverer.setExecute(false);
     }
 
 }
