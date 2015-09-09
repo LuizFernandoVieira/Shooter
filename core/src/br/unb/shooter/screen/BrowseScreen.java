@@ -66,7 +66,8 @@ public class BrowseScreen extends Screen {
                 player.setName(textFieldName.getText());
                 GameController.getInstance().setPlayer(player);
                 getMachine().changeState(new LobbyClientState());
-                NetController.getInstance().setSelectedServerIp(listServers.getSelected());
+                // NetController.getInstance().setSelectedServerIp(listServers.getSelected());
+                NetController.getInstance().setSelectedServerIp("127.0.0.1");
             }
 
         });
