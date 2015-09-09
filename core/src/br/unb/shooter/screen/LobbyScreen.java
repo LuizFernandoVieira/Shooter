@@ -1,6 +1,7 @@
 package br.unb.shooter.screen;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -41,6 +42,10 @@ public class LobbyScreen extends Screen {
 
         listPlayers = new List<Player>(getSkin());
 
+        listPlayers.setItems(new Player(), new Player(), new Player(), new Player());
+
+        listPlayers.setSelectedIndex(-1);
+
         table.add(listPlayers).width(500);
 
         table.row();
@@ -75,11 +80,14 @@ public class LobbyScreen extends Screen {
     public void update() {
         if (GameController.getInstance().getPlayersMap() != null) {
             Collection<Player> players = GameController.getInstance().getPlayersMap().values();
-            Player[] playersArray = new Player[players.size()];
-            int index = 0;
-            for (Player player : players) {
-                playersArray[index] = player;
-                index++;
+            Iterator<Player> iterator = players.iterator();
+            Player[] playersArray = new Player[4];
+            for (int index = 0; index < 4; index++) {
+                if (iterator.hasNext()) {
+                    playersArray[index] = iterator.next();
+                } else {
+                    playersArray[index] = new Player();
+                }
             }
             listPlayers.setItems(playersArray);
         }

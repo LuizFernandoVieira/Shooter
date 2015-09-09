@@ -1,6 +1,8 @@
 package br.unb.shooter.screen;
 
 import java.net.InetAddress;
+import java.util.Collection;
+import java.util.Iterator;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
@@ -34,6 +36,10 @@ public class BrowseScreen extends Screen {
         getStage().addActor(table);
 
         listServers = new List<String>(getSkin());
+
+        listServers.setItems("", "", "", "");
+
+        listServers.setSelectedIndex(-1);
 
         table.add(listServers).width(500);
 
@@ -78,14 +84,18 @@ public class BrowseScreen extends Screen {
      */
     public void update() {
         if (NetController.getInstance().getIps() != null) {
-            String[] serversArray = new String[NetController.getInstance().getIps().size()];
+            String[] serversArray = new String[4];
 
-            int index = 0;
+            Collection<InetAddress> collection = NetController.getInstance().getIps().values();
 
-            for (InetAddress ip : NetController.getInstance().getIps().values()) {
-                serversArray[index] = ip.getHostAddress();
+            Iterator<InetAddress> iterator = collection.iterator();
 
-                index++;
+            for (int index = 0; index < 4; index++) {
+                if (iterator.hasNext()) {
+                    serversArray[index] = iterator.next().getHostAddress();
+                } else {
+                    serversArray[index] = "";
+                }
             }
 
             listServers.setItems(serversArray);
