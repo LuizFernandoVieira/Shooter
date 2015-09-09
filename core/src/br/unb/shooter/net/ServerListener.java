@@ -1,5 +1,6 @@
 package br.unb.shooter.net;
 
+import com.badlogic.gdx.Gdx;
 import com.esotericsoftware.kryonet.Connection;
 
 import br.unb.shooter.screen.HostScreen;
@@ -9,12 +10,12 @@ public class ServerListener extends ShooterListener {
 
     @Override
     public void connected(Connection connection) {
-        System.out.println("Conectou");
+        Gdx.app.log("SERVER_LISTENER", "Client connected.");
     }
 
     @Override
     public void disconnected(Connection connection) {
-        System.out.println("Desconectou");
+        Gdx.app.log("SERVER_LISTENER", "Client disconnected.");
     }
 
     public HostScreen getScreen() {
