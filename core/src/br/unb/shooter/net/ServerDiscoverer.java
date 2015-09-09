@@ -10,8 +10,6 @@ public class ServerDiscoverer implements Runnable {
      * Constructor.
      */
     public ServerDiscoverer() {
-        // System.setProperty("java.net.preferIPv4Stack", "true");
-
         NetController.getInstance().createClient();
 
         execute = true;
