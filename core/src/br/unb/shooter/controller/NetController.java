@@ -82,7 +82,7 @@ public class NetController {
      */
     public void connectClient(String serverIp) {
         try {
-            client.connect(5000, serverIp, TCP_PORT);
+            client.connect(5000, serverIp, TCP_PORT, UDP_PORT);
         } catch (IOException e) {
             return;
         }
