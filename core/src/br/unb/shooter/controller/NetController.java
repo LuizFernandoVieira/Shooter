@@ -2,7 +2,6 @@ package br.unb.shooter.controller;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -131,23 +130,6 @@ public class NetController {
                 }
             }
         }
-    }
-
-    /**
-     * Validates server ip.
-     * 
-     * @param ip Server's ip
-     * @return Boolean
-     */
-    public Boolean isServerIp(String ip) {
-        try {
-            if (InetAddress.getLocalHost().getHostAddress().equals(ip)) {
-                return true;
-            }
-        } catch (UnknownHostException e) {
-            return false;
-        }
-        return false;
     }
 
     public Client getClient() {
