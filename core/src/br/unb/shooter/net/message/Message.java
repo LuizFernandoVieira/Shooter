@@ -19,7 +19,7 @@ public abstract class Message {
                 : message;
 
         if (code.equals(MessageEnum.INPUT.getId())) {
-            return new InputMessage(message);
+            return new ClientInputMessage(message);
         } else if (code.equals(MessageEnum.CLIENT_CONNECT.getId())) {
             return new ClientConnectMessage(message);
         } else if (code.equals(MessageEnum.SERVER_UPDATE_LOBBY.getId())) {

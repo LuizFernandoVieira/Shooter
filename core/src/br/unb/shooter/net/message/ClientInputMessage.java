@@ -2,7 +2,7 @@ package br.unb.shooter.net.message;
 
 import br.unb.shooter.util.Constants;
 
-public class InputMessage extends Message {
+public class ClientInputMessage extends Message {
 
     private Integer targetX;
 
@@ -20,7 +20,7 @@ public class InputMessage extends Message {
 
     private Boolean moveLeft;
 
-    public InputMessage(String message) {
+    public ClientInputMessage(String message) {
         this.id = MessageEnum.INPUT.getId();
         translate(message);
     }
