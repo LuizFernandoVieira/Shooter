@@ -2,7 +2,7 @@ package br.unb.shooter.state;
 
 public class StateMachine {
 
-    private IState state = new MenuState();
+    private IState state = new StartState();
 
     public void create() {
         state.create(this);
@@ -29,6 +29,14 @@ public class StateMachine {
         this.state.dispose();
         this.state = state;
         state.create(this);
+    }
+
+    public IState getState() {
+        return state;
+    }
+
+    public void setState(IState state) {
+        this.state = state;
     }
 
 }

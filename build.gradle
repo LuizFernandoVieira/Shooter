@@ -98,6 +98,7 @@ project(":ios") {
 project(":core") {
     apply plugin: "java"
 
+	sourceSets.test.java.srcDirs = ["test/"]
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -112,6 +113,7 @@ project(":core") {
         compile "com.esotericsoftware:kryonet:2.22.0-RC1"
         
         testCompile "junit:junit:4.12"
+        testCompile "org.easymock:easymock:3.4"
     }
 }
 
