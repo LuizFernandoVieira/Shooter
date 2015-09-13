@@ -7,7 +7,6 @@ public abstract class Weapon {
 
     private Entity owner;
     private Vector2 position;
-    private boolean facingRight;
 
     /**
      * Constructor.
@@ -15,7 +14,6 @@ public abstract class Weapon {
     public Weapon() {
         owner = null;
         position = new Vector2();
-        facingRight = true;
     }
 
     public abstract void update(float deltaTime);
