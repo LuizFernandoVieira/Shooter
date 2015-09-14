@@ -3,31 +3,14 @@ package br.unb.shooter.state;
 import br.unb.shooter.controller.NetController;
 import br.unb.shooter.screen.LobbyScreen;
 
-public class LobbyServerState implements IState {
-
-    private LobbyScreen screen;
+public class LobbyServerState extends State {
 
     @Override
     public void create(StateMachine machine) {
-        screen = new LobbyScreen(true);
-        screen.setMachine(machine);
+        setScreen(new LobbyScreen(true));
+        getScreen().setMachine(machine);
 
         NetController.getInstance().createServerAndListener();
-    }
-
-    @Override
-    public void update() {
-        screen.update();
-    }
-
-    @Override
-    public void draw() {
-        screen.draw();
-    }
-
-    @Override
-    public void dispose() {
-        screen.dispose();
     }
 
 }

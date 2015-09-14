@@ -3,30 +3,14 @@ package br.unb.shooter.state;
 import br.unb.shooter.controller.NetController;
 import br.unb.shooter.screen.MultiplayerScreen;
 
-public class MultiplayerState implements IState {
-
-    private MultiplayerScreen screen;
+public class MultiplayerState extends State {
 
     @Override
     public void create(StateMachine machine) {
-        screen = new MultiplayerScreen();
-        screen.setMachine(machine);
+        setScreen(new MultiplayerScreen());
+        getScreen().setMachine(machine);
 
         NetController.getInstance().setIsMultiplayer(true);
-    }
-
-    @Override
-    public void update() {
-    }
-
-    @Override
-    public void draw() {
-        screen.draw();
-    }
-
-    @Override
-    public void dispose() {
-        screen.dispose();
     }
 
 }

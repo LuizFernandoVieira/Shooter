@@ -1,5 +1,5 @@
 package br.unb.shooter.state;
 
-public class CreditsState {
+public class CreditsState extends State {
 
 }

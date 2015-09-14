@@ -17,6 +17,10 @@ public class StartScreen extends Screen {
 
     private long deltaTime;
 
+    /**
+     * Creates the screen.
+     */
+    @Override
     public void create() {
         batch = new SpriteBatch();
 
@@ -25,6 +29,10 @@ public class StartScreen extends Screen {
         startTime = TimeUtils.millis();
     }
 
+    /**
+     * Updates the screen.
+     */
+    @Override
     public void update() {
         deltaTime = TimeUtils.timeSinceMillis(startTime);
 
@@ -33,6 +41,10 @@ public class StartScreen extends Screen {
         }
     }
 
+    /**
+     * Draws the screen.
+     */
+    @Override
     public void draw() {
         batch.begin();
 
@@ -41,6 +53,9 @@ public class StartScreen extends Screen {
         batch.end();
     }
 
+    /**
+     * State transition.
+     */
     public void endTimer() {
         getMachine().changeState(new CutsceneState());
     }

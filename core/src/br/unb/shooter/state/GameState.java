@@ -4,14 +4,12 @@ import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.NetController;
 import br.unb.shooter.screen.GameScreen;
 
-public class GameState implements IState {
-
-    private GameScreen screen;
+public class GameState extends State {
 
     @Override
     public void create(final StateMachine machine) {
-        screen = new GameScreen();
-        screen.setMachine(machine);
+        setScreen(new GameScreen());
+        getScreen().setMachine(machine);
 
         if (!NetController.getInstance().getIsMultiplayer()) {
             GameController.getInstance().createServerPlayer("Player");
@@ -21,25 +19,7 @@ public class GameState implements IState {
     @Override
     public void update() {
         GameController.getInstance().getPlayer().update();
-        screen.update();
-    }
-
-    @Override
-    public void draw() {
-        screen.draw();
-    }
-
-    @Override
-    public void dispose() {
-        screen.dispose();
-    }
-
-    public GameScreen getScreen() {
-        return screen;
-    }
-
-    public void setScreen(GameScreen screen) {
-        this.screen = screen;
+        getScreen().update();
     }
 
 }

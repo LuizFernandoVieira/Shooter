@@ -82,7 +82,7 @@ public class LobbyScreen extends Screen {
     }
 
     /**
-     * Update screen.
+     * Updates the screen.
      */
     @Override
     public void update() {

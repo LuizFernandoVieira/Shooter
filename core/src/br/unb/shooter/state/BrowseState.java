@@ -4,9 +4,7 @@ import br.unb.shooter.controller.NetController;
 import br.unb.shooter.net.ServerDiscoverer;
 import br.unb.shooter.screen.BrowseScreen;
 
-public class BrowseState implements IState {
-
-    private BrowseScreen screen;
+public class BrowseState extends State {
 
     private Thread thread;
 
@@ -14,8 +12,8 @@ public class BrowseState implements IState {
 
     @Override
     public void create(StateMachine machine) {
-        screen = new BrowseScreen();
-        screen.setMachine(machine);
+        setScreen(new BrowseScreen());
+        getScreen().setMachine(machine);
 
         System.setProperty("java.net.preferIPv4Stack", "true");
 
@@ -29,18 +27,7 @@ public class BrowseState implements IState {
     }
 
     @Override
-    public void update() {
-        screen.update();
-    }
-
-    @Override
-    public void draw() {
-        screen.draw();
-    }
-
-    @Override
     public void dispose() {
-        screen.dispose();
         discoverer.setExecute(false);
     }
 

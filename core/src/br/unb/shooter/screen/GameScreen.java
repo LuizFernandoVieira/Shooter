@@ -57,7 +57,7 @@ public class GameScreen extends Screen {
     }
 
     /**
-     * Update state.
+     * Updates the screen.
      */
     @Override
     public void update() {
