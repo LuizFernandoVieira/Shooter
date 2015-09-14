@@ -3,6 +3,8 @@ package br.unb.shooter.state;
 import org.junit.Assert;
 import org.junit.Test;
 
+import br.unb.shooter.screen.StartScreen;
+
 public class StateMachineTest {
     @Test
     public void testCreateStateMachine() {
@@ -13,6 +15,15 @@ public class StateMachineTest {
 
     @Test
     public void testStartToCutsceneTransition() {
+        StateMachine machine = new StateMachine();
+
+        StartState state = (StartState) machine.getState();
+
+        StartScreen screen = (StartScreen) state.getScreen();
+
+        screen.endTimer();
+
+        Assert.assertEquals(CutsceneState.class, machine.getState().getClass());
     }
 
     @Test

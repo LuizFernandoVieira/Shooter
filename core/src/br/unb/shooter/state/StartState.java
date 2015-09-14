@@ -1,19 +1,11 @@
 package br.unb.shooter.state;
 
-public class StartState implements IState {
-    @Override
-    public void create(final StateMachine machine) {
+import br.unb.shooter.screen.StartScreen;
+
+public class StartState extends State {
+
+    public StartState() {
+        setScreen(new StartScreen());
     }
 
-    @Override
-    public void update() {
-    }
-
-    @Override
-    public void draw() {
-    }
-
-    @Override
-    public void dispose() {
-    }
 }

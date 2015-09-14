@@ -23,7 +23,10 @@ public class HostScreen extends Screen {
      */
     public HostScreen() {
         super();
+    }
 
+    @Override
+    public void create() {
         Table table = new Table();
         table.setWidth(600);
         table.setHeight(600);
@@ -71,13 +74,6 @@ public class HostScreen extends Screen {
             }
 
         });
-    }
-
-    public void draw() {
-        super.draw();
-    }
-
-    public void update() {
     }
 
 }

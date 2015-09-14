@@ -18,7 +18,10 @@ public class MenuScreen extends Screen {
      */
     public MenuScreen() {
         super();
+    }
 
+    @Override
+    public void create() {
         table = new Table();
         table.setWidth(600);
         table.setHeight(600);
@@ -65,13 +68,6 @@ public class MenuScreen extends Screen {
             }
 
         });
-    }
-
-    /**
-     * Draw screen.
-     */
-    public void draw() {
-        super.draw();
     }
 
 }

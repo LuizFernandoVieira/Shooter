@@ -27,7 +27,10 @@ public class BrowseScreen extends Screen {
      */
     public BrowseScreen() {
         super();
+    }
 
+    @Override
+    public void create() {
         getStage().clear();
 
         Table table = new Table();
@@ -73,15 +76,9 @@ public class BrowseScreen extends Screen {
     }
 
     /**
-     * Draw screen.
-     */
-    public void draw() {
-        super.draw();
-    }
-
-    /**
      * Updates screen.
      */
+    @Override
     public void update() {
         if (NetController.getInstance().getIps() != null) {
             String[] serversArray = new String[4];

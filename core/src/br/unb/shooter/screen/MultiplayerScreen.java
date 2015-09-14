@@ -18,7 +18,10 @@ public class MultiplayerScreen extends Screen {
      */
     public MultiplayerScreen() {
         super();
+    }
 
+    @Override
+    public void create() {
         Table table = new Table();
         table.setWidth(600);
         table.setHeight(600);

@@ -22,12 +22,19 @@ public class LobbyScreen extends Screen {
 
     private Label labelServerName;
 
+    private Boolean isServer;
+
     /**
      * Constructor.
      */
     public LobbyScreen(Boolean isServer) {
         super();
 
+        this.isServer = isServer;
+    }
+
+    @Override
+    public void create() {
         Table table = new Table();
         table.setWidth(600);
         table.setHeight(600);
@@ -77,6 +84,7 @@ public class LobbyScreen extends Screen {
     /**
      * Update screen.
      */
+    @Override
     public void update() {
         if (GameController.getInstance().getPlayersMap() != null) {
             Collection<Player> players = GameController.getInstance().getPlayersMap().values();

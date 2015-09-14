@@ -30,7 +30,10 @@ public class GameScreen extends Screen {
      */
     public GameScreen() {
         super();
+    }
 
+    @Override
+    public void create() {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -54,23 +57,25 @@ public class GameScreen extends Screen {
     }
 
     /**
+     * Update state.
+     */
+    @Override
+    public void update() {
+        playerLibgdx.update(GameController.getInstance().getPlayer(), Gdx.graphics.getDeltaTime());
+
+        labelFps.setText(Gdx.graphics.getFramesPerSecond() + " fps");
+    }
+
+    /**
      * Renders game screen.
      */
+    @Override
     public void draw() {
         super.draw();
 
         batch.begin();
         playerLibgdx.draw(batch, GameController.getInstance().getPlayer());
         batch.end();
-    }
-
-    /**
-     * Update state.
-     */
-    public void update() {
-        playerLibgdx.update(GameController.getInstance().getPlayer(), Gdx.graphics.getDeltaTime());
-
-        labelFps.setText(Gdx.graphics.getFramesPerSecond() + " fps");
     }
 
     public void dispose() {

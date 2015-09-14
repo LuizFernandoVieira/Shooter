@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import br.unb.shooter.state.StateMachine;
 
-public class Screen {
+public abstract class Screen {
 
     private Stage stage;
 
@@ -24,6 +24,11 @@ public class Screen {
 
         setSkin(new Skin(Gdx.files.internal("uiskin.json")));
     }
+
+    public abstract void create();
+
+    public void update() {
+    };
 
     public void draw() {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
