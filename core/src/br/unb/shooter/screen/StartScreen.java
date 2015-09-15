@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 
+import br.unb.shooter.input.StartInputProcessor;
 import br.unb.shooter.state.CutsceneState;
 
 public class StartScreen extends Screen {
@@ -17,6 +18,8 @@ public class StartScreen extends Screen {
 
     private long deltaTime;
 
+    private StartInputProcessor input;
+
     /**
      * Creates the screen.
      */
@@ -27,6 +30,12 @@ public class StartScreen extends Screen {
         img = new Texture(Gdx.files.internal("logo.png"));
 
         startTime = TimeUtils.millis();
+
+        input = new StartInputProcessor();
+
+        input.setScreen(this);
+
+        Gdx.input.setInputProcessor(input);
     }
 
     /**
@@ -48,15 +57,29 @@ public class StartScreen extends Screen {
     public void draw() {
         batch.begin();
 
-        batch.draw(img, 0, 0);
+        batch.draw(img, 200, 200);
 
         batch.end();
     }
 
     /**
-     * State transition.
+     * End timer event.
      */
     public void endTimer() {
+        changeState();
+    }
+
+    /**
+     * Esc key event.
+     */
+    public void pressEscKey() {
+        changeState();
+    }
+
+    /**
+     * State transition.
+     */
+    private void changeState() {
         getMachine().changeState(new CutsceneState());
     }
 

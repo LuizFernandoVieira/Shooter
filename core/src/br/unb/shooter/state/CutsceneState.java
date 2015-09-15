@@ -8,6 +8,8 @@ public class CutsceneState extends State {
     public void create(StateMachine machine) {
         setScreen(new CutsceneScreen());
         getScreen().setMachine(machine);
+
+        getScreen().create();
     }
 
 }

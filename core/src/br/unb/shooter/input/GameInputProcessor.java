@@ -6,7 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.entity.Player;
 
-public class ShooterInputProcessor implements InputProcessor {
+public class GameInputProcessor implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {

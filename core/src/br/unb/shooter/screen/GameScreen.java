@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.entity.graphic.player.PlayerLibgdx;
-import br.unb.shooter.input.ShooterInputProcessor;
+import br.unb.shooter.input.GameInputProcessor;
 import br.unb.shooter.util.Constants;
 
 public class GameScreen extends Screen {
@@ -43,7 +43,7 @@ public class GameScreen extends Screen {
 
         playerLibgdx.initGraphics();
 
-        Gdx.input.setInputProcessor(new ShooterInputProcessor());
+        Gdx.input.setInputProcessor(new GameInputProcessor());
 
         table = new Table();
         table.setWidth(600);

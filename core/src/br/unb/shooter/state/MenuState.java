@@ -10,6 +10,8 @@ public class MenuState extends State {
         setScreen(new MenuScreen());
         getScreen().setMachine(machine);
 
+        getScreen().create();
+
         NetController.getInstance().setIsMultiplayer(false);
     }
 
