@@ -1,6 +1,7 @@
 package br.unb.shooter.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -18,11 +19,13 @@ public abstract class Screen {
      * Constructor.
      */
     public Screen() {
-        setStage(new Stage());
+        this.stage = new Stage();
 
         Gdx.input.setInputProcessor(stage);
 
-        setSkin(new Skin(Gdx.files.internal("uiskin.json")));
+        FileHandle handle = Gdx.files.internal("uiskin.json");
+
+        this.skin = new Skin(handle);
     }
 
     public abstract void create();
