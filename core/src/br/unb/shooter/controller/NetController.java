@@ -9,9 +9,11 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
+import br.unb.shooter.entity.Player;
 import br.unb.shooter.net.ClientListener;
 import br.unb.shooter.net.ServerListener;
 import br.unb.shooter.net.message.ClientConnectMessage;
+import br.unb.shooter.net.message.ClientInputMessage;
 import br.unb.shooter.net.message.ServerStartMessage;
 import br.unb.shooter.net.message.ServerUpdateLobbyMessage;
 import br.unb.shooter.net.message.ServerUpdateMessage;
@@ -150,6 +152,12 @@ public class NetController {
         ServerUpdateMessage msg = new ServerUpdateMessage(GameController.getInstance().getPlayersMap());
 
         server.sendToAllTCP(msg.toString());
+    }
+
+    public void sendPlayerInput(Player player) {
+        ClientInputMessage msg = new ClientInputMessage(player);
+
+        client.sendTCP(msg.toString());
     }
 
     public Client getClient() {

@@ -1,8 +1,7 @@
 package br.unb.shooter.net.message;
 
 public enum MessageEnum {
-    INPUT("input", "Input"), //
-    TELL("tell", "Tell"), //
+    CLIENT_INPUT("client_input", "Client Input"), //
     CLIENT_CONNECT("client_connect", "Client Connect"), //
     CLIENT_DISCOVER_HOST("client_discover_host", "Client Discover Host"), //
     SERVER_UPDATE_LOBBY("server_update_lobby", "Server Update Lobby"), //

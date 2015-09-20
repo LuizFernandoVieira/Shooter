@@ -18,7 +18,7 @@ public abstract class Message {
         String code = message.indexOf(Constants.SPACE) > -1 ? message.substring(0, message.indexOf(Constants.SPACE))
                 : message;
 
-        if (code.equals(MessageEnum.INPUT.getId())) {
+        if (code.equals(MessageEnum.CLIENT_INPUT.getId())) {
             return new ClientInputMessage(message);
         } else if (code.equals(MessageEnum.CLIENT_CONNECT.getId())) {
             return new ClientConnectMessage(message);

@@ -1,16 +1,12 @@
 package br.unb.shooter.net.message;
 
+import br.unb.shooter.controller.GameController;
+import br.unb.shooter.entity.Player;
 import br.unb.shooter.util.Constants;
 
 public class ClientInputMessage extends Message {
 
-    private Integer targetX;
-
-    private Integer targetY;
-
-    private Boolean leftActionButton;
-
-    private Boolean rightActionButton;
+    private Integer playerId;
 
     private Boolean moveUp;
 
@@ -21,58 +17,49 @@ public class ClientInputMessage extends Message {
     private Boolean moveLeft;
 
     public ClientInputMessage(String message) {
-        this.id = MessageEnum.INPUT.getId();
+        this.id = MessageEnum.CLIENT_INPUT.getId();
         translate(message);
+    }
+
+    public ClientInputMessage(Player player) {
+        this.id = MessageEnum.CLIENT_INPUT.getId();
+        this.playerId = player.getId();
+        this.moveUp = player.getMoveUp();
+        this.moveRight = player.getMoveRight();
+        this.moveDown = player.getMoveDown();
+        this.moveLeft = player.getMoveLeft();
     }
 
     @Override
     public void execute() {
+        Player sender = GameController.getInstance().getPlayersMap().get(this.playerId);
+        sender.setMoveUp(moveUp);
+        sender.setMoveRight(moveRight);
+        sender.setMoveDown(moveDown);
+        sender.setMoveLeft(moveLeft);
+        sender.update();
     }
 
     private void translate(String message) {
         String[] slices = message.split(Constants.SPACE);
 
-        this.id = MessageEnum.INPUT.getId();
-        this.targetX = Integer.valueOf(slices[1]);
-        this.targetY = Integer.valueOf(slices[2]);
-        this.leftActionButton = Constants.ONE.equals(slices[3]);
-        this.rightActionButton = Constants.ONE.equals(slices[4]);
-        this.moveUp = Constants.ONE.equals(slices[5]);
-        this.moveDown = Constants.ONE.equals(slices[6]);
-        this.moveRight = Constants.ONE.equals(slices[7]);
-        this.moveLeft = Constants.ONE.equals(slices[8]);
+        this.id = MessageEnum.CLIENT_INPUT.getId();
+        this.playerId = Integer.valueOf(slices[1]);
+        this.moveUp = Constants.ONE.equals(slices[2]);
+        this.moveRight = Constants.ONE.equals(slices[3]);
+        this.moveDown = Constants.ONE.equals(slices[4]);
+        this.moveLeft = Constants.ONE.equals(slices[5]);
     }
 
-    public Integer getTargetX() {
-        return targetX;
+    @Override
+    public String toString() {
+        return this.id + Constants.SPACE + this.playerId + Constants.SPACE + convertBoolean(this.moveUp)
+                + Constants.SPACE + convertBoolean(this.moveRight) + Constants.SPACE + convertBoolean(this.moveDown)
+                + Constants.SPACE + convertBoolean(this.moveLeft);
     }
 
-    public void setTargetX(Integer targetX) {
-        this.targetX = targetX;
-    }
-
-    public Integer getTargetY() {
-        return targetY;
-    }
-
-    public void setTargetY(Integer targetY) {
-        this.targetY = targetY;
-    }
-
-    public Boolean getLeftActionButton() {
-        return leftActionButton;
-    }
-
-    public void setLeftActionButton(Boolean leftActionButton) {
-        this.leftActionButton = leftActionButton;
-    }
-
-    public Boolean getRightActionButton() {
-        return rightActionButton;
-    }
-
-    public void setRightActionButton(Boolean rightActionButton) {
-        this.rightActionButton = rightActionButton;
+    private String convertBoolean(Boolean bool) {
+        return bool ? "1" : "0";
     }
 
     public Boolean getMoveUp() {

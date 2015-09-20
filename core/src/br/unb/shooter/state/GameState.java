@@ -1,11 +1,9 @@
 package br.unb.shooter.state;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.NetController;
-import br.unb.shooter.entity.Player;
 import br.unb.shooter.screen.GameScreen;
 
 public class GameState extends State {
@@ -36,21 +34,15 @@ public class GameState extends State {
     public void update() {
         GameController.getInstance().getPlayer().update();
         getScreen().update();
-        if (isServer && TimeUtils.timeSinceMillis(startTime) > 100) {
+        // if (isServer && TimeUtils.timeSinceMillis(startTime) > 100) {
+        if (isServer) {
             NetController.getInstance().updateGame();
             startTime = TimeUtils.millis();
         }
-
         if (!isServer) {
-            String text = "";
-
-            for (Player player : GameController.getInstance().getPlayersMap().values()) {
-                text += player.hashCode() + " ";
+            if (GameController.getInstance().getPlayer().getIsMoving()) {
+                NetController.getInstance().sendPlayerInput(GameController.getInstance().getPlayer());
             }
-
-            text += GameController.getInstance().getPlayer().hashCode();
-
-            Gdx.app.log("GAME_STATE", text);
         }
     }
 
