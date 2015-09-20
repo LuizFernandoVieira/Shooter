@@ -10,6 +10,8 @@ public class PlayerLibgdx {
     private IdlePlayerState idleState;
     private WalkingPlayerState walkingState;
 
+    private Boolean canDraw = false;
+
     /**
      * Constructor.
      */
@@ -40,10 +42,14 @@ public class PlayerLibgdx {
         }
 
         state.update(deltaTime, player);
+
+        canDraw = true;
     }
 
     public void draw(SpriteBatch batch, Player player) {
-        state.draw(batch, player);
+        if (canDraw) {
+            state.draw(batch, player);
+        }
     }
 
 }
