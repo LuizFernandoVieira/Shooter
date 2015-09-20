@@ -14,6 +14,7 @@ import br.unb.shooter.net.ServerListener;
 import br.unb.shooter.net.message.ClientConnectMessage;
 import br.unb.shooter.net.message.ServerStartMessage;
 import br.unb.shooter.net.message.ServerUpdateLobbyMessage;
+import br.unb.shooter.net.message.ServerUpdateMessage;
 
 public class NetController {
 
@@ -138,6 +139,15 @@ public class NetController {
      */
     public void startGame() {
         ServerStartMessage msg = new ServerStartMessage(GameController.getInstance().getPlayersMap());
+
+        server.sendToAllTCP(msg.toString());
+    }
+
+    /**
+     * Update game on all clients.
+     */
+    public void updateGame() {
+        ServerUpdateMessage msg = new ServerUpdateMessage(GameController.getInstance().getPlayersMap());
 
         server.sendToAllTCP(msg.toString());
     }

@@ -16,7 +16,7 @@ public class SingleplayerState extends State {
     @Override
     public void handle(StateEventEnum event) {
         if (event.equals(StateEventEnum.BUTTON_SELECT)) {
-            getMachine().changeState(new GameState());
+            getMachine().changeState(new GameState(true));
         }
     }
 

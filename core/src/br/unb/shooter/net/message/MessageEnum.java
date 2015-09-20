@@ -8,7 +8,7 @@ public enum MessageEnum {
     SERVER_UPDATE_LOBBY("server_update_lobby", "Server Update Lobby"), //
     SERVER_NAME("server_name", "Server Name"), //
     SERVER_START("server_start", "Server Start"), //
-    UPDATE("update", "Update"); // server update message every 100 ms
+    SERVER_UPDATE("server_update", "Server Update"); //
 
     private String id;
 

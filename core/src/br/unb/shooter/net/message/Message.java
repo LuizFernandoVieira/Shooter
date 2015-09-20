@@ -26,6 +26,8 @@ public abstract class Message {
             return new ServerUpdateLobbyMessage(message);
         } else if (code.equals(MessageEnum.SERVER_START.getId())) {
             return new ServerStartMessage(message);
+        } else if (code.equals(MessageEnum.SERVER_UPDATE.getId())) {
+            return new ServerUpdateMessage(message);
         }
 
         return msg;

@@ -46,7 +46,7 @@ public class MenuScreen extends Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                getMachine().changeState(new GameState());
+                getMachine().changeState(new GameState(true));
             }
 
         });

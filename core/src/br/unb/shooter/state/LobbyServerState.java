@@ -18,7 +18,7 @@ public class LobbyServerState extends State {
     @Override
     public void handle(StateEventEnum event) {
         if (event.equals(StateEventEnum.BUTTON_START)) {
-            getMachine().changeState(new GameState());
+            getMachine().changeState(new GameState(true));
         }
     }
 

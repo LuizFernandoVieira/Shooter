@@ -90,7 +90,7 @@ public class ServerUpdateLobbyMessage extends Message {
         for (Player player : players) {
             GameController.getInstance().getPlayersMap().put(player.getId(), player);
             if (player.getName().equals(GameController.getInstance().getPlayer().getName())) {
-                GameController.getInstance().getPlayer().setId(player.getId());
+                GameController.getInstance().setPlayer(player);
             }
         }
     }
