@@ -13,6 +13,8 @@ public class Player extends Entity {
 
     private Boolean isMoving;
 
+    private Boolean isChangingState;
+
     /**
      * Constructor.
      */
@@ -22,6 +24,7 @@ public class Player extends Entity {
         moveDown = false;
         moveLeft = false;
         isMoving = false;
+        isChangingState = false;
         movingOffset = 2;
         positionX = 0;
         positionY = 0;
@@ -38,6 +41,7 @@ public class Player extends Entity {
         } else {
             isMoving = false;
         }
+        isChangingState = true;
     }
 
     /**
@@ -56,7 +60,6 @@ public class Player extends Entity {
         if (moveLeft) {
             setPositionX(getPositionX() - movingOffset);
         }
-        setMovingState();
     }
 
     public Integer getHealth() {
@@ -121,6 +124,14 @@ public class Player extends Entity {
 
     public void setIsMoving(Boolean isMoving) {
         this.isMoving = isMoving;
+    }
+
+    public Boolean getIsChangingState() {
+        return isChangingState;
+    }
+
+    public void setIsChangingState(Boolean isChangingState) {
+        this.isChangingState = isChangingState;
     }
 
     @Override

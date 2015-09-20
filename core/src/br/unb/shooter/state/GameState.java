@@ -32,7 +32,8 @@ public class GameState extends State {
                 NetController.getInstance().updateGame();
             }
             if (!isServer) {
-                if (GameController.getInstance().getPlayer().getIsMoving()) {
+                if (GameController.getInstance().getPlayer().getIsChangingState()) {
+                    GameController.getInstance().getPlayer().setIsChangingState(false);
                     NetController.getInstance().sendPlayerInput(GameController.getInstance().getPlayer());
                 }
             }
