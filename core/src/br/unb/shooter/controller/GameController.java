@@ -20,6 +20,8 @@ public class GameController {
 
     private static GameController instance;
 
+    private Boolean isStarted = false;
+
     /**
      * Create a singleton from GameController.
      * 
@@ -64,6 +66,41 @@ public class GameController {
         }
     }
 
+    /**
+     * Initialize game state.
+     */
+    public void startGame() {
+        Integer positionXPlayer1 = 0;
+        Integer positionXPlayer2 = 64;
+        Integer positionXPlayer3 = 128;
+        Integer positionXPlayer4 = 192;
+        Integer positionYPlayer1 = 0;
+        Integer positionYPlayer2 = 0;
+        Integer positionYPlayer3 = 0;
+        Integer positionYPlayer4 = 0;
+
+        Integer index = 0;
+        for (Player player : GameController.getInstance().playersMap.values()) {
+            if (index == 0) {
+                player.setPositionX(positionXPlayer1);
+                player.setPositionY(positionYPlayer1);
+            }
+            if (index == 1) {
+                player.setPositionX(positionXPlayer2);
+                player.setPositionY(positionYPlayer2);
+            }
+            if (index == 2) {
+                player.setPositionX(positionXPlayer3);
+                player.setPositionY(positionYPlayer3);
+            }
+            if (index == 3) {
+                player.setPositionX(positionXPlayer4);
+                player.setPositionY(positionYPlayer4);
+            }
+            index++;
+        }
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -102,6 +139,14 @@ public class GameController {
 
     public void setServerName(String serverName) {
         this.serverName = serverName;
+    }
+
+    public Boolean getIsStarted() {
+        return isStarted;
+    }
+
+    public void setIsStarted(Boolean isStarted) {
+        this.isStarted = isStarted;
     }
 
 }

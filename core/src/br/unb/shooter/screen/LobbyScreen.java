@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import br.unb.shooter.controller.GameController;
+import br.unb.shooter.controller.NetController;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.state.StateEventEnum;
 
@@ -101,10 +102,21 @@ public class LobbyScreen extends Screen {
         }
 
         labelServerName.setText(GameController.getInstance().getServerName());
+
+        if (GameController.getInstance().getIsStarted()) {
+            startGame();
+        }
     }
 
     private void pressStartButton() {
         getMachine().handle(StateEventEnum.BUTTON_START);
+        GameController.getInstance().startGame();
+        NetController.getInstance().startGame();
+    }
+
+    private void startGame() {
+        getMachine().handle(StateEventEnum.START_GAME);
+        GameController.getInstance().startGame();
     }
 
 }

@@ -15,7 +15,8 @@ public enum StateEventEnum {
     BUTTON_HOST(12, "button_host"), //
     BUTTON_BROWSE(13, "button_browse"), //
     BUTTON_START(14, "button_start"), //
-    BUTTON_JOIN(15, "button_join"); //
+    BUTTON_JOIN(15, "button_join"), //
+    START_GAME(16, "start_game"); //
 
     private Integer id;
 

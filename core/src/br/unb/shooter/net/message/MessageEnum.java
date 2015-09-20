@@ -7,6 +7,7 @@ public enum MessageEnum {
     CLIENT_DISCOVER_HOST("client_discover_host", "Client Discover Host"), //
     SERVER_UPDATE_LOBBY("server_update_lobby", "Server Update Lobby"), //
     SERVER_NAME("server_name", "Server Name"), //
+    SERVER_START("server_start", "Server Start"), //
     UPDATE("update", "Update"); // server update message every 100 ms
 
     private String id;
