@@ -10,8 +10,6 @@ public class GameState extends State {
 
     private Boolean isServer;
 
-    private Long startTime;
-
     public GameState(Boolean isServer) {
         this.isServer = isServer;
     }
