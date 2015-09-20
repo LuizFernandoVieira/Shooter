@@ -1,7 +1,5 @@
 package br.unb.shooter.state;
 
-import com.badlogic.gdx.utils.TimeUtils;
-
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.NetController;
 import br.unb.shooter.screen.GameScreen;
@@ -24,18 +22,14 @@ public class GameState extends State {
         if (!NetController.getInstance().getIsMultiplayer()) {
             GameController.getInstance().createServerPlayer("Player");
         }
-
-        startTime = TimeUtils.millis();
     }
 
     @Override
     public void update() {
         GameController.getInstance().getPlayer().update();
         getScreen().update();
-        // if (isServer && TimeUtils.timeSinceMillis(startTime) > 100) {
         if (isServer) {
             NetController.getInstance().updateGame();
-            startTime = TimeUtils.millis();
         }
         if (!isServer) {
             if (GameController.getInstance().getPlayer().getIsMoving()) {
