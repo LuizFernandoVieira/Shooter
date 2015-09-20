@@ -12,6 +12,7 @@ public class StartState extends State {
 
     @Override
     public void create(StateMachine machine) {
+        setMachine(machine);
         setScreen(new StartScreen());
         getScreen().setMachine(machine);
         getScreen().create();

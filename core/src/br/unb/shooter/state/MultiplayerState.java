@@ -7,9 +7,11 @@ public class MultiplayerState extends State {
 
     @Override
     public void create(StateMachine machine) {
+        setMachine(machine);
         NetController.getInstance().setIsMultiplayer(true);
         setScreen(new MultiplayerScreen());
         getScreen().setMachine(machine);
+        getScreen().create();
     }
 
     @Override

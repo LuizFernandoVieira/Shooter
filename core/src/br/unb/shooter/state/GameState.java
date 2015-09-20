@@ -8,8 +8,10 @@ public class GameState extends State {
 
     @Override
     public void create(final StateMachine machine) {
+        setMachine(machine);
         setScreen(new GameScreen());
         getScreen().setMachine(machine);
+        getScreen().create();
 
         if (!NetController.getInstance().getIsMultiplayer()) {
             GameController.getInstance().createServerPlayer("Player");

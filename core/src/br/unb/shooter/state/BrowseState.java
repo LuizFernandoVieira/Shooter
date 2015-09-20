@@ -12,8 +12,10 @@ public class BrowseState extends State {
 
     @Override
     public void create(StateMachine machine) {
+        setMachine(machine);
         setScreen(new BrowseScreen());
         getScreen().setMachine(machine);
+        getScreen().create();
 
         System.setProperty("java.net.preferIPv4Stack", "true");
 

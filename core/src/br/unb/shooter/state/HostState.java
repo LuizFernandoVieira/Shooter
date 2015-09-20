@@ -6,8 +6,10 @@ public class HostState extends State {
 
     @Override
     public void create(StateMachine machine) {
+        setMachine(machine);
         setScreen(new HostScreen());
         getScreen().setMachine(machine);
+        getScreen().create();
     }
 
     @Override

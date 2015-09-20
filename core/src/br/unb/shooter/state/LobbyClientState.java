@@ -7,8 +7,10 @@ public class LobbyClientState extends State {
 
     @Override
     public void create(StateMachine machine) {
+        setMachine(machine);
         setScreen(new LobbyScreen(false));
         getScreen().setMachine(machine);
+        getScreen().create();
 
         NetController.getInstance().addClientListener();
 
