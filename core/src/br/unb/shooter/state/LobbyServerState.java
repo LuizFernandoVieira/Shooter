@@ -13,4 +13,11 @@ public class LobbyServerState extends State {
         NetController.getInstance().createServerAndListener();
     }
 
+    @Override
+    public void handle(StateEventEnum event) {
+        if (event.equals(StateEventEnum.BUTTON_START)) {
+            getMachine().changeState(new GameState());
+        }
+    }
+
 }

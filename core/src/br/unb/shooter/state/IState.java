@@ -14,4 +14,6 @@ public interface IState {
     void draw();
 
     void dispose();
+
+    void handle(StateEventEnum event);
 }

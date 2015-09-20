@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.entity.Player;
-import br.unb.shooter.state.GameState;
+import br.unb.shooter.state.StateEventEnum;
 
 public class LobbyScreen extends Screen {
 
@@ -71,7 +71,7 @@ public class LobbyScreen extends Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                getMachine().changeState(new GameState());
+                pressStartButton();
             }
 
         });
@@ -101,6 +101,10 @@ public class LobbyScreen extends Screen {
         }
 
         labelServerName.setText(GameController.getInstance().getServerName());
+    }
+
+    private void pressStartButton() {
+        getMachine().handle(StateEventEnum.BUTTON_START);
     }
 
 }

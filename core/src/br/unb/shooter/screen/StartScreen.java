@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import br.unb.shooter.input.StartInputProcessor;
-import br.unb.shooter.state.CutsceneState;
+import br.unb.shooter.state.StateEventEnum;
 
 public class StartScreen extends Screen {
 
@@ -66,21 +66,14 @@ public class StartScreen extends Screen {
      * End timer event.
      */
     public void endTimer() {
-        changeState();
+        getMachine().handle(StateEventEnum.TIMER_END);
     }
 
     /**
      * Esc key event.
      */
     public void pressEscKey() {
-        changeState();
-    }
-
-    /**
-     * State transition.
-     */
-    private void changeState() {
-        getMachine().changeState(new CutsceneState());
+        getMachine().handle(StateEventEnum.KEY_ESC);
     }
 
 }

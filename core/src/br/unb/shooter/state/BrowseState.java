@@ -31,4 +31,11 @@ public class BrowseState extends State {
         discoverer.setExecute(false);
     }
 
+    @Override
+    public void handle(StateEventEnum event) {
+        if (event.equals(StateEventEnum.BUTTON_JOIN)) {
+            getMachine().changeState(new LobbyClientState());
+        }
+    }
+
 }

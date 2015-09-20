@@ -1,6 +1,6 @@
 package br.unb.shooter.state;
 
-public class CreditsState extends State {
+public class SettingsState extends State {
 
     @Override
     public void handle(StateEventEnum event) {

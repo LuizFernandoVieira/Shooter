@@ -22,4 +22,8 @@ public class GameState extends State {
         getScreen().update();
     }
 
+    @Override
+    public void handle(StateEventEnum event) {
+    }
+
 }

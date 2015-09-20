@@ -6,8 +6,11 @@ public abstract class State implements IState {
 
     private Screen screen;
 
+    private StateMachine machine;
+
     @Override
     public void create(StateMachine machine) {
+        this.machine = machine;
         screen.create();
     }
 
@@ -32,6 +35,14 @@ public abstract class State implements IState {
 
     public void setScreen(Screen screen) {
         this.screen = screen;
+    }
+
+    public StateMachine getMachine() {
+        return machine;
+    }
+
+    public void setMachine(StateMachine machine) {
+        this.machine = machine;
     }
 
 }

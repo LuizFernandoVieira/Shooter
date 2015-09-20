@@ -2,7 +2,7 @@ package br.unb.shooter.state;
 
 public class StateMachine {
 
-    private IState state = new StartState();
+    private IState state;
 
     public void create() {
         state.create(this);
@@ -28,7 +28,16 @@ public class StateMachine {
     public void changeState(IState state) {
         this.state.dispose();
         this.state = state;
-        state.create(this);
+        this.state.create(this);
+    }
+
+    /**
+     * Handle state transitions.
+     * 
+     * @param endTimer
+     */
+    public void handle(StateEventEnum event) {
+        this.state.handle(event);
     }
 
     public IState getState() {

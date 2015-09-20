@@ -10,4 +10,11 @@ public class HostState extends State {
         getScreen().setMachine(machine);
     }
 
+    @Override
+    public void handle(StateEventEnum event) {
+        if (event.equals(StateEventEnum.BUTTON_START)) {
+            getMachine().changeState(new LobbyServerState());
+        }
+    }
+
 }
