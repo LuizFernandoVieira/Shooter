@@ -56,6 +56,7 @@ public class Player extends Entity {
         if (moveLeft) {
             setPositionX(getPositionX() - movingOffset);
         }
+        setMovingState();
     }
 
     public Integer getHealth() {

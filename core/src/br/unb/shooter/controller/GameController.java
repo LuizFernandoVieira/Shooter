@@ -50,6 +50,8 @@ public class GameController {
         }
 
         playersMap.put(player.getId(), player);
+
+        GdxController.getInstance().addPlayer(player);
     }
 
     /**
@@ -63,6 +65,8 @@ public class GameController {
             player.setName(name);
             player.setId(playersMap.size() + 1);
             playersMap.put(player.getId(), player);
+
+            GdxController.getInstance().addPlayer(player);
         }
     }
 

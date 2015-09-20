@@ -25,8 +25,6 @@ public class GameInputProcessor implements InputProcessor {
             player.setMoveRight(true);
         }
 
-        player.setMovingState();
-
         return false;
     }
 
@@ -46,8 +44,6 @@ public class GameInputProcessor implements InputProcessor {
         if (keycode == Keys.D) {
             player.setMoveRight(false);
         }
-
-        player.setMovingState();
 
         return false;
     }
