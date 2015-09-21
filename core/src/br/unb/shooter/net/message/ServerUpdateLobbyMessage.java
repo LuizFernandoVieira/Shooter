@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.unb.shooter.controller.GameController;
+import br.unb.shooter.controller.GdxController;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.util.Constants;
 
@@ -92,6 +93,7 @@ public class ServerUpdateLobbyMessage extends Message {
             if (player.getName().equals(GameController.getInstance().getPlayer().getName())) {
                 GameController.getInstance().setPlayer(player);
             }
+            GdxController.getInstance().addPlayer(player);
         }
     }
 

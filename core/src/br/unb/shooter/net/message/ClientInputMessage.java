@@ -37,6 +37,7 @@ public class ClientInputMessage extends Message {
         sender.setMoveRight(moveRight);
         sender.setMoveDown(moveDown);
         sender.setMoveLeft(moveLeft);
+        sender.setMovingState();
         sender.update();
     }
 

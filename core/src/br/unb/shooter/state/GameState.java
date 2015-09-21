@@ -26,14 +26,16 @@ public class GameState extends State {
 
     @Override
     public void update() {
-        GameController.getInstance().getPlayer().update();
         getScreen().update();
-        if (isServer) {
-            NetController.getInstance().updateGame();
-        }
-        if (!isServer) {
-            if (GameController.getInstance().getPlayer().getIsMoving()) {
-                NetController.getInstance().sendPlayerInput(GameController.getInstance().getPlayer());
+        if (NetController.getInstance().getIsMultiplayer()) {
+            if (isServer) {
+                NetController.getInstance().updateGame();
+            }
+            if (!isServer) {
+                if (GameController.getInstance().getPlayer().getIsChangingState()) {
+                    GameController.getInstance().getPlayer().setIsChangingState(false);
+                    NetController.getInstance().sendPlayerInput(GameController.getInstance().getPlayer());
+                }
             }
         }
     }

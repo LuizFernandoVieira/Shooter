@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.debug.DebugGdx;
 import br.unb.shooter.entity.Player;
-import br.unb.shooter.entity.graphic.player.PlayerLibgdx;
 import br.unb.shooter.input.GameInputProcessor;
 import br.unb.shooter.util.Constants;
 
@@ -22,8 +21,6 @@ public class GameScreen extends Screen {
     private Viewport viewport;
     
     private DebugGdx debugGdx;
-
-    private PlayerLibgdx playerLibgdx;
 
     private Table table;
 
@@ -45,9 +42,7 @@ public class GameScreen extends Screen {
         
         debugGdx = new DebugGdx();
 
-        playerLibgdx = new PlayerLibgdx();
-
-        playerLibgdx.initGraphics();
+        GdxController.getInstance().getPlayerGdx().initGraphics();
 
         Gdx.input.setInputProcessor(new GameInputProcessor());
 
@@ -68,7 +63,8 @@ public class GameScreen extends Screen {
     @Override
     public void update() {
         for (Player player : GameController.getInstance().getPlayersMap().values()) {
-            playerLibgdx.update(player, Gdx.graphics.getDeltaTime());
+            player.update();
+            GdxController.getInstance().getPlayerGdx().update(player, Gdx.graphics.getDeltaTime());
         }
 
         labelFps.setText(Gdx.graphics.getFramesPerSecond() + " fps");
@@ -83,7 +79,7 @@ public class GameScreen extends Screen {
 
         batch.begin();
         for (Player player : GameController.getInstance().getPlayersMap().values()) {
-            playerLibgdx.draw(batch, player);
+            GdxController.getInstance().getPlayerGdx().draw(batch, player);
         }
         batch.end();
         
