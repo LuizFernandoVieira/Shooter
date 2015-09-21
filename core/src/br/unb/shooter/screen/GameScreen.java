@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import br.unb.shooter.controller.GameController;
+import br.unb.shooter.debug.DebugGdx;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.graphic.player.PlayerLibgdx;
 import br.unb.shooter.input.GameInputProcessor;
@@ -19,6 +20,8 @@ public class GameScreen extends Screen {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Viewport viewport;
+    
+    private DebugGdx debugGdx;
 
     private PlayerLibgdx playerLibgdx;
 
@@ -39,6 +42,8 @@ public class GameScreen extends Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new ExtendViewport(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT, camera);
+        
+        debugGdx = new DebugGdx();
 
         playerLibgdx = new PlayerLibgdx();
 
@@ -81,10 +86,13 @@ public class GameScreen extends Screen {
             playerLibgdx.draw(batch, player);
         }
         batch.end();
+        
+        debugGdx.draw(camera);
     }
 
     public void dispose() {
         batch.dispose();
+        debugGdx.dispose();
     }
 
     public void resize() {
