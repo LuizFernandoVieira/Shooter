@@ -55,8 +55,9 @@ public class ServerUpdateMessage extends Message {
             player.setName(slices[offset + 1]);
             player.setPositionX(Integer.valueOf(slices[offset + 2]));
             player.setPositionY(Integer.valueOf(slices[offset + 3]));
+            player.setIsMoving(slices[offset + 4].equals("1") ? true : false);
 
-            offset += 4;
+            offset += 5;
 
             this.players.add(player);
         }
@@ -70,7 +71,8 @@ public class ServerUpdateMessage extends Message {
 
         for (Player player : players) {
             message += (Constants.SPACE + player.getId() + Constants.SPACE + player.getName() + Constants.SPACE
-                    + player.getPositionX() + Constants.SPACE + player.getPositionY());
+                    + player.getPositionX() + Constants.SPACE + player.getPositionY() + Constants.SPACE
+                    + (player.getIsMoving() ? "1" : "0"));
         }
 
         return message;
@@ -82,6 +84,7 @@ public class ServerUpdateMessage extends Message {
             Player playerOnClient = GameController.getInstance().getPlayersMap().get(player.getId());
             playerOnClient.setPositionX(player.getPositionX());
             playerOnClient.setPositionY(player.getPositionY());
+            playerOnClient.setIsMoving(player.getIsMoving());
         }
     }
 
