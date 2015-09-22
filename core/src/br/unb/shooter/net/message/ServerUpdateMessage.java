@@ -56,8 +56,9 @@ public class ServerUpdateMessage extends Message {
             player.setPositionX(Integer.valueOf(slices[offset + 2]));
             player.setPositionY(Integer.valueOf(slices[offset + 3]));
             player.setIsMoving(slices[offset + 4].equals("1") ? true : false);
+            player.setFacing(Integer.valueOf(slices[offset + 5]));
 
-            offset += 5;
+            offset += 6;
 
             this.players.add(player);
         }
@@ -72,7 +73,7 @@ public class ServerUpdateMessage extends Message {
         for (Player player : players) {
             message += (Constants.SPACE + player.getId() + Constants.SPACE + player.getName() + Constants.SPACE
                     + player.getPositionX() + Constants.SPACE + player.getPositionY() + Constants.SPACE
-                    + (player.getIsMoving() ? "1" : "0"));
+                    + (player.getIsMoving() ? "1" : "0") + Constants.SPACE + player.getFacing());
         }
 
         return message;
@@ -85,6 +86,7 @@ public class ServerUpdateMessage extends Message {
             playerOnClient.setPositionX(player.getPositionX());
             playerOnClient.setPositionY(player.getPositionY());
             playerOnClient.setIsMoving(player.getIsMoving());
+            playerOnClient.setFacing(player.getFacing());
         }
     }
 
