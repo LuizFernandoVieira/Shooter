@@ -10,7 +10,12 @@ public class PlayerGdx {
 
     private HashMap<Integer, IPlayerState> stateMap;
     private IdlePlayerState idleState;
-    private WalkingPlayerState walkingState;
+    private WalkingPlayerState walkingUpState;
+    private WalkingPlayerState walkingRightState;
+    private WalkingPlayerState walkingDownState;
+    private WalkingPlayerState walkingLeftState;
+
+    private PlayerTexture texture;
 
     private Boolean canDraw = false;
 
@@ -19,15 +24,27 @@ public class PlayerGdx {
      */
     public PlayerGdx() {
         idleState = new IdlePlayerState();
-        walkingState = new WalkingPlayerState();
+        walkingUpState = new WalkingPlayerState();
+        walkingRightState = new WalkingPlayerState();
+        walkingDownState = new WalkingPlayerState();
+        walkingLeftState = new WalkingPlayerState();
     }
 
     /**
      * Init player graphics.
      */
     public void initGraphics() {
+        texture = new PlayerTexture();
+        idleState.setCurrentFrame(texture.getIdleFrame());
+        walkingUpState.setWalkingFrames(texture.getWalkingUpFrames());
+        walkingRightState.setWalkingFrames(texture.getWalkingRightFrames());
+        walkingDownState.setWalkingFrames(texture.getWalkingDownFrames());
+        walkingLeftState.setWalkingFrames(texture.getWalkingLeftFrames());
         idleState.create();
-        walkingState.create();
+        walkingUpState.create();
+        walkingRightState.create();
+        walkingDownState.create();
+        walkingLeftState.create();
     }
 
     /**
@@ -37,7 +54,18 @@ public class PlayerGdx {
      */
     public void update(Player player, float deltaTime) {
         if (player.getIsMoving()) {
-            stateMap.put(player.getId(), walkingState);
+            if (player.getFacing() == 0) {
+                stateMap.put(player.getId(), walkingUpState);
+            }
+            if (player.getFacing() == 1) {
+                stateMap.put(player.getId(), walkingRightState);
+            }
+            if (player.getFacing() == 2) {
+                stateMap.put(player.getId(), walkingDownState);
+            }
+            if (player.getFacing() == 3) {
+                stateMap.put(player.getId(), walkingLeftState);
+            }
         } else {
             stateMap.put(player.getId(), idleState);
         }
@@ -64,17 +92,4 @@ public class PlayerGdx {
     public IdlePlayerState getIdleState() {
         return idleState;
     }
-
-    public void setIdleState(IdlePlayerState idleState) {
-        this.idleState = idleState;
-    }
-
-    public WalkingPlayerState getWalkingState() {
-        return walkingState;
-    }
-
-    public void setWalkingState(WalkingPlayerState walkingState) {
-        this.walkingState = walkingState;
-    }
-
 }

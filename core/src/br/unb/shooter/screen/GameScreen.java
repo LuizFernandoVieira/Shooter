@@ -84,7 +84,7 @@ public class GameScreen extends Screen {
         }
         batch.end();
 
-        debugGdx.draw(camera);
+        // debugGdx.draw(camera);
     }
 
     public void dispose() {

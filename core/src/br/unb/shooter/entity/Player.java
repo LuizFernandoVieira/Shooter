@@ -10,6 +10,7 @@ public class Player extends Entity {
     private String name;
     private Integer connectionId;
     private Integer movingOffset;
+    private Integer facing;
 
     private Boolean isMoving;
 
@@ -30,6 +31,7 @@ public class Player extends Entity {
         positionY = 0;
         width = 0;
         height = 0;
+        facing = 0;
     }
 
     /**
@@ -40,6 +42,18 @@ public class Player extends Entity {
             isMoving = true;
         } else {
             isMoving = false;
+        }
+        if (moveUp) {
+            facing = 0;
+        }
+        if (moveDown) {
+            facing = 2;
+        }
+        if (moveRight) {
+            facing = 1;
+        }
+        if (moveLeft) {
+            facing = 3;
         }
         isChangingState = true;
     }
@@ -137,6 +151,14 @@ public class Player extends Entity {
     @Override
     public String toString() {
         return this.name == null ? "" : this.name;
+    }
+
+    public Integer getFacing() {
+        return facing;
+    }
+
+    public void setFacing(Integer facing) {
+        this.facing = facing;
     }
 
 }

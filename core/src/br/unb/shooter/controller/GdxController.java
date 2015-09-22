@@ -30,6 +30,10 @@ public class GdxController {
     }
 
     public PlayerGdx getPlayerGdx() {
+        if (playerGdx == null) {
+            playerGdx = new PlayerGdx();
+            playerGdx.setStateMap(new HashMap<Integer, IPlayerState>());
+        }
         return playerGdx;
     }
 
