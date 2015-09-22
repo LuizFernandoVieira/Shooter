@@ -26,7 +26,7 @@ public class GdxController {
             playerGdx = new PlayerGdx();
             playerGdx.setStateMap(new HashMap<Integer, IPlayerState>());
         }
-        playerGdx.getStateMap().put(player.getId(), playerGdx.getIdleState());
+        playerGdx.getStateMap().put(player.getId(), playerGdx.getDefaultState());
     }
 
     public PlayerGdx getPlayerGdx() {
