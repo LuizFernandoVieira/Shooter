@@ -13,6 +13,7 @@ public class Player extends Entity {
     private Integer connectionId;
     private Integer movingOffset;
     private Integer facing;
+    private Integer previousFacing;
 
     private Boolean isMoving;
 
@@ -61,6 +62,8 @@ public class Player extends Entity {
         Integer absX = Math.abs(offsetX);
         Integer absY = Math.abs(offsetY);
 
+        previousFacing = facing;
+
         if (offsetY > 0 && absX < absY) {
             facing = 0;
         }
@@ -72,6 +75,10 @@ public class Player extends Entity {
         }
         if (offsetX < 0 && absX > absY) {
             facing = 3;
+        }
+
+        if (facing != previousFacing) {
+            isChangingState = true;
         }
     }
 
