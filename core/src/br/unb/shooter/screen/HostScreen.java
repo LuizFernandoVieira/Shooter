@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.state.LobbyServerState;
+import br.unb.shooter.util.Constants;
 
 public class HostScreen extends Screen {
 
@@ -28,8 +29,8 @@ public class HostScreen extends Screen {
     @Override
     public void create() {
         Table table = new Table();
-        table.setWidth(600);
-        table.setHeight(600);
+        table.setWidth(Constants.CAMERA_WIDTH);
+        table.setHeight(Constants.CAMERA_HEIGHT);
         getStage().addActor(table);
 
         TextFieldStyle style = new TextFieldStyle(getSkin().getFont("default-font"), Color.WHITE,

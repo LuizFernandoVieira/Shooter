@@ -15,6 +15,7 @@ import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.NetController;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.state.LobbyClientState;
+import br.unb.shooter.util.Constants;
 
 public class BrowseScreen extends Screen {
 
@@ -34,8 +35,8 @@ public class BrowseScreen extends Screen {
         getStage().clear();
 
         Table table = new Table();
-        table.setWidth(600);
-        table.setHeight(600);
+        table.setWidth(Constants.CAMERA_WIDTH);
+        table.setHeight(Constants.CAMERA_HEIGHT);
         getStage().addActor(table);
 
         listServers = new List<String>(getSkin());

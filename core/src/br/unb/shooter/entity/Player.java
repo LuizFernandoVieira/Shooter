@@ -1,5 +1,7 @@
 package br.unb.shooter.entity;
 
+import br.unb.shooter.util.Constants;
+
 public class Player extends Entity {
 
     private Integer health;
@@ -43,19 +45,34 @@ public class Player extends Entity {
         } else {
             isMoving = false;
         }
-        if (moveUp) {
+        isChangingState = true;
+    }
+
+    /**
+     * Set facing.
+     * 
+     * @param x
+     * @param y
+     */
+    public void setFacing(Integer x, Integer y) {
+        Integer offsetX = x - positionX;
+        Integer offsetY = (Constants.CAMERA_HEIGHT - y) - positionY;
+
+        Integer absX = Math.abs(offsetX);
+        Integer absY = Math.abs(offsetY);
+
+        if (offsetY > 0 && absX < absY) {
             facing = 0;
         }
-        if (moveDown) {
-            facing = 2;
-        }
-        if (moveRight) {
+        if (offsetX > 0 && absX > absY) {
             facing = 1;
         }
-        if (moveLeft) {
+        if (offsetY < 0 && absX < absY) {
+            facing = 2;
+        }
+        if (offsetX < 0 && absX > absY) {
             facing = 3;
         }
-        isChangingState = true;
     }
 
     /**

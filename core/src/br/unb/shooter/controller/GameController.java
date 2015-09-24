@@ -22,6 +22,16 @@ public class GameController {
 
     private Boolean isStarted = false;
 
+    private Integer mouseX;
+
+    private Integer mouseY;
+
+    public GameController() {
+        shotsMap = new HashMap<Integer, Shot>();
+        mouseX = 0;
+        mouseY = 0;
+    }
+
     /**
      * Create a singleton from GameController.
      * 
@@ -151,6 +161,22 @@ public class GameController {
 
     public void setIsStarted(Boolean isStarted) {
         this.isStarted = isStarted;
+    }
+
+    public Integer getMouseX() {
+        return mouseX;
+    }
+
+    public void setMouseX(Integer mouseX) {
+        this.mouseX = mouseX;
+    }
+
+    public Integer getMouseY() {
+        return mouseY;
+    }
+
+    public void setMouseY(Integer mouseY) {
+        this.mouseY = mouseY;
     }
 
 }

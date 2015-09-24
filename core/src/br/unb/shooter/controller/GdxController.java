@@ -5,9 +5,14 @@ import java.util.HashMap;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.graphic.player.IPlayerState;
 import br.unb.shooter.entity.graphic.player.PlayerGdx;
+import br.unb.shooter.entity.graphic.targetmark.TargetMarkGdx;
 
 public class GdxController {
     private static GdxController instance;
+
+    private PlayerGdx playerGdx;
+
+    private TargetMarkGdx markGdx;
 
     public static GdxController getInstance() {
         if (instance == null) {
@@ -15,8 +20,6 @@ public class GdxController {
         }
         return instance;
     }
-
-    private PlayerGdx playerGdx;
 
     /**
      * Add player to gdx controller.
@@ -39,5 +42,16 @@ public class GdxController {
 
     public void setPlayerGdx(PlayerGdx playerGdx) {
         this.playerGdx = playerGdx;
+    }
+
+    public TargetMarkGdx getMarkGdx() {
+        if (markGdx == null) {
+            markGdx = new TargetMarkGdx();
+        }
+        return markGdx;
+    }
+
+    public void setMarkGdx(TargetMarkGdx markGdx) {
+        this.markGdx = markGdx;
     }
 }

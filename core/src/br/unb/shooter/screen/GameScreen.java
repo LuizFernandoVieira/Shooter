@@ -45,11 +45,15 @@ public class GameScreen extends Screen {
 
         GdxController.getInstance().getPlayerGdx().initGraphics();
 
+        GdxController.getInstance().getMarkGdx().initGraphics();
+
         Gdx.input.setInputProcessor(new GameInputProcessor());
 
+        Gdx.input.setCursorImage(GdxController.getInstance().getMarkGdx().getPixmap(), 6, 6);
+
         table = new Table();
-        table.setWidth(600);
-        table.setHeight(600);
+        table.setWidth(Constants.CAMERA_WIDTH);
+        table.setHeight(Constants.CAMERA_HEIGHT);
 
         getStage().addActor(table);
 
@@ -63,6 +67,8 @@ public class GameScreen extends Screen {
      */
     @Override
     public void update() {
+        GameController.getInstance().getPlayer().setFacing(GameController.getInstance().getMouseX(),
+                GameController.getInstance().getMouseY());
         for (Player player : GameController.getInstance().getPlayersMap().values()) {
             player.update();
             GdxController.getInstance().getPlayerGdx().update(player, Gdx.graphics.getDeltaTime());

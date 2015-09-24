@@ -16,6 +16,7 @@ import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.NetController;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.state.StateEventEnum;
+import br.unb.shooter.util.Constants;
 
 public class LobbyScreen extends Screen {
 
@@ -37,8 +38,8 @@ public class LobbyScreen extends Screen {
     @Override
     public void create() {
         Table table = new Table();
-        table.setWidth(600);
-        table.setHeight(600);
+        table.setWidth(Constants.CAMERA_WIDTH);
+        table.setHeight(Constants.CAMERA_HEIGHT);
         getStage().addActor(table);
 
         labelServerName = new Label(GameController.getInstance().getServerName(), getSkin(), "default-font",

@@ -78,7 +78,8 @@ public class GameInputProcessor implements InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        // TODO Auto-generated method stub
+        GameController.getInstance().setMouseX(screenX);
+        GameController.getInstance().setMouseY(screenY);
         return false;
     }
 

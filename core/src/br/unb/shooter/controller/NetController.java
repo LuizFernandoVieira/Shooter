@@ -155,7 +155,8 @@ public class NetController {
     }
 
     public void sendPlayerInput(Player player) {
-        ClientInputMessage msg = new ClientInputMessage(player);
+        ClientInputMessage msg = new ClientInputMessage(player, GameController.getInstance().getMouseX(),
+                GameController.getInstance().getMouseY());
 
         client.sendTCP(msg.toString());
     }

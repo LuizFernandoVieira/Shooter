@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import br.unb.shooter.state.GameState;
 import br.unb.shooter.state.MultiplayerState;
+import br.unb.shooter.util.Constants;
 
 public class MenuScreen extends Screen {
 
@@ -23,8 +24,8 @@ public class MenuScreen extends Screen {
     @Override
     public void create() {
         table = new Table();
-        table.setWidth(600);
-        table.setHeight(600);
+        table.setWidth(Constants.CAMERA_WIDTH);
+        table.setHeight(Constants.CAMERA_HEIGHT);
 
         getStage().addActor(table);
 

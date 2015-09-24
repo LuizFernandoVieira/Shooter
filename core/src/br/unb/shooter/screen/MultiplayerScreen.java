@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import br.unb.shooter.state.BrowseState;
 import br.unb.shooter.state.HostState;
 import br.unb.shooter.state.MenuState;
+import br.unb.shooter.util.Constants;
 
 public class MultiplayerScreen extends Screen {
 
@@ -23,8 +24,8 @@ public class MultiplayerScreen extends Screen {
     @Override
     public void create() {
         Table table = new Table();
-        table.setWidth(600);
-        table.setHeight(600);
+        table.setWidth(Constants.CAMERA_WIDTH);
+        table.setHeight(Constants.CAMERA_HEIGHT);
         getStage().addActor(table);
 
         TextButtonStyle btnStyle = new TextButtonStyle(getSkin().getDrawable("default-round"),
