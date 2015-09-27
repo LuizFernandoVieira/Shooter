@@ -5,6 +5,7 @@ import java.util.HashMap;
 import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
+import br.unb.shooter.util.Constants;
 
 public class GameController {
 
@@ -26,10 +27,13 @@ public class GameController {
 
     private Integer mouseY;
 
+    private Integer shotSequence;
+
     public GameController() {
         shotsMap = new HashMap<Integer, Shot>();
         mouseX = 0;
         mouseY = 0;
+        shotSequence = 0;
     }
 
     /**
@@ -113,6 +117,33 @@ public class GameController {
             }
             index++;
         }
+    }
+
+    /**
+     * Create a shot.
+     * 
+     * @param player
+     * @param mouseX
+     * @param mouseY
+     */
+    public void createShot(Player player, Integer mouseX, Integer mouseY) {
+        if (shotsMap == null) {
+            shotsMap = new HashMap<Integer, Shot>();
+        }
+        shotSequence++;
+        Shot shot = new Shot();
+        Integer deltaX = (mouseX - player.getPositionX());
+        Integer deltaY = ((Constants.CAMERA_HEIGHT - mouseY) - player.getPositionX());
+        Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
+        shot.setAngle(angle);
+        shot.setPositionX(player.getPositionX() + (player.getWidth() / 2));
+        shot.setPositionY(player.getPositionY() + (player.getHeight() / 2));
+        shot.setId(shotSequence);
+        shotsMap.put(shotSequence, shot);
+    }
+
+    public void removeShot(Shot shot) {
+        shotsMap.remove(shot.getId());
     }
 
     public Player getPlayer() {

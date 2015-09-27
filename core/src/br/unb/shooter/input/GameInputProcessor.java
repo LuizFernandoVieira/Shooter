@@ -60,7 +60,8 @@ public class GameInputProcessor implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        // TODO Auto-generated method stub
+        Player player = GameController.getInstance().getPlayer();
+        GameController.getInstance().createShot(player, screenX, screenY);
         return false;
     }
 

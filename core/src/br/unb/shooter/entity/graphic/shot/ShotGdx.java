@@ -7,7 +7,7 @@ import br.unb.shooter.entity.Shot;
 public class ShotGdx {
     private ShotTexture shotTexture;
 
-    public void create() {
+    public void initGraphics() {
         shotTexture = new ShotTexture();
     }
 
