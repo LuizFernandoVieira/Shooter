@@ -132,13 +132,23 @@ public class GameController {
         }
         shotSequence++;
         Shot shot = new Shot();
-        Integer deltaX = (mouseX - player.getPositionX());
-        Integer deltaY = ((Constants.CAMERA_HEIGHT - mouseY) - player.getPositionX());
+
+        Integer playerXCentered = player.getPositionX() + (player.getWidth() / 2);
+        Integer playerYCentered = player.getPositionY() + (player.getHeight() / 2);
+
+        Integer mouseXCorrected = mouseX;
+        Integer mouseYCorrected = (Constants.CAMERA_HEIGHT - mouseY);
+
+        Integer deltaX = (mouseXCorrected - playerXCentered);
+        Integer deltaY = (mouseYCorrected - playerYCentered);
+
         Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
+
         shot.setAngle(angle);
-        shot.setPositionX(player.getPositionX() + (player.getWidth() / 2));
-        shot.setPositionY(player.getPositionY() + (player.getHeight() / 2));
+        shot.setPositionX(playerXCentered);
+        shot.setPositionY(playerYCentered);
         shot.setId(shotSequence);
+
         shotsMap.put(shotSequence, shot);
     }
 
