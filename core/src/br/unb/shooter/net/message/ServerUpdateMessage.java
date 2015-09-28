@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.entity.Player;
+import br.unb.shooter.entity.Shot;
 import br.unb.shooter.util.Constants;
 
 public class ServerUpdateMessage extends Message {
@@ -13,6 +14,10 @@ public class ServerUpdateMessage extends Message {
     private Integer playersLength;
 
     private List<Player> players;
+
+    private Integer shotsLength;
+
+    private List<Shot> shots;
 
     public ServerUpdateMessage() {
         this.id = MessageEnum.SERVER_UPDATE.getId();
@@ -28,11 +33,14 @@ public class ServerUpdateMessage extends Message {
      * 
      * @param playersMap Player's map
      */
-    public ServerUpdateMessage(HashMap<Integer, Player> playersMap) {
+    public ServerUpdateMessage(HashMap<Integer, Player> playersMap, HashMap<Integer, Shot> shotsMap) {
         this.id = MessageEnum.SERVER_UPDATE.getId();
         this.playersLength = playersMap.size();
         this.players = new ArrayList<Player>();
         this.players.addAll(playersMap.values());
+        this.shotsLength = shotsMap.size();
+        this.shots = new ArrayList<Shot>();
+        this.shots.addAll(shotsMap.values());
     }
 
     private void translate(String message) {
@@ -62,6 +70,28 @@ public class ServerUpdateMessage extends Message {
 
             this.players.add(player);
         }
+
+        this.shotsLength = Integer.valueOf(slices[offset]);
+
+        if (shots == null) {
+            shots = new ArrayList<Shot>();
+        }
+
+        offset += 1;
+
+        for (int i = 0; i < shotsLength; i++) {
+            Shot shot = new Shot();
+
+            shot.setId(Integer.valueOf(slices[offset + 0]));
+            shot.setPositionX(Float.valueOf(slices[offset + 1]));
+            shot.setPositionY(Float.valueOf(slices[offset + 2]));
+            shot.setAngle(Double.valueOf(slices[offset + 3]));
+            shot.setFinish(slices[offset + 4].equals(Constants.ONE));
+
+            offset += 5;
+
+            this.shots.add(shot);
+        }
     }
 
     @Override
@@ -76,6 +106,14 @@ public class ServerUpdateMessage extends Message {
                     + (player.getIsMoving() ? "1" : "0") + Constants.SPACE + player.getFacing());
         }
 
+        message += Constants.SPACE + this.shotsLength;
+
+        for (Shot shot : shots) {
+            message += (Constants.SPACE + shot.getId() + Constants.SPACE + shot.getPositionX() + Constants.SPACE
+                    + shot.getPositionY() + Constants.SPACE + shot.getAngle() + Constants.SPACE
+                    + Constants.convertBoolean(shot.getFinish()));
+        }
+
         return message;
     }
 
@@ -87,6 +125,18 @@ public class ServerUpdateMessage extends Message {
             playerOnClient.setPositionY(player.getPositionY());
             playerOnClient.setIsMoving(player.getIsMoving());
             playerOnClient.setFacing(player.getFacing());
+        }
+
+        for (Shot shot : shots) {
+            Shot shotOnClient = GameController.getInstance().getShotsMap().get(shot.getId());
+            if (shotOnClient == null) {
+                shotOnClient = new Shot();
+                GameController.getInstance().getShotsMap().put(shot.getId(), shot);
+            }
+            shotOnClient.setPositionX(shot.getPositionX());
+            shotOnClient.setPositionY(shot.getPositionY());
+            shotOnClient.setAngle(shot.getAngle());
+            shotOnClient.setFinish(shot.getFinish());
         }
     }
 

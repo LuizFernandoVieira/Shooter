@@ -18,9 +18,22 @@ public class Shot extends Entity {
         finish = false;
     }
 
-    public void create(Player player, Float x, Float y) {
-        setPositionX(x);
-        setPositionY(y);
+    public void create(Player player, Float mouseX, Float mouseY) {
+        Float playerXCentered = player.getPositionX() + (player.getWidth() / 2);
+        Float playerYCentered = player.getPositionY() + (player.getHeight() / 2);
+
+        Float mouseXCorrected = mouseX;
+        Float mouseYCorrected = (Constants.CAMERA_HEIGHT - mouseY);
+
+        Float deltaX = (mouseXCorrected - playerXCentered);
+        Float deltaY = (mouseYCorrected - playerYCentered);
+
+        Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
+
+        setAngle(angle);
+        setPositionX(playerXCentered);
+        setPositionY(playerYCentered);
+
         this.finish = false;
     }
 

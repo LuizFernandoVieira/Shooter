@@ -39,7 +39,7 @@ public class GameScreen extends Screen {
         camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new ExtendViewport(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT, camera);
 
-        debugGdx = new DebugGdx(getStage(), getSkin());
+        // debugGdx = new DebugGdx(getStage(), getSkin());
 
         GdxController.getInstance().getPlayerGdx().initGraphics();
 
@@ -74,8 +74,9 @@ public class GameScreen extends Screen {
         for (Integer id : ids) {
             GameController.getInstance().getShotsMap().remove(id);
         }
-        debugGdx.update(GameController.getInstance().getPlayer(), GameController.getInstance().getMouseX(),
-                GameController.getInstance().getMouseY());
+        // debugGdx.update(GameController.getInstance().getPlayer(),
+        // GameController.getInstance().getMouseX(),
+        // GameController.getInstance().getMouseY());
     }
 
     /**
@@ -94,7 +95,7 @@ public class GameScreen extends Screen {
         }
         batch.end();
 
-        debugGdx.draw(camera);
+        // debugGdx.draw(camera);
     }
 
     public void dispose() {

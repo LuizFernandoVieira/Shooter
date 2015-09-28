@@ -61,7 +61,7 @@ public class GameInputProcessor implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Player player = GameController.getInstance().getPlayer();
-        GameController.getInstance().createShot(player, screenX, screenY);
+        GameController.getInstance().createShot(player, Float.valueOf(screenX), Float.valueOf(screenY));
         return false;
     }
 

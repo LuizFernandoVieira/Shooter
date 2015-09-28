@@ -63,13 +63,10 @@ public class ClientInputMessage extends Message {
 
     @Override
     public String toString() {
-        return this.id + Constants.SPACE + this.playerId + Constants.SPACE + convertBoolean(this.moveUp)
-                + Constants.SPACE + convertBoolean(this.moveRight) + Constants.SPACE + convertBoolean(this.moveDown)
-                + Constants.SPACE + convertBoolean(this.moveLeft) + Constants.SPACE + mouseX + Constants.SPACE + mouseY;
-    }
-
-    private String convertBoolean(Boolean bool) {
-        return bool ? "1" : "0";
+        return this.id + Constants.SPACE + this.playerId + Constants.SPACE + Constants.convertBoolean(this.moveUp)
+                + Constants.SPACE + Constants.convertBoolean(this.moveRight) + Constants.SPACE
+                + Constants.convertBoolean(this.moveDown) + Constants.SPACE + Constants.convertBoolean(this.moveLeft)
+                + Constants.SPACE + mouseX + Constants.SPACE + mouseY;
     }
 
     public Boolean getMoveUp() {
