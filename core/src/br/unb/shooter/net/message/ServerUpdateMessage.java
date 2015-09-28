@@ -53,8 +53,8 @@ public class ServerUpdateMessage extends Message {
 
             player.setId(Integer.valueOf(slices[offset + 0]));
             player.setName(slices[offset + 1]);
-            player.setPositionX(Integer.valueOf(slices[offset + 2]));
-            player.setPositionY(Integer.valueOf(slices[offset + 3]));
+            player.setPositionX(Float.valueOf(slices[offset + 2]));
+            player.setPositionY(Float.valueOf(slices[offset + 3]));
             player.setIsMoving(slices[offset + 4].equals("1") ? true : false);
             player.setFacing(Integer.valueOf(slices[offset + 5]));
 

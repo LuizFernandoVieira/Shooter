@@ -30,6 +30,8 @@ public class DebugGdx {
     private Integer mouseX;
     private Integer mouseY;
 
+    private Player player;
+
     public DebugGdx() {
         shapeRenderer = new ShapeRenderer();
     }
@@ -51,10 +53,11 @@ public class DebugGdx {
 
     public void update(Player player, Integer mouseX, Integer mouseY) {
         text = "Player x: " + player.getPositionX() + " y: " + player.getPositionY() + " Mouse x: " + mouseX + " y: "
-                + mouseY;
+                + (Constants.CAMERA_HEIGHT - mouseY);
         label.setText(text);
         this.mouseX = mouseX;
         this.mouseY = mouseY;
+        this.player = player;
     }
 
     public void draw(OrthographicCamera camera) {
@@ -68,6 +71,7 @@ public class DebugGdx {
         if (drawRectangles) {
             drawRectangles();
         }
+        drawTrajectory();
     }
 
     public void dispose() {
@@ -99,6 +103,19 @@ public class DebugGdx {
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.rect(x, (Constants.CAMERA_HEIGHT - y) - player.getHeight(), player.getWidth(),
                 player.getHeight());
+        shapeRenderer.end();
+    }
+
+    private void drawTrajectory() {
+        Float playerXCentered = player.getPositionX() + (player.getWidth() / 2);
+        Float playerYCentered = Constants.CAMERA_HEIGHT - player.getPositionY() - (player.getHeight() / 2);
+
+        Integer mouseXCorrected = mouseX;
+        Integer mouseYCorrected = mouseY;
+
+        shapeRenderer.begin(ShapeType.Line);
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.line(playerXCentered, playerYCentered, mouseXCorrected, mouseYCorrected);
         shapeRenderer.end();
     }
 

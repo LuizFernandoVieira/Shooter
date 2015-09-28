@@ -2,6 +2,8 @@ package br.unb.shooter.controller;
 
 import java.util.HashMap;
 
+import com.badlogic.gdx.Gdx;
+
 import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
@@ -88,14 +90,14 @@ public class GameController {
      * Initialize game state.
      */
     public void startGame() {
-        Integer positionXPlayer1 = 0;
-        Integer positionXPlayer2 = 64;
-        Integer positionXPlayer3 = 128;
-        Integer positionXPlayer4 = 192;
-        Integer positionYPlayer1 = 0;
-        Integer positionYPlayer2 = 0;
-        Integer positionYPlayer3 = 0;
-        Integer positionYPlayer4 = 0;
+        Float positionXPlayer1 = 0f;
+        Float positionXPlayer2 = 64f;
+        Float positionXPlayer3 = 128f;
+        Float positionXPlayer4 = 192f;
+        Float positionYPlayer1 = 0f;
+        Float positionYPlayer2 = 0f;
+        Float positionYPlayer3 = 0f;
+        Float positionYPlayer4 = 0f;
 
         Integer index = 0;
         for (Player player : GameController.getInstance().playersMap.values()) {
@@ -133,14 +135,17 @@ public class GameController {
         shotSequence++;
         Shot shot = new Shot();
 
-        Integer playerXCentered = player.getPositionX() + (player.getWidth() / 2);
-        Integer playerYCentered = player.getPositionY() + (player.getHeight() / 2);
+        Gdx.app.log("SHOT", "px: " + player.getPositionX() + " py: " + player.getPositionY());
+        Gdx.app.log("SHOT", "mx: " + mouseX + " my: " + mouseY);
+
+        Float playerXCentered = player.getPositionX() + (player.getWidth() / 2);
+        Float playerYCentered = player.getPositionY() + (player.getHeight() / 2);
 
         Integer mouseXCorrected = mouseX;
         Integer mouseYCorrected = (Constants.CAMERA_HEIGHT - mouseY);
 
-        Integer deltaX = (mouseXCorrected - playerXCentered);
-        Integer deltaY = (mouseYCorrected - playerYCentered);
+        Float deltaX = (mouseXCorrected - playerXCentered);
+        Float deltaY = (mouseYCorrected - playerYCentered);
 
         Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
 

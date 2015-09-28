@@ -30,8 +30,8 @@ public class Player extends Entity {
         isMoving = false;
         isChangingState = false;
         movingOffset = 2;
-        positionX = 0;
-        positionY = 0;
+        positionX = 0f;
+        positionY = 0f;
         width = 0;
         height = 0;
         facing = 0;
@@ -56,11 +56,11 @@ public class Player extends Entity {
      * @param y
      */
     public void setFacing(Integer x, Integer y) {
-        Integer offsetX = x - positionX;
-        Integer offsetY = (Constants.CAMERA_HEIGHT - y) - positionY;
+        Float offsetX = x - positionX;
+        Float offsetY = (Constants.CAMERA_HEIGHT - y) - positionY;
 
-        Integer absX = Math.abs(offsetX);
-        Integer absY = Math.abs(offsetY);
+        Float absX = Math.abs(offsetX);
+        Float absY = Math.abs(offsetY);
 
         previousFacing = facing;
 

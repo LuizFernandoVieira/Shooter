@@ -3,8 +3,8 @@ package br.unb.shooter.entity;
 public class Entity {
 
     private Integer id;
-    protected Integer positionX;
-    protected Integer positionY;
+    protected Float positionX;
+    protected Float positionY;
     protected Integer width;
     protected Integer height;
 
@@ -19,19 +19,19 @@ public class Entity {
         this.id = id;
     }
 
-    public Integer getPositionX() {
+    public Float getPositionX() {
         return positionX;
     }
 
-    public void setPositionX(Integer positionX) {
+    public void setPositionX(Float positionX) {
         this.positionX = positionX;
     }
 
-    public Integer getPositionY() {
+    public Float getPositionY() {
         return positionY;
     }
 
-    public void setPositionY(Integer positionY) {
+    public void setPositionY(Float positionY) {
         this.positionY = positionY;
     }
 
