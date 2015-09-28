@@ -2,8 +2,6 @@ package br.unb.shooter.controller;
 
 import java.util.HashMap;
 
-import com.badlogic.gdx.Gdx;
-
 import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
@@ -134,9 +132,6 @@ public class GameController {
         }
         shotSequence++;
         Shot shot = new Shot();
-
-        Gdx.app.log("SHOT", "px: " + player.getPositionX() + " py: " + player.getPositionY());
-        Gdx.app.log("SHOT", "mx: " + mouseX + " my: " + mouseY);
 
         Float playerXCentered = player.getPositionX() + (player.getWidth() / 2);
         Float playerYCentered = player.getPositionY() + (player.getHeight() / 2);
