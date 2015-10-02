@@ -170,6 +170,23 @@ public class NetController {
         client.sendTCP(msg.toString());
     }
 
+    /**
+     * Send messages for update. Client send update to server and vice-versa.
+     */
+    public void sendMessages() {
+        if (isMultiplayer) {
+            if (isServer) {
+                updateGame();
+            }
+            if (!isServer) {
+                if (GameController.getInstance().getPlayer().getIsChangingState()
+                        || GameController.getInstance().getPlayer().getIsShooting()) {
+                    sendPlayerInput(GameController.getInstance().getPlayer());
+                }
+            }
+        }
+    }
+
     public Client getClient() {
         return client;
     }

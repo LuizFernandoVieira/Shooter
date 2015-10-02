@@ -138,8 +138,27 @@ public class GameController {
         shotsMap.put(shotSequence, shot);
     }
 
+    /**
+     * Remove one shot.
+     *
+     * @param shot
+     */
     public void removeShot(Shot shot) {
         shotsMap.remove(shot.getId());
+    }
+
+    /**
+     * Reset player state.
+     */
+    public void resetPlayersState() {
+        for (Player player : playersMap.values()) {
+            if (player.getIsChangingState()) {
+                player.setIsChangingState(false);
+            }
+            if (player.getIsShooting()) {
+                player.setIsShooting(false);
+            }
+        }
     }
 
     public Player getPlayer() {
