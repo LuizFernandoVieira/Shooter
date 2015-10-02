@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.GdxController;
+import br.unb.shooter.controller.NetController;
 import br.unb.shooter.debug.DebugGdx;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
@@ -63,6 +64,9 @@ public class GameScreen extends Screen {
         for (Player player : GameController.getInstance().getPlayersMap().values()) {
             player.update();
             GdxController.getInstance().getPlayerGdx().update(player, Gdx.graphics.getDeltaTime());
+            if (player.getIsShooting() && NetController.getInstance().getIsServer()) {
+                GameController.getInstance().createShot(player);
+            }
         }
         List<Integer> ids = new ArrayList<Integer>();
         for (Shot shot : GameController.getInstance().getShotsMap().values()) {

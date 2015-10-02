@@ -34,10 +34,13 @@ public class NetController {
 
     private Boolean isMultiplayer;
 
+    private Boolean isServer;
+
     private static NetController instance;
 
     public NetController() {
         isMultiplayer = false;
+        isServer = true;
     }
 
     /**
@@ -155,6 +158,11 @@ public class NetController {
         server.sendToAllTCP(msg.toString());
     }
 
+    /**
+     * Send input.
+     * 
+     * @param player
+     */
     public void sendPlayerInput(Player player) {
         ClientInputMessage msg = new ClientInputMessage(player, GameController.getInstance().getMouseX(),
                 GameController.getInstance().getMouseY());
@@ -200,6 +208,14 @@ public class NetController {
 
     public void setSelectedServerIp(String selectedServerIp) {
         this.selectedServerIp = selectedServerIp;
+    }
+
+    public Boolean getIsServer() {
+        return isServer;
+    }
+
+    public void setIsServer(Boolean isServer) {
+        this.isServer = isServer;
     }
 
 }

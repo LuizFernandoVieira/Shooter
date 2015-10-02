@@ -2,6 +2,7 @@ package br.unb.shooter.state;
 
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.NetController;
+import br.unb.shooter.entity.Player;
 import br.unb.shooter.screen.GameScreen;
 
 public class GameState extends State {
@@ -32,10 +33,18 @@ public class GameState extends State {
                 NetController.getInstance().updateGame();
             }
             if (!isServer) {
-                if (GameController.getInstance().getPlayer().getIsChangingState()) {
-                    GameController.getInstance().getPlayer().setIsChangingState(false);
+                if (GameController.getInstance().getPlayer().getIsChangingState()
+                        || GameController.getInstance().getPlayer().getIsShooting()) {
                     NetController.getInstance().sendPlayerInput(GameController.getInstance().getPlayer());
                 }
+            }
+        }
+        for (Player player : GameController.getInstance().getPlayersMap().values()) {
+            if (player.getIsChangingState()) {
+                player.setIsChangingState(false);
+            }
+            if (player.getIsShooting()) {
+                player.setIsShooting(false);
             }
         }
     }

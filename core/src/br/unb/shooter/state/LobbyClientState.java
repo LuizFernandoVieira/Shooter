@@ -7,14 +7,18 @@ public class LobbyClientState extends State {
 
     @Override
     public void create(StateMachine machine) {
+        Boolean isServer = false;
+
         setMachine(machine);
-        setScreen(new LobbyScreen(false));
+        setScreen(new LobbyScreen(isServer));
         getScreen().setMachine(machine);
         getScreen().create();
 
         NetController.getInstance().addClientListener();
 
         NetController.getInstance().connectClient(NetController.getInstance().getSelectedServerIp());
+
+        NetController.getInstance().setIsServer(isServer);
     }
 
     @Override

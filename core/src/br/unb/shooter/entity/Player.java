@@ -15,9 +15,15 @@ public class Player extends Entity {
     private Integer facing;
     private Integer previousFacing;
 
+    private Float targetX;
+
+    private Float targetY;
+
     private Boolean isMoving;
 
     private Boolean isChangingState;
+
+    private Boolean isShooting;
 
     /**
      * Constructor.
@@ -29,6 +35,7 @@ public class Player extends Entity {
         moveLeft = false;
         isMoving = false;
         isChangingState = false;
+        isShooting = false;
         movingOffset = 2;
         positionX = 0f;
         positionY = 0f;
@@ -55,7 +62,7 @@ public class Player extends Entity {
      * @param x
      * @param y
      */
-    public void setFacing(Integer x, Integer y) {
+    public void setFacing(Float x, Float y) {
         Float offsetX = x - positionX;
         Float offsetY = (Constants.CAMERA_HEIGHT - y) - positionY;
 
@@ -183,6 +190,30 @@ public class Player extends Entity {
 
     public void setFacing(Integer facing) {
         this.facing = facing;
+    }
+
+    public Boolean getIsShooting() {
+        return isShooting;
+    }
+
+    public void setIsShooting(Boolean isShooting) {
+        this.isShooting = isShooting;
+    }
+
+    public Float getTargetX() {
+        return targetX;
+    }
+
+    public void setTargetX(Float targetX) {
+        this.targetX = targetX;
+    }
+
+    public Float getTargetY() {
+        return targetY;
+    }
+
+    public void setTargetY(Float targetY) {
+        this.targetY = targetY;
     }
 
 }

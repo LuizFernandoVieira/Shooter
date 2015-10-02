@@ -60,8 +60,9 @@ public class GameInputProcessor implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Player player = GameController.getInstance().getPlayer();
-        GameController.getInstance().createShot(player, Float.valueOf(screenX), Float.valueOf(screenY));
+        GameController.getInstance().getPlayer().setIsShooting(true);
+        GameController.getInstance().getPlayer().setTargetX(Float.valueOf(screenX));
+        GameController.getInstance().getPlayer().setTargetY(Float.valueOf(screenY));
         return false;
     }
 
@@ -79,8 +80,8 @@ public class GameInputProcessor implements InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        GameController.getInstance().setMouseX(screenX);
-        GameController.getInstance().setMouseY(screenY);
+        GameController.getInstance().setMouseX(Float.valueOf(screenX));
+        GameController.getInstance().setMouseY(Float.valueOf(screenY));
         return false;
     }
 

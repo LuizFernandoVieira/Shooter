@@ -7,12 +7,15 @@ public class LobbyServerState extends State {
 
     @Override
     public void create(StateMachine machine) {
+        Boolean isServer = true;
+
         setMachine(machine);
-        setScreen(new LobbyScreen(true));
+        setScreen(new LobbyScreen(isServer));
         getScreen().setMachine(machine);
         getScreen().create();
 
         NetController.getInstance().createServerAndListener();
+        NetController.getInstance().setIsServer(isServer);
     }
 
     @Override

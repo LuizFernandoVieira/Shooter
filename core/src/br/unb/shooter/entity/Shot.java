@@ -18,12 +18,12 @@ public class Shot extends Entity {
         finish = false;
     }
 
-    public void create(Player player, Float mouseX, Float mouseY) {
+    public void create(Player player) {
         Float playerXCentered = player.getPositionX() + (player.getWidth() / 2);
         Float playerYCentered = player.getPositionY() + (player.getHeight() / 2);
 
-        Float mouseXCorrected = mouseX;
-        Float mouseYCorrected = (Constants.CAMERA_HEIGHT - mouseY);
+        Float mouseXCorrected = player.getTargetX();
+        Float mouseYCorrected = (Constants.CAMERA_HEIGHT - player.getTargetY());
 
         Float deltaX = (mouseXCorrected - playerXCentered);
         Float deltaY = (mouseYCorrected - playerYCentered);

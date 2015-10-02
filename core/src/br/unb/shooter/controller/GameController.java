@@ -22,16 +22,16 @@ public class GameController {
 
     private Boolean isStarted = false;
 
-    private Integer mouseX;
+    private Float mouseX;
 
-    private Integer mouseY;
+    private Float mouseY;
 
     private Integer shotSequence;
 
     public GameController() {
         shotsMap = new HashMap<Integer, Shot>();
-        mouseX = 0;
-        mouseY = 0;
+        mouseX = 0f;
+        mouseY = 0f;
         shotSequence = 0;
     }
 
@@ -125,14 +125,14 @@ public class GameController {
      * @param mouseX
      * @param mouseY
      */
-    public void createShot(Player player, Float mouseX, Float mouseY) {
+    public void createShot(Player player) {
         if (shotsMap == null) {
             shotsMap = new HashMap<Integer, Shot>();
         }
         shotSequence++;
         Shot shot = new Shot();
 
-        shot.create(player, mouseX, mouseY);
+        shot.create(player);
         shot.setId(shotSequence);
 
         shotsMap.put(shotSequence, shot);
@@ -190,19 +190,19 @@ public class GameController {
         this.isStarted = isStarted;
     }
 
-    public Integer getMouseX() {
+    public Float getMouseX() {
         return mouseX;
     }
 
-    public void setMouseX(Integer mouseX) {
+    public void setMouseX(Float mouseX) {
         this.mouseX = mouseX;
     }
 
-    public Integer getMouseY() {
+    public Float getMouseY() {
         return mouseY;
     }
 
-    public void setMouseY(Integer mouseY) {
+    public void setMouseY(Float mouseY) {
         this.mouseY = mouseY;
     }
 

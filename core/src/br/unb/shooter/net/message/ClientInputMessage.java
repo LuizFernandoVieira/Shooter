@@ -16,16 +16,18 @@ public class ClientInputMessage extends Message {
 
     private Boolean moveLeft;
 
-    private Integer mouseX;
+    private Float mouseX;
 
-    private Integer mouseY;
+    private Float mouseY;
+
+    private Boolean leftMouseButton;
 
     public ClientInputMessage(String message) {
         this.id = MessageEnum.CLIENT_INPUT.getId();
         translate(message);
     }
 
-    public ClientInputMessage(Player player, Integer mouseX, Integer mouseY) {
+    public ClientInputMessage(Player player, Float mouseX, Float mouseY) {
         this.id = MessageEnum.CLIENT_INPUT.getId();
         this.playerId = player.getId();
         this.moveUp = player.getMoveUp();
@@ -34,6 +36,7 @@ public class ClientInputMessage extends Message {
         this.moveLeft = player.getMoveLeft();
         this.mouseX = mouseX;
         this.mouseY = mouseY;
+        this.leftMouseButton = player.getIsShooting();
     }
 
     @Override
@@ -46,6 +49,11 @@ public class ClientInputMessage extends Message {
         sender.setMovingState();
         sender.update();
         sender.setFacing(mouseX, mouseY);
+        sender.setTargetX(mouseX);
+        sender.setTargetY(mouseY);
+        if (leftMouseButton) {
+            sender.setIsShooting(true);
+        }
     }
 
     private void translate(String message) {
@@ -57,8 +65,9 @@ public class ClientInputMessage extends Message {
         this.moveRight = Constants.ONE.equals(slices[3]);
         this.moveDown = Constants.ONE.equals(slices[4]);
         this.moveLeft = Constants.ONE.equals(slices[5]);
-        this.mouseX = Integer.valueOf(slices[6]);
-        this.mouseY = Integer.valueOf(slices[7]);
+        this.mouseX = Float.valueOf(slices[6]);
+        this.mouseY = Float.valueOf(slices[7]);
+        this.leftMouseButton = Constants.ONE.equals(slices[8]);
     }
 
     @Override
@@ -66,7 +75,8 @@ public class ClientInputMessage extends Message {
         return this.id + Constants.SPACE + this.playerId + Constants.SPACE + Constants.convertBoolean(this.moveUp)
                 + Constants.SPACE + Constants.convertBoolean(this.moveRight) + Constants.SPACE
                 + Constants.convertBoolean(this.moveDown) + Constants.SPACE + Constants.convertBoolean(this.moveLeft)
-                + Constants.SPACE + mouseX + Constants.SPACE + mouseY;
+                + Constants.SPACE + mouseX + Constants.SPACE + mouseY + Constants.SPACE
+                + Constants.convertBoolean(this.leftMouseButton);
     }
 
     public Boolean getMoveUp() {
@@ -101,20 +111,28 @@ public class ClientInputMessage extends Message {
         this.moveLeft = moveLeft;
     }
 
-    public Integer getMouseX() {
+    public Float getMouseX() {
         return mouseX;
     }
 
-    public void setMouseX(Integer mouseX) {
+    public void setMouseX(Float mouseX) {
         this.mouseX = mouseX;
     }
 
-    public Integer getMouseY() {
+    public Float getMouseY() {
         return mouseY;
     }
 
-    public void setMouseY(Integer mouseY) {
+    public void setMouseY(Float mouseY) {
         this.mouseY = mouseY;
+    }
+
+    public Boolean getLeftMouseButton() {
+        return leftMouseButton;
+    }
+
+    public void setLeftMouseButton(Boolean leftMouseButton) {
+        this.leftMouseButton = leftMouseButton;
     }
 
 }
