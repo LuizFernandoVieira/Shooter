@@ -22,12 +22,26 @@ public class ClientInputMessage extends Message {
 
     private Boolean leftMouseButton;
 
+    /**
+     * Constructor.
+     * 
+     * @param message
+     */
     public ClientInputMessage(String message) {
+        super();
         this.id = MessageEnum.CLIENT_INPUT.getId();
         translate(message);
     }
 
+    /**
+     * Constructor.
+     * 
+     * @param player
+     * @param mouseX
+     * @param mouseY
+     */
     public ClientInputMessage(Player player, Float mouseX, Float mouseY) {
+        super();
         this.id = MessageEnum.CLIENT_INPUT.getId();
         this.playerId = player.getId();
         this.moveUp = player.getMoveUp();

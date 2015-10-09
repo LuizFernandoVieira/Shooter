@@ -17,11 +17,21 @@ public class ServerUpdateLobbyMessage extends Message {
 
     private List<Player> players;
 
+    /**
+     * Constructor.
+     */
     public ServerUpdateLobbyMessage() {
+        super();
         this.id = MessageEnum.SERVER_UPDATE_LOBBY.getId();
     }
 
+    /**
+     * Constructor.
+     * 
+     * @param message
+     */
     public ServerUpdateLobbyMessage(String message) {
+        super();
         this.id = MessageEnum.SERVER_UPDATE_LOBBY.getId();
         translate(message);
     }

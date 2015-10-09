@@ -19,11 +19,21 @@ public class ServerUpdateMessage extends Message {
 
     private List<Shot> shots;
 
+    /**
+     * Constructor.
+     */
     public ServerUpdateMessage() {
+        super();
         this.id = MessageEnum.SERVER_UPDATE.getId();
     }
 
+    /**
+     * Constructor.
+     * 
+     * @param message
+     */
     public ServerUpdateMessage(String message) {
+        super();
         this.id = MessageEnum.SERVER_UPDATE.getId();
         translate(message);
     }
@@ -34,6 +44,7 @@ public class ServerUpdateMessage extends Message {
      * @param playersMap Player's map
      */
     public ServerUpdateMessage(HashMap<Integer, Player> playersMap, HashMap<Integer, Shot> shotsMap) {
+        super();
         this.id = MessageEnum.SERVER_UPDATE.getId();
         this.playersLength = playersMap.size();
         this.players = new ArrayList<Player>();

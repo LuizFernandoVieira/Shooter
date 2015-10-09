@@ -14,11 +14,21 @@ public class ServerStartMessage extends Message {
 
     private Integer playersLength;
 
+    /**
+     * Constructor.
+     */
     public ServerStartMessage() {
+        super();
         this.id = MessageEnum.SERVER_START.getId();
     }
 
+    /**
+     * Constructor.
+     * 
+     * @param message
+     */
     public ServerStartMessage(String message) {
+        super();
         this.id = MessageEnum.SERVER_START.getId();
         translate(message);
     }
@@ -29,6 +39,7 @@ public class ServerStartMessage extends Message {
      * @param playersMap
      */
     public ServerStartMessage(HashMap<Integer, Player> playersMap) {
+        super();
         this.id = MessageEnum.SERVER_START.getId();
         this.playersLength = playersMap.size();
         this.players = new ArrayList<Player>();

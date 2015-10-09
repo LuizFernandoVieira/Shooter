@@ -3,6 +3,7 @@ package br.unb.shooter.controller;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.esotericsoftware.kryonet.Client;
@@ -14,11 +15,14 @@ import br.unb.shooter.net.ClientListener;
 import br.unb.shooter.net.ServerListener;
 import br.unb.shooter.net.message.ClientConnectMessage;
 import br.unb.shooter.net.message.ClientInputMessage;
+import br.unb.shooter.net.message.Message;
 import br.unb.shooter.net.message.ServerStartMessage;
 import br.unb.shooter.net.message.ServerUpdateLobbyMessage;
 import br.unb.shooter.net.message.ServerUpdateMessage;
 
 public class NetController {
+
+    public static final Integer LAG = 1000;
 
     private static final Integer TCP_PORT = 5000;
 
@@ -38,9 +42,15 @@ public class NetController {
 
     private static NetController instance;
 
+    private LinkedList<Message> messages;
+
+    private Integer messageSequence;
+
     public NetController() {
         isMultiplayer = false;
         isServer = true;
+        messageSequence = 0;
+        messages = new LinkedList<Message>();
     }
 
     /**
@@ -187,6 +197,16 @@ public class NetController {
         }
     }
 
+    /**
+     * Retrieves next message sequence.
+     *
+     * @return
+     */
+    public Integer nextSequence() {
+        messageSequence++;
+        return messageSequence;
+    }
+
     public Client getClient() {
         return client;
     }
@@ -233,6 +253,22 @@ public class NetController {
 
     public void setIsServer(Boolean isServer) {
         this.isServer = isServer;
+    }
+
+    public LinkedList<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(LinkedList<Message> messages) {
+        this.messages = messages;
+    }
+
+    public Integer getMessageSequence() {
+        return messageSequence;
+    }
+
+    public void setMessageSequence(Integer messageSequence) {
+        this.messageSequence = messageSequence;
     }
 
 }

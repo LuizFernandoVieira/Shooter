@@ -8,12 +8,22 @@ public class ClientConnectMessage extends Message {
 
     private String name;
 
+    /**
+     * Constructor.
+     * 
+     * @param message
+     */
     public ClientConnectMessage(String message) {
+        super();
         this.id = MessageEnum.CLIENT_CONNECT.getId();
         translate(message);
     }
 
+    /**
+     * Constructor.
+     */
     public ClientConnectMessage() {
+        super();
         this.id = MessageEnum.CLIENT_CONNECT.getId();
     }
 

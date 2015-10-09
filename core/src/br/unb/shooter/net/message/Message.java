@@ -1,10 +1,28 @@
 package br.unb.shooter.net.message;
 
+import com.badlogic.gdx.utils.TimeUtils;
+
+import br.unb.shooter.controller.NetController;
 import br.unb.shooter.util.Constants;
 
 public abstract class Message {
 
     protected String id;
+
+    protected Integer sequence;
+
+    protected Long timestamp;
+
+    protected Boolean isExecuted;
+
+    /**
+     * Constructor.
+     */
+    public Message() {
+        this.sequence = NetController.getInstance().getMessageSequence();
+        this.timestamp = TimeUtils.millis();
+        this.isExecuted = false;
+    }
 
     /**
      * Instantiate a message object.
@@ -41,6 +59,30 @@ public abstract class Message {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Integer getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(Integer sequence) {
+        this.sequence = sequence;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Boolean getIsExecuted() {
+        return isExecuted;
+    }
+
+    public void setIsExecuted(Boolean isExecuted) {
+        this.isExecuted = isExecuted;
     }
 
 }
