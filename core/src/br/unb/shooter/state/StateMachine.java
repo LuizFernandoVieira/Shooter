@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import br.unb.shooter.controller.NetController;
@@ -28,7 +27,6 @@ public class StateMachine {
                     Message message = it.next();
                     long messageTimestamp = message.getTimestamp();
                     if (!message.getIsExecuted() && TimeUtils.timeSinceMillis(messageTimestamp) > NetController.LAG) {
-                        Gdx.app.log("EXECUTED", "message: " + message.getId());
                         message.execute();
                         message.setIsExecuted(true);
                         removables.add(message);
