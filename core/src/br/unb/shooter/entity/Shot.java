@@ -10,15 +10,20 @@ public class Shot extends Entity {
 
     private Double angle;
 
+    private Player player;
+
+    private Integer sequence;
+
     public Shot() {
         setPositionX(0f);
         setPositionY(0f);
         setHeight(6);
         setWidth(6);
         finish = false;
+        sequence = 0;
     }
 
-    public void create(Player player) {
+    public void create(Player player, Integer sequence) {
         Float playerXCentered = player.getPositionX() + (player.getWidth() / 2);
         Float playerYCentered = player.getPositionY() + (player.getHeight() / 2);
 
@@ -33,6 +38,8 @@ public class Shot extends Entity {
         setAngle(angle);
         setPositionX(playerXCentered);
         setPositionY(playerYCentered);
+        setPlayer(player);
+        setSequence(sequence);
 
         this.finish = false;
     }
@@ -63,6 +70,22 @@ public class Shot extends Entity {
 
     public void setFinish(Boolean finish) {
         this.finish = finish;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Integer getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(Integer sequence) {
+        this.sequence = sequence;
     }
 
 }

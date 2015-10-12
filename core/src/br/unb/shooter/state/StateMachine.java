@@ -2,6 +2,7 @@ package br.unb.shooter.state;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.badlogic.gdx.utils.TimeUtils;
@@ -19,10 +20,14 @@ public class StateMachine {
 
     public void update() {
         if (NetController.getInstance().getMessages().size() > 0) {
+            LinkedList<Message> messages = new LinkedList<Message>();
+            for (Message msg : NetController.getInstance().getMessages()) {
+                messages.add(msg);
+            }
             List<Message> removables = new ArrayList<Message>();
-            long timestamp = NetController.getInstance().getMessages().getFirst().getTimestamp();
+            long timestamp = messages.getFirst().getTimestamp();
             if (TimeUtils.timeSinceMillis(timestamp) > NetController.LAG) {
-                Iterator<Message> it = NetController.getInstance().getMessages().iterator();
+                Iterator<Message> it = messages.iterator();
                 while (it.hasNext()) {
                     Message message = it.next();
                     long messageTimestamp = message.getTimestamp();

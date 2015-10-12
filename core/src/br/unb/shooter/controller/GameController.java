@@ -14,6 +14,8 @@ public class GameController {
 
     private HashMap<Integer, Player> playersMap;
 
+    private HashMap<Integer, Integer> shotsSequenceMap;
+
     private HashMap<Integer, Enemy> enemiesMap;
 
     private HashMap<Integer, Shot> shotsMap;
@@ -26,13 +28,10 @@ public class GameController {
 
     private Float mouseY;
 
-    private Integer shotSequence;
-
     public GameController() {
         shotsMap = new HashMap<Integer, Shot>();
         mouseX = 0f;
         mouseY = 0f;
-        shotSequence = 0;
     }
 
     /**
@@ -122,17 +121,29 @@ public class GameController {
      * Create a shot.
      * 
      * @param player
-     * @param mouseX
-     * @param mouseY
      */
     public void createShot(Player player) {
         if (shotsMap == null) {
             shotsMap = new HashMap<Integer, Shot>();
         }
-        shotSequence++;
+
+        if (shotsSequenceMap == null) {
+            shotsSequenceMap = new HashMap<Integer, Integer>();
+        }
+
+        if (!shotsSequenceMap.containsKey(player.getId())) {
+            shotsSequenceMap.put(player.getId(), 0);
+        }
+
         Shot shot = new Shot();
 
-        shot.create(player);
+        shotsSequenceMap.put(player.getId(), shotsSequenceMap.get(player.getId()) + 1);
+
+        shot.create(player, shotsSequenceMap.get(player.getId()));
+
+        // Hash function that generates global shot sequence
+        Integer shotSequence = ((player.getId() - 1) + (shotsSequenceMap.get(player.getId()) - 1) * 4) + 1;
+
         shot.setId(shotSequence);
 
         shotsMap.put(shotSequence, shot);

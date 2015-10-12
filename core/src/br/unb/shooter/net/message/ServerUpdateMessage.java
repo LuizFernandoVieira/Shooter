@@ -98,8 +98,11 @@ public class ServerUpdateMessage extends Message {
             shot.setPositionY(Float.valueOf(slices[offset + 2]));
             shot.setAngle(Double.valueOf(slices[offset + 3]));
             shot.setFinish(slices[offset + 4].equals(Constants.ONE));
+            shot.setPlayer(new Player());
+            shot.getPlayer().setId(Integer.valueOf(slices[offset + 5]));
+            shot.setSequence(Integer.valueOf(slices[offset + 6]));
 
-            offset += 5;
+            offset += 7;
 
             this.shots.add(shot);
         }
@@ -122,7 +125,8 @@ public class ServerUpdateMessage extends Message {
         for (Shot shot : shots) {
             message += (Constants.SPACE + shot.getId() + Constants.SPACE + shot.getPositionX() + Constants.SPACE
                     + shot.getPositionY() + Constants.SPACE + shot.getAngle() + Constants.SPACE
-                    + Constants.convertBoolean(shot.getFinish()));
+                    + Constants.convertBoolean(shot.getFinish())) + Constants.SPACE + shot.getPlayer().getId()
+                    + Constants.SPACE + shot.getSequence();
         }
 
         return message;
@@ -148,6 +152,8 @@ public class ServerUpdateMessage extends Message {
             shotOnClient.setPositionY(shot.getPositionY());
             shotOnClient.setAngle(shot.getAngle());
             shotOnClient.setFinish(shot.getFinish());
+            shotOnClient.setPlayer(shot.getPlayer());
+            shotOnClient.setSequence(shot.getSequence());
         }
     }
 
