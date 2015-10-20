@@ -19,7 +19,7 @@ public abstract class Message {
      * Constructor.
      */
     public Message() {
-        this.sequence = NetController.getInstance().getMessageSequence();
+        this.sequence = NetController.getInstance().nextSequence();
         this.timestamp = TimeUtils.millis();
         this.isExecuted = false;
     }

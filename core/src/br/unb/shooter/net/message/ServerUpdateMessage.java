@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.unb.shooter.controller.GameController;
+import br.unb.shooter.controller.NetController;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
 import br.unb.shooter.util.Constants;
@@ -18,6 +19,8 @@ public class ServerUpdateMessage extends Message {
     private Integer shotsLength;
 
     private List<Shot> shots;
+
+    private Long lastInput;
 
     /**
      * Constructor.
@@ -43,7 +46,7 @@ public class ServerUpdateMessage extends Message {
      * 
      * @param playersMap Player's map
      */
-    public ServerUpdateMessage(HashMap<Integer, Player> playersMap, HashMap<Integer, Shot> shotsMap) {
+    public ServerUpdateMessage(HashMap<Integer, Player> playersMap, HashMap<Integer, Shot> shotsMap, Long lastInput) {
         super();
         this.id = MessageEnum.SERVER_UPDATE.getId();
         this.playersLength = playersMap.size();
@@ -52,6 +55,7 @@ public class ServerUpdateMessage extends Message {
         this.shotsLength = shotsMap.size();
         this.shots = new ArrayList<Shot>();
         this.shots.addAll(shotsMap.values());
+        this.lastInput = lastInput;
     }
 
     private void translate(String message) {
@@ -106,6 +110,8 @@ public class ServerUpdateMessage extends Message {
 
             this.shots.add(shot);
         }
+
+        this.lastInput = Long.valueOf(slices[offset]);
     }
 
     @Override
@@ -129,17 +135,36 @@ public class ServerUpdateMessage extends Message {
                     + Constants.SPACE + shot.getSequence();
         }
 
+        message += Constants.SPACE + this.lastInput;
+
         return message;
     }
 
     @Override
     public void execute() {
+        // Set current server player status
         for (Player player : players) {
             Player playerOnClient = GameController.getInstance().getPlayersMap().get(player.getId());
             playerOnClient.setPositionX(player.getPositionX());
             playerOnClient.setPositionY(player.getPositionY());
             playerOnClient.setIsMoving(player.getIsMoving());
             playerOnClient.setFacing(player.getFacing());
+
+            // Re apply inputs after server update
+            if (player.getId().equals(GameController.getInstance().getPlayer().getId())) {
+                NetController.getInstance().removePastInputs(lastInput);
+
+                for (Message message : NetController.getInstance().getClientMessages()) {
+                    ClientInputMessage input = (ClientInputMessage) message;
+                    player.setFacing(input.getMouseX(), input.getMouseY());
+                    player.setMoveUp(input.getMoveUp());
+                    player.setMoveRight(input.getMoveRight());
+                    player.setMoveDown(input.getMoveDown());
+                    player.setMoveLeft(input.getMoveLeft());
+                    player.setMovingState();
+                    player.update();
+                }
+            }
         }
 
         for (Shot shot : shots) {

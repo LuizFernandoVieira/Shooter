@@ -1,6 +1,7 @@
 package br.unb.shooter.net.message;
 
 import br.unb.shooter.controller.GameController;
+import br.unb.shooter.controller.NetController;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.util.Constants;
 
@@ -68,6 +69,7 @@ public class ClientInputMessage extends Message {
         if (leftMouseButton) {
             sender.setIsShooting(true);
         }
+        NetController.getInstance().setLastInputTime(this.getTimestamp());
     }
 
     private void translate(String message) {

@@ -2,6 +2,7 @@ package br.unb.shooter.controller;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +23,7 @@ import br.unb.shooter.net.message.ServerUpdateMessage;
 
 public class NetController {
 
-    public static final Integer LAG = 1000;
+    public static final Integer LAG = 0;
 
     private static final Integer TCP_PORT = 5000;
 
@@ -44,13 +45,19 @@ public class NetController {
 
     private LinkedList<Message> messages;
 
+    private LinkedList<Message> clientMessages;
+
     private Integer messageSequence;
+
+    private Long lastInputTime;
 
     public NetController() {
         isMultiplayer = false;
         isServer = true;
         messageSequence = 0;
         messages = new LinkedList<Message>();
+        clientMessages = new LinkedList<Message>();
+        lastInputTime = 0L;
     }
 
     /**
@@ -163,7 +170,7 @@ public class NetController {
      */
     public void updateGame() {
         ServerUpdateMessage msg = new ServerUpdateMessage(GameController.getInstance().getPlayersMap(),
-                GameController.getInstance().getShotsMap());
+                GameController.getInstance().getShotsMap(), lastInputTime);
 
         server.sendToAllTCP(msg.toString());
     }
@@ -176,6 +183,8 @@ public class NetController {
     public void sendPlayerInput(Player player) {
         ClientInputMessage msg = new ClientInputMessage(player, GameController.getInstance().getMouseX(),
                 GameController.getInstance().getMouseY());
+
+        clientMessages.add(msg);
 
         client.sendTCP(msg.toString());
     }
@@ -205,6 +214,23 @@ public class NetController {
     public Integer nextSequence() {
         messageSequence++;
         return messageSequence;
+    }
+
+    /**
+     * Remove past inputs from client list.
+     *
+     * @param lastInput
+     */
+    public void removePastInputs(Long lastInput) {
+        List<Message> removables = new ArrayList<Message>();
+        for (Message message : clientMessages) {
+            if (message.getTimestamp() < lastInput) {
+                removables.add(message);
+            }
+        }
+        for (Message message : removables) {
+            clientMessages.remove(message);
+        }
     }
 
     public Client getClient() {
@@ -269,6 +295,22 @@ public class NetController {
 
     public void setMessageSequence(Integer messageSequence) {
         this.messageSequence = messageSequence;
+    }
+
+    public LinkedList<Message> getClientMessages() {
+        return clientMessages;
+    }
+
+    public void setClientMessages(LinkedList<Message> clientMessages) {
+        this.clientMessages = clientMessages;
+    }
+
+    public Long getLastInputTime() {
+        return lastInputTime;
+    }
+
+    public void setLastInputTime(Long lastInputTime) {
+        this.lastInputTime = lastInputTime;
     }
 
 }
