@@ -12,7 +12,7 @@ public class ShooterListener extends Listener {
 	public void received(Connection connection, Object object) {
 		Message message = Message.makeMessage(object.toString());
 		if (message != null) {
-			NetController.getInstance().getMessages().add(message);
+			NetController.getInstance().getMessageQueue().addMessage(message);
 		}
 	}
 

@@ -11,7 +11,7 @@ public class StateMachine {
 	}
 
 	public void update() {
-		NetController.getInstance().executeMessages();
+		NetController.getInstance().getMessageQueue().executeMessages();
 
 		state.update();
 	}

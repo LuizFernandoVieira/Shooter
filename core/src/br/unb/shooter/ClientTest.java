@@ -34,7 +34,7 @@ public class ClientTest {
 			}
 
 			// Execute messages.
-			NetController.getInstance().executeMessages();
+			NetController.getInstance().getMessageQueue().executeMessages();
 
 			if (GameController.getInstance().getIsStarted()) {
 				if (counter >= 10 && counter <= 20) {

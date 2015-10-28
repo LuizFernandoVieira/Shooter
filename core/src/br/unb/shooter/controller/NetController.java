@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.badlogic.gdx.utils.TimeUtils;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -19,6 +17,7 @@ import br.unb.shooter.net.ServerListener;
 import br.unb.shooter.net.message.ClientConnectMessage;
 import br.unb.shooter.net.message.ClientInputMessage;
 import br.unb.shooter.net.message.Message;
+import br.unb.shooter.net.message.MessageQueue;
 import br.unb.shooter.net.message.ServerStartMessage;
 import br.unb.shooter.net.message.ServerUpdateLobbyMessage;
 import br.unb.shooter.net.message.ServerUpdateMessage;
@@ -45,21 +44,18 @@ public class NetController {
 
 	private static NetController instance;
 
-	private LinkedList<Message> messages;
-
 	private LinkedList<Message> clientMessages;
 
-	private Integer messageSequence;
-
 	private Long lastInputTime;
+
+	private MessageQueue messageQueue;
 
 	public NetController() {
 		isMultiplayer = false;
 		isServer = true;
-		messageSequence = 0;
-		messages = new LinkedList<Message>();
 		clientMessages = new LinkedList<Message>();
 		lastInputTime = 0L;
+		messageQueue = new MessageQueue();
 	}
 
 	/**
@@ -209,16 +205,6 @@ public class NetController {
 	}
 
 	/**
-	 * Retrieves next message sequence.
-	 *
-	 * @return
-	 */
-	public Integer nextSequence() {
-		messageSequence++;
-		return messageSequence;
-	}
-
-	/**
 	 * Remove past inputs from client list.
 	 *
 	 * @param lastInput
@@ -233,39 +219,6 @@ public class NetController {
 			}
 			for (Message message : removables) {
 				clientMessages.remove(message);
-			}
-		}
-	}
-
-	/**
-	 * Execute messages with fake lag.
-	 */
-	public void executeMessages() {
-		if (this.messages.size() > 0) {
-			LinkedList<Message> snap = new LinkedList<Message>();
-			for (Message msg : this.messages) {
-				snap.add(msg);
-			}
-			List<Message> removables = new ArrayList<Message>();
-			long timestamp = snap.getFirst().getTimestamp();
-			if (TimeUtils.timeSinceMillis(timestamp) > LAG) {
-				Iterator<Message> it = snap.iterator();
-				while (it.hasNext()) {
-					Message message = it.next();
-					long messageTimestamp = message.getTimestamp();
-					if (!message.getIsExecuted() && TimeUtils.timeSinceMillis(messageTimestamp) > LAG) {
-						message.execute();
-						message.setIsExecuted(true);
-						removables.add(message);
-					} else {
-						break;
-					}
-				}
-			}
-			if (removables.size() > 0) {
-				for (Message msg : removables) {
-					this.messages.remove(msg);
-				}
 			}
 		}
 	}
@@ -332,22 +285,6 @@ public class NetController {
 		this.isServer = isServer;
 	}
 
-	public LinkedList<Message> getMessages() {
-		return messages;
-	}
-
-	public void setMessages(LinkedList<Message> messages) {
-		this.messages = messages;
-	}
-
-	public Integer getMessageSequence() {
-		return messageSequence;
-	}
-
-	public void setMessageSequence(Integer messageSequence) {
-		this.messageSequence = messageSequence;
-	}
-
 	public LinkedList<Message> getClientMessages() {
 		return clientMessages;
 	}
@@ -362,6 +299,14 @@ public class NetController {
 
 	public void setLastInputTime(Long lastInputTime) {
 		this.lastInputTime = lastInputTime;
+	}
+
+	public MessageQueue getMessageQueue() {
+		return messageQueue;
+	}
+
+	public void setMessageQueue(MessageQueue messageQueue) {
+		this.messageQueue = messageQueue;
 	}
 
 }

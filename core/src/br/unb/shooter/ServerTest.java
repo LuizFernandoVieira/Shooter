@@ -34,7 +34,7 @@ public class ServerTest {
 			}
 
 			// Execute messages.
-			NetController.getInstance().executeMessages();
+			NetController.getInstance().getMessageQueue().executeMessages();
 
 			if (GameController.getInstance().getIsStarted()) {
 				// Update clients.
