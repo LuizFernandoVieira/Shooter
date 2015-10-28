@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-import com.esotericsoftware.minlog.Log;
 
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.net.ClientListener;
@@ -175,8 +174,6 @@ public class NetController {
 		ServerUpdateMessage msg = new ServerUpdateMessage(GameController.getInstance().getPlayersMap(),
 				GameController.getInstance().getShotsMap(), lastInputTime);
 
-		Log.debug(msg.toString());
-
 		server.sendToAllTCP(msg.toString());
 	}
 
@@ -188,8 +185,6 @@ public class NetController {
 	public void sendPlayerInput(Player player) {
 		ClientInputMessage msg = new ClientInputMessage(player, GameController.getInstance().getMouseX(),
 				GameController.getInstance().getMouseY());
-
-		Log.debug(msg.toString());
 
 		clientMessages.add(msg);
 

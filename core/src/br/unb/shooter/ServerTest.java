@@ -15,10 +15,6 @@ public class ServerTest {
 	private static Integer counter = 0;
 
 	public static void main(String[] args) {
-		Log.set(Log.LEVEL_DEBUG);
-
-		Log.debug("START SERVER");
-
 		GameController.getInstance().createServerPlayer("Bruno");
 
 		NetController.getInstance().createServerAndListener();
@@ -48,17 +44,13 @@ public class ServerTest {
 			try {
 				Thread.sleep(1000L);
 			} catch (InterruptedException e) {
-				Log.debug(e.getMessage());
+				Log.error(e.getMessage());
 			}
-
-			Log.debug("Ciclo servidor: " + counter);
 
 			counter++;
 		}
 
 		NetController.getInstance().stopServer();
-
-		Log.debug("END SERVER");
 	}
 
 	private static class Input extends Thread {
@@ -94,8 +86,6 @@ public class ServerTest {
 					Log.error(e.getMessage());
 				}
 			}
-
-			Log.debug("END SERVER INPUT LISTENER");
 		}
 
 		public Boolean getStop() {

@@ -17,10 +17,6 @@ public class ClientTest {
 	private static Integer counter = 0;
 
 	public static void main(String[] args) {
-		Log.set(Log.LEVEL_DEBUG);
-
-		Log.debug("START CLIENT");
-
 		GameController.getInstance().createServerPlayer("Luiz");
 
 		NetController.getInstance().createClient();
@@ -47,10 +43,6 @@ public class ClientTest {
 					NetController.getInstance().sendPlayerInput(GameController.getInstance().getPlayer());
 				}
 
-				Log.debug("Ciclo cliente: " + counter + " " + GameController.getInstance().getPlayer().getName()
-						+ " x: " + GameController.getInstance().getPlayer().getPositionX() + " y: "
-						+ GameController.getInstance().getPlayer().getPositionY());
-
 				counter++;
 			}
 
@@ -63,8 +55,6 @@ public class ClientTest {
 		}
 
 		NetController.getInstance().stopClient();
-
-		Log.debug("END CLIENT");
 	}
 
 	private static class Input extends Thread {
@@ -94,8 +84,6 @@ public class ClientTest {
 					Log.error(e.getMessage());
 				}
 			}
-
-			Log.debug("END CLIENT INPUT LISTENER");
 		}
 
 		public Boolean getStop() {
