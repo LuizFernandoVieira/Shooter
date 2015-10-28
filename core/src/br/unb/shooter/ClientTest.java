@@ -37,14 +37,22 @@ public class ClientTest {
 				state.setIsRunning(false);
 			}
 
-			if (counter >= 10 && counter <= 20) {
-				GameController.getInstance().getPlayer().setMoveRight(true);
-				GameController.getInstance().getPlayer().update();
-				NetController.getInstance().sendPlayerInput(GameController.getInstance().getPlayer());
-			}
-			
 			// Execute messages.
 			NetController.getInstance().executeMessages();
+
+			if (GameController.getInstance().getIsStarted()) {
+				if (counter >= 10 && counter <= 20) {
+					GameController.getInstance().getPlayer().setMoveRight(true);
+					GameController.getInstance().getPlayer().update();
+					NetController.getInstance().sendPlayerInput(GameController.getInstance().getPlayer());
+				}
+
+				Log.debug("Ciclo cliente: " + counter + " " + GameController.getInstance().getPlayer().getName()
+						+ " x: " + GameController.getInstance().getPlayer().getPositionX() + " y: "
+						+ GameController.getInstance().getPlayer().getPositionY());
+
+				counter++;
+			}
 
 			try {
 				Thread.sleep(200L);
@@ -52,12 +60,9 @@ public class ClientTest {
 				Log.error(e.getMessage());
 			}
 
-			Log.debug("Ciclo cliente: " + counter + " player x: "
-					+ GameController.getInstance().getPlayer().getPositionX() + " player y: "
-					+ GameController.getInstance().getPlayer().getPositionY());
-
-			counter++;
 		}
+
+		NetController.getInstance().stopClient();
 
 		Log.debug("END CLIENT");
 	}

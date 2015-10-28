@@ -21,8 +21,6 @@ public class ServerTest {
 
 		GameController.getInstance().createServerPlayer("Bruno");
 
-		GameController.getInstance().createClientPlayer("Luiz");
-
 		NetController.getInstance().createServerAndListener();
 
 		GameController.getInstance().setServerName("Servidor");
@@ -34,16 +32,18 @@ public class ServerTest {
 			if (input.getStop()) {
 				state.setIsRunning(false);
 			}
-			if (input.getStartGame()) {
-				NetController.getInstance().updateLobby();
+			if (input.getStartGame() && !GameController.getInstance().getIsStarted()) {
 				NetController.getInstance().startGame();
+				GameController.getInstance().setIsStarted(true);
 			}
 
 			// Execute messages.
 			NetController.getInstance().executeMessages();
 
-			// Update clients.
-			NetController.getInstance().updateGame();
+			if (GameController.getInstance().getIsStarted()) {
+				// Update clients.
+				NetController.getInstance().updateGame();
+			}
 
 			try {
 				Thread.sleep(1000L);
@@ -55,6 +55,8 @@ public class ServerTest {
 
 			counter++;
 		}
+
+		NetController.getInstance().stopServer();
 
 		Log.debug("END SERVER");
 	}
