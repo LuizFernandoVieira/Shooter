@@ -6,71 +6,65 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class PlayerTexture {
 
-    private static final Integer WIDTH = 32;
+    private static final Integer WIDTH = 41;
 
-    private static final Integer HEIGHT = 32;
+    private static final Integer HEIGHT = 66;
 
-    private Texture texture;
+    private Texture textureWalking;
 
-    private TextureRegion[][] regions;
+    private Texture textureIdle;
+
+    private TextureRegion[] walkingRight;
+
+    private TextureRegion[] walkingLeft;
+
+    private TextureRegion idleRight;
+
+    private TextureRegion idleLeft;
 
     public PlayerTexture() {
-        texture = new Texture(Gdx.files.internal("spritesheet.png"));
+        textureWalking = new Texture(Gdx.files.internal("bubbleswalking.png"));
 
-        regions = new TextureRegion[8][12];
+        textureIdle = new Texture(Gdx.files.internal("bubblesidle.png"));
+
+        walkingRight = new TextureRegion[8];
+
+        walkingLeft = new TextureRegion[8];
+
+        idleRight = new TextureRegion();
+
+        idleLeft = new TextureRegion();
 
         for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 12; j++) {
-                regions[i][j] = new TextureRegion(texture, i * HEIGHT, j * WIDTH, WIDTH, HEIGHT);
-            }
+            walkingRight[i] = new TextureRegion(textureWalking, i * WIDTH, 0, WIDTH, HEIGHT);
         }
-    }
 
-    public TextureRegion getIdleUpFrame() {
-        return regions[1][3];
+        for (int i = 0; i < 8; i++) {
+            walkingLeft[i] = new TextureRegion(textureWalking, i * WIDTH, 0, WIDTH, HEIGHT);
+            walkingLeft[i].flip(true, false);
+        }
+
+        idleRight = new TextureRegion(textureIdle);
+
+        idleLeft = new TextureRegion(textureIdle);
+
+        idleLeft.flip(true, false);
     }
 
     public TextureRegion getIdleRightFrame() {
-        return regions[1][2];
-    }
-
-    public TextureRegion getIdleDownFrame() {
-        return regions[1][0];
+        return idleRight;
     }
 
     public TextureRegion getIdleLeftFrame() {
-        return regions[1][1];
-    }
-
-    public TextureRegion[] getWalkingUpFrames() {
-        TextureRegion[] frames = new TextureRegion[3];
-        frames[0] = regions[1][3];
-        frames[1] = regions[0][3];
-        frames[2] = regions[2][3];
-        return frames;
+        return idleLeft;
     }
 
     public TextureRegion[] getWalkingRightFrames() {
-        TextureRegion[] frames = new TextureRegion[3];
-        frames[0] = regions[1][2];
-        frames[1] = regions[0][2];
-        frames[2] = regions[2][2];
-        return frames;
-    }
-
-    public TextureRegion[] getWalkingDownFrames() {
-        TextureRegion[] frames = new TextureRegion[3];
-        frames[0] = regions[1][0];
-        frames[1] = regions[0][0];
-        frames[2] = regions[2][0];
-        return frames;
+        return walkingRight;
     }
 
     public TextureRegion[] getWalkingLeftFrames() {
-        TextureRegion[] frames = new TextureRegion[3];
-        frames[0] = regions[1][1];
-        frames[1] = regions[0][1];
-        frames[2] = regions[2][1];
-        return frames;
+        return walkingLeft;
     }
+
 }

@@ -1,7 +1,5 @@
 package br.unb.shooter.entity;
 
-import br.unb.shooter.util.Constants;
-
 public class Player extends Entity {
 
     private Integer health;
@@ -63,27 +61,15 @@ public class Player extends Entity {
      * @param y
      */
     public void setFacing(Float x, Float y) {
-        Float offsetX = x - positionX;
-        Float offsetY = (Constants.CAMERA_HEIGHT - y) - positionY;
-
-        Float absX = Math.abs(offsetX);
-        Float absY = Math.abs(offsetY);
+        Float offsetX = x - (positionX + width / 2);
 
         previousFacing = facing;
 
-        if (offsetY > 0 && absX < absY) {
+        if (offsetX > 0) {
             facing = 0;
-        }
-        if (offsetX > 0 && absX > absY) {
+        } else {
             facing = 1;
         }
-        if (offsetY < 0 && absX < absY) {
-            facing = 2;
-        }
-        if (offsetX < 0 && absX > absY) {
-            facing = 3;
-        }
-
         if (facing != previousFacing) {
             isChangingState = true;
         }
