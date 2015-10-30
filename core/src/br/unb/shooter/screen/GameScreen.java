@@ -15,6 +15,7 @@ import br.unb.shooter.debug.DebugGdx;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
 import br.unb.shooter.input.GameInputProcessor;
+import br.unb.shooter.map.Map;
 import br.unb.shooter.util.Constants;
 
 public class GameScreen extends Screen {
@@ -24,6 +25,8 @@ public class GameScreen extends Screen {
     private Viewport viewport;
 
     private DebugGdx debugGdx;
+
+    private Map map;
 
     /**
      * Constructor.
@@ -51,6 +54,9 @@ public class GameScreen extends Screen {
 
         // I didn't understand why 16, 13 to center the mouse cursor
         Gdx.input.setCursorImage(GdxController.getInstance().getMarkGdx().getPixmap(), 16, 13);
+
+        map = new Map();
+        map.create();
     }
 
     /**
@@ -88,6 +94,10 @@ public class GameScreen extends Screen {
     @Override
     public void draw() {
         super.draw();
+
+        if (map != null) {
+            map.draw(camera);
+        }
 
         batch.begin();
         for (Player player : GameController.getInstance().getPlayersMap().values()) {
