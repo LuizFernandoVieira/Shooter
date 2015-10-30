@@ -150,7 +150,7 @@ public class ServerUpdateMessage extends Message {
 			playerOnClient.setPositionY(player.getPositionY());
 			playerOnClient.setIsMoving(player.getIsMoving());
 			playerOnClient.setFacing(player.getFacing());
-
+/*
 			// Re apply inputs after server update
 			if (playerOnClient.getId().equals(GameController.getInstance().getPlayer().getId())) {
 				NetController.getInstance().removePastInputs(lastInput);
@@ -166,6 +166,7 @@ public class ServerUpdateMessage extends Message {
 					playerOnClient.update();
 				}
 			}
+*/			
 		}
 
 		for (Shot shot : shots) {
