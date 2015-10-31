@@ -34,7 +34,7 @@ public class Player extends Entity {
         isMoving = false;
         isChangingState = false;
         isShooting = false;
-        movingOffset = 2;
+        movingOffset = 3;
         positionX = 0f;
         positionY = 0f;
         width = 0;

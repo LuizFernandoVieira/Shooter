@@ -7,6 +7,7 @@ import java.util.List;
 import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
+import br.unb.shooter.entity.Wall;
 
 public class GameController {
 
@@ -21,6 +22,8 @@ public class GameController {
     private HashMap<Integer, Enemy> enemiesMap;
 
     private HashMap<Integer, Shot> shotsMap;
+
+    private HashMap<Integer, Wall> wallsMap;
 
     private List<Integer> removedShots;
 
@@ -177,6 +180,15 @@ public class GameController {
         }
     }
 
+    public void addWall(Wall wall) {
+        if (this.wallsMap == null) {
+            this.wallsMap = new HashMap<Integer, Wall>();
+        }
+        Integer cellX = (int) (wall.getPositionX() / 32);
+        Integer cellY = (int) (wall.getPositionY() / 32);
+        this.wallsMap.put(cellX + (cellY * 50), wall);
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -247,6 +259,14 @@ public class GameController {
 
     public void setRemovedShots(List<Integer> removedShots) {
         this.removedShots = removedShots;
+    }
+
+    public HashMap<Integer, Wall> getWallsMap() {
+        return wallsMap;
+    }
+
+    public void setWallsMap(HashMap<Integer, Wall> wallsMap) {
+        this.wallsMap = wallsMap;
     }
 
 }
