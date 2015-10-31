@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class MessageQueue {
 
-    public static final Integer LAG = 1000;
+    public static final Integer LAG = 0;
 
     private Integer messageSequence;
 

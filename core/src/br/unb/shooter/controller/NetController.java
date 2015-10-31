@@ -24,8 +24,6 @@ import br.unb.shooter.net.message.ServerUpdateMessage;
 
 public class NetController {
 
-    public static final Integer LAG = 1000;
-
     private static final Integer TCP_PORT = 5000;
 
     private static final Integer UDP_PORT = 6000;
@@ -104,7 +102,7 @@ public class NetController {
      */
     public void connectClient(String serverIp) {
         try {
-            client.connect(5000, "172.20.10.5", TCP_PORT, UDP_PORT);
+            client.connect(5000, serverIp, TCP_PORT, UDP_PORT);
         } catch (IOException e) {
             return;
         }
@@ -168,9 +166,12 @@ public class NetController {
      */
     public void updateGame() {
         ServerUpdateMessage msg = new ServerUpdateMessage(GameController.getInstance().getPlayersMap(),
-                GameController.getInstance().getShotsMap(), lastInputTime);
+                GameController.getInstance().getShotsMap(), lastInputTime,
+                GameController.getInstance().getRemovedShots());
 
         server.sendToAllTCP(msg.toString());
+
+        GameController.getInstance().setRemovedShots(new ArrayList<Integer>());
     }
 
     /**

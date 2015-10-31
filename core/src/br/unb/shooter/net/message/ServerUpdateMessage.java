@@ -5,183 +5,197 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.unb.shooter.controller.GameController;
-import br.unb.shooter.controller.NetController;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
 import br.unb.shooter.util.Constants;
 
 public class ServerUpdateMessage extends Message {
 
-	private Integer playersLength;
+    private Integer playersLength;
 
-	private List<Player> players;
+    private List<Player> players;
 
-	private Integer shotsLength;
+    private Integer shotsLength;
 
-	private List<Shot> shots;
+    private List<Shot> shots;
 
-	private Long lastInput;
+    private Long lastInput;
 
-	/**
-	 * Constructor.
-	 */
-	public ServerUpdateMessage() {
-		super();
-		this.id = MessageEnum.SERVER_UPDATE.getId();
-	}
+    private Integer removedShotsLength;
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param message
-	 */
-	public ServerUpdateMessage(String message) {
-		super();
-		this.id = MessageEnum.SERVER_UPDATE.getId();
-		translate(message);
-	}
+    private List<Integer> removedShots;
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param playersMap
-	 *            Player's map
-	 */
-	public ServerUpdateMessage(HashMap<Integer, Player> playersMap, HashMap<Integer, Shot> shotsMap, Long lastInput) {
-		super();
-		this.id = MessageEnum.SERVER_UPDATE.getId();
-		this.playersLength = playersMap.size();
-		this.players = new ArrayList<Player>();
-		this.players.addAll(playersMap.values());
-		this.shotsLength = shotsMap.size();
-		this.shots = new ArrayList<Shot>();
-		this.shots.addAll(shotsMap.values());
-		this.lastInput = lastInput;
-	}
+    /**
+     * Constructor.
+     */
+    public ServerUpdateMessage() {
+        super();
+        this.id = MessageEnum.SERVER_UPDATE.getId();
+    }
 
-	private void translate(String message) {
-		String[] slices = message.split(Constants.SPACE);
+    /**
+     * Constructor.
+     * 
+     * @param message
+     */
+    public ServerUpdateMessage(String message) {
+        super();
+        this.id = MessageEnum.SERVER_UPDATE.getId();
+        translate(message);
+    }
 
-		this.id = slices[0];
+    /**
+     * Constructor.
+     * 
+     * @param playersMap Player's map
+     */
+    public ServerUpdateMessage(HashMap<Integer, Player> playersMap, HashMap<Integer, Shot> shotsMap, Long lastInput,
+            List<Integer> removedShots) {
+        super();
+        this.id = MessageEnum.SERVER_UPDATE.getId();
+        this.playersLength = playersMap.size();
+        this.players = new ArrayList<Player>();
+        this.players.addAll(playersMap.values());
+        this.shotsLength = shotsMap.size();
+        this.shots = new ArrayList<Shot>();
+        this.shots.addAll(shotsMap.values());
+        this.lastInput = lastInput;
+        this.removedShotsLength = removedShots.size();
+        this.removedShots = new ArrayList<Integer>();
+        this.removedShots.addAll(removedShots);
+    }
 
-		this.playersLength = Integer.valueOf(slices[1]);
+    private void translate(String message) {
+        String[] slices = message.split(Constants.SPACE);
 
-		if (players == null) {
-			players = new ArrayList<Player>();
-		}
+        this.id = slices[0];
 
-		int offset = 2;
+        this.playersLength = Integer.valueOf(slices[1]);
 
-		for (int i = 0; i < playersLength; i++) {
-			Player player = new Player();
+        if (players == null) {
+            players = new ArrayList<Player>();
+        }
 
-			player.setId(Integer.valueOf(slices[offset + 0]));
-			player.setName(slices[offset + 1]);
-			player.setPositionX(Float.valueOf(slices[offset + 2]));
-			player.setPositionY(Float.valueOf(slices[offset + 3]));
-			player.setIsMoving(slices[offset + 4].equals("1") ? true : false);
-			player.setFacing(Integer.valueOf(slices[offset + 5]));
+        int offset = 2;
 
-			offset += 6;
+        for (int i = 0; i < playersLength; i++) {
+            Player player = new Player();
 
-			this.players.add(player);
-		}
+            player.setId(Integer.valueOf(slices[offset + 0]));
+            player.setName(slices[offset + 1]);
+            player.setPositionX(Float.valueOf(slices[offset + 2]));
+            player.setPositionY(Float.valueOf(slices[offset + 3]));
+            player.setIsMoving(slices[offset + 4].equals("1") ? true : false);
+            player.setFacing(Integer.valueOf(slices[offset + 5]));
 
-		this.shotsLength = Integer.valueOf(slices[offset]);
+            offset += 6;
 
-		if (shots == null) {
-			shots = new ArrayList<Shot>();
-		}
+            this.players.add(player);
+        }
 
-		offset += 1;
+        this.shotsLength = Integer.valueOf(slices[offset]);
 
-		for (int i = 0; i < shotsLength; i++) {
-			Shot shot = new Shot();
+        if (shots == null) {
+            shots = new ArrayList<Shot>();
+        }
 
-			shot.setId(Integer.valueOf(slices[offset + 0]));
-			shot.setPositionX(Float.valueOf(slices[offset + 1]));
-			shot.setPositionY(Float.valueOf(slices[offset + 2]));
-			shot.setAngle(Double.valueOf(slices[offset + 3]));
-			shot.setFinish(slices[offset + 4].equals(Constants.ONE));
-			shot.setPlayer(new Player());
-			shot.getPlayer().setId(Integer.valueOf(slices[offset + 5]));
-			shot.setSequence(Integer.valueOf(slices[offset + 6]));
+        offset += 1;
 
-			offset += 7;
+        for (int i = 0; i < shotsLength; i++) {
+            Shot shot = new Shot();
 
-			this.shots.add(shot);
-		}
+            shot.setId(Integer.valueOf(slices[offset + 0]));
+            shot.setPositionX(Float.valueOf(slices[offset + 1]));
+            shot.setPositionY(Float.valueOf(slices[offset + 2]));
+            shot.setAngle(Double.valueOf(slices[offset + 3]));
+            shot.setFinish(slices[offset + 4].equals(Constants.ONE));
+            shot.setPlayer(new Player());
+            shot.getPlayer().setId(Integer.valueOf(slices[offset + 5]));
+            shot.setSequence(Integer.valueOf(slices[offset + 6]));
 
-		this.lastInput = Long.valueOf(slices[offset]);
-	}
+            offset += 7;
 
-	@Override
-	public String toString() {
-		String message = "";
+            this.shots.add(shot);
+        }
 
-		message = this.id + Constants.SPACE + this.playersLength;
+        this.lastInput = Long.valueOf(slices[offset]);
 
-		for (Player player : players) {
-			message += (Constants.SPACE + player.getId() + Constants.SPACE + player.getName() + Constants.SPACE
-					+ player.getPositionX() + Constants.SPACE + player.getPositionY() + Constants.SPACE
-					+ (player.getIsMoving() ? "1" : "0") + Constants.SPACE + player.getFacing());
-		}
+        offset += 1;
 
-		message += Constants.SPACE + this.shotsLength;
+        this.removedShotsLength = Integer.valueOf(slices[offset]);
 
-		for (Shot shot : shots) {
-			message += (Constants.SPACE + shot.getId() + Constants.SPACE + shot.getPositionX() + Constants.SPACE
-					+ shot.getPositionY() + Constants.SPACE + shot.getAngle() + Constants.SPACE
-					+ Constants.convertBoolean(shot.getFinish())) + Constants.SPACE + shot.getPlayer().getId()
-					+ Constants.SPACE + shot.getSequence();
-		}
+        if (removedShots == null) {
+            removedShots = new ArrayList<Integer>();
+        }
 
-		message += Constants.SPACE + this.lastInput;
+        offset += 1;
 
-		return message;
-	}
+        for (int i = 0; i < removedShotsLength; i++) {
+            this.removedShots.add(Integer.valueOf(slices[offset]));
+            offset += 1;
+        }
+    }
 
-	@Override
-	public void execute() {
-		// Set current server player status
-		for (Player player : players) {
-			Player playerOnClient = GameController.getInstance().getPlayersMap().get(player.getId());
-			playerOnClient.setPositionX(player.getPositionX());
-			playerOnClient.setPositionY(player.getPositionY());
-			playerOnClient.setIsMoving(player.getIsMoving());
-			playerOnClient.setFacing(player.getFacing());
-/*
-			// Re apply inputs after server update
-			if (playerOnClient.getId().equals(GameController.getInstance().getPlayer().getId())) {
-				NetController.getInstance().removePastInputs(lastInput);
+    @Override
+    public String toString() {
+        String message = "";
 
-				for (Message message : NetController.getInstance().getClientMessages()) {
-					ClientInputMessage input = (ClientInputMessage) message;
-					playerOnClient.setFacing(input.getMouseX(), input.getMouseY());
-					playerOnClient.setMoveUp(input.getMoveUp());
-					playerOnClient.setMoveRight(input.getMoveRight());
-					playerOnClient.setMoveDown(input.getMoveDown());
-					playerOnClient.setMoveLeft(input.getMoveLeft());
-					playerOnClient.setMovingState();
-					playerOnClient.update();
-				}
-			}
-*/			
-		}
+        message = this.id + Constants.SPACE + this.playersLength;
 
-		for (Shot shot : shots) {
-			Shot shotOnClient = GameController.getInstance().getShotsMap().get(shot.getId());
-			if (shotOnClient == null) {
-				shotOnClient = new Shot();
-				GameController.getInstance().getShotsMap().put(shot.getId(), shot);
-			}
-			shotOnClient.setPositionX(shot.getPositionX());
-			shotOnClient.setPositionY(shot.getPositionY());
-			shotOnClient.setAngle(shot.getAngle());
-			shotOnClient.setFinish(shot.getFinish());
-			shotOnClient.setPlayer(shot.getPlayer());
-			shotOnClient.setSequence(shot.getSequence());
-		}
-	}
+        for (Player player : players) {
+            message += (Constants.SPACE + player.getId() + Constants.SPACE + player.getName() + Constants.SPACE
+                    + player.getPositionX() + Constants.SPACE + player.getPositionY() + Constants.SPACE
+                    + (player.getIsMoving() ? "1" : "0") + Constants.SPACE + player.getFacing());
+        }
+
+        message += Constants.SPACE + this.shotsLength;
+
+        for (Shot shot : shots) {
+            message += (Constants.SPACE + shot.getId() + Constants.SPACE + shot.getPositionX() + Constants.SPACE
+                    + shot.getPositionY() + Constants.SPACE + shot.getAngle() + Constants.SPACE
+                    + Constants.convertBoolean(shot.getFinish())) + Constants.SPACE + shot.getPlayer().getId()
+                    + Constants.SPACE + shot.getSequence();
+        }
+
+        message += Constants.SPACE + this.lastInput;
+
+        message += Constants.SPACE + this.removedShotsLength;
+
+        for (Integer id : removedShots) {
+            message += (Constants.SPACE + id.toString());
+        }
+
+        return message;
+    }
+
+    @Override
+    public void execute() {
+        // Set current server player status
+        for (Player player : players) {
+            Player playerOnClient = GameController.getInstance().getPlayersMap().get(player.getId());
+            playerOnClient.setPositionX(player.getPositionX());
+            playerOnClient.setPositionY(player.getPositionY());
+            playerOnClient.setIsMoving(player.getIsMoving());
+            playerOnClient.setFacing(player.getFacing());
+        }
+
+        for (Shot shot : shots) {
+            Shot shotOnClient = GameController.getInstance().getShotsMap().get(shot.getId());
+            if (shotOnClient == null) {
+                shotOnClient = new Shot();
+                GameController.getInstance().getShotsMap().put(shot.getId(), shot);
+            }
+            shotOnClient.setPositionX(shot.getPositionX());
+            shotOnClient.setPositionY(shot.getPositionY());
+            shotOnClient.setAngle(shot.getAngle());
+            shotOnClient.setFinish(shot.getFinish());
+            shotOnClient.setPlayer(shot.getPlayer());
+            shotOnClient.setSequence(shot.getSequence());
+        }
+
+        for (Integer id : removedShots) {
+            GameController.getInstance().getShotsMap().remove(id);
+        }
+    }
 
 }

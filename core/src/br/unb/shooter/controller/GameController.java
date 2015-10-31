@@ -1,6 +1,8 @@
 package br.unb.shooter.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.Player;
@@ -20,6 +22,8 @@ public class GameController {
 
     private HashMap<Integer, Shot> shotsMap;
 
+    private List<Integer> removedShots;
+
     private static GameController instance;
 
     private Boolean isStarted = false;
@@ -32,6 +36,7 @@ public class GameController {
         shotsMap = new HashMap<Integer, Shot>();
         mouseX = 0f;
         mouseY = 0f;
+        removedShots = new ArrayList<Integer>();
     }
 
     /**
@@ -234,6 +239,14 @@ public class GameController {
 
     public void setMouseY(Float mouseY) {
         this.mouseY = mouseY;
+    }
+
+    public List<Integer> getRemovedShots() {
+        return removedShots;
+    }
+
+    public void setRemovedShots(List<Integer> removedShots) {
+        this.removedShots = removedShots;
     }
 
 }

@@ -78,14 +78,12 @@ public class GameScreen extends Screen {
             shot.update();
             if (shot.getFinish()) {
                 ids.add(shot.getId());
+                GameController.getInstance().getRemovedShots().add(shot.getId());
             }
         }
         for (Integer id : ids) {
             GameController.getInstance().getShotsMap().remove(id);
         }
-        // debugGdx.update(GameController.getInstance().getPlayer(),
-        // GameController.getInstance().getMouseX(),
-        // GameController.getInstance().getMouseY());
     }
 
     /**
