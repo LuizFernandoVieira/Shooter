@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import br.unb.shooter.collision.MapCollision;
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.GdxController;
 import br.unb.shooter.debug.DebugGdx;
@@ -27,6 +28,8 @@ public class GameScreen extends Screen {
     private DebugGdx debugGdx;
 
     private Map map;
+
+    private MapCollision mapCollision;
 
     /**
      * Constructor.
@@ -57,6 +60,8 @@ public class GameScreen extends Screen {
 
         map = new Map();
         map.create();
+
+        mapCollision = new MapCollision(map.getTileWidth(), map.getTileHeight());
     }
 
     /**
@@ -67,17 +72,11 @@ public class GameScreen extends Screen {
         GameController.getInstance().getPlayer().setFacing(GameController.getInstance().getMouseX(),
                 GameController.getInstance().getMouseY());
         for (Player player : GameController.getInstance().getPlayersMap().values()) {
-            Float oldx = player.getPositionX();
-            Float oldy = player.getPositionY();
+            mapCollision.setOldPlayerState(player);
             player.update();
-            Integer cellX = (int) (player.getPositionX() / 32);
-            Integer cellY = (int) (player.getPositionY() / 32);
-            Integer cellWidth = (int) ((player.getPositionX() + player.getWidth()) / 32);
-            Integer cellHeight = (int) ((player.getPositionY() + player.getHeight()) / 32);
-            if (GameController.getInstance().getWallsMap().containsKey(cellX + cellY * 50)
-                    || GameController.getInstance().getWallsMap().containsKey(cellWidth + cellHeight * 50)) {
-                player.setPositionX(oldx);
-                player.setPositionY(oldy);
+            if (mapCollision.checkMapCollision(GameController.getInstance().getWallsMap(), player)) {
+                player.setPositionX(mapCollision.getPlayer().getPositionX());
+                player.setPositionY(mapCollision.getPlayer().getPositionY());
             }
             GdxController.getInstance().getPlayerGdx().update(player, Gdx.graphics.getDeltaTime());
             if (player.getIsShooting()) {

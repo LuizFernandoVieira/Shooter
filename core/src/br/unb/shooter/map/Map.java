@@ -1,7 +1,6 @@
 package br.unb.shooter.map;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
@@ -19,9 +18,11 @@ public class Map {
 
     private OrthogonalTiledMapRenderer renderer;
 
-    private MapObjects mapObjects;
-
     private TiledMapTileLayer mapWalls;
+
+    private Integer tileWidth;
+
+    private Integer tileHeight;
 
     public void create() {
         tiledLoader = new TmxMapLoader();
@@ -30,9 +31,11 @@ public class Map {
 
         renderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
 
-        mapObjects = tiledMap.getLayers().get("objects").getObjects();
-
         mapWalls = (TiledMapTileLayer) tiledMap.getLayers().get("foreground");
+
+        this.tileWidth = (int) mapWalls.getTileWidth();
+
+        this.tileHeight = (int) mapWalls.getTileHeight();
 
         for (int i = 0; i < mapWalls.getWidth(); i++) {
             for (int j = 0; j < mapWalls.getHeight(); j++) {
@@ -53,6 +56,22 @@ public class Map {
         renderer.setView(camera);
         renderer.render();
         camera.setToOrtho(true);
+    }
+
+    public Integer getTileWidth() {
+        return tileWidth;
+    }
+
+    public void setTileWidth(Integer tileWidth) {
+        this.tileWidth = tileWidth;
+    }
+
+    public Integer getTileHeight() {
+        return tileHeight;
+    }
+
+    public void setTileHeight(Integer tileHeight) {
+        this.tileHeight = tileHeight;
     }
 
 }
