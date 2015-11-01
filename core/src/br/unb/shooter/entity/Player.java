@@ -22,6 +22,8 @@ public class Player extends Entity {
     private Boolean isChangingState;
 
     private Boolean isShooting;
+    
+    private Weapon weapon;
 
     /**
      * Constructor.
@@ -40,6 +42,8 @@ public class Player extends Entity {
         width = 0;
         height = 0;
         facing = 0;
+        weapon = new FireWeapon();
+        weapon.setOwner(this);
     }
 
     /**
@@ -91,6 +95,8 @@ public class Player extends Entity {
         if (moveLeft) {
             setPositionX(getPositionX() - movingOffset);
         }
+        
+        weapon.update();
     }
 
     public Integer getHealth() {
@@ -200,6 +206,14 @@ public class Player extends Entity {
 
     public void setTargetY(Float targetY) {
         this.targetY = targetY;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 
 }

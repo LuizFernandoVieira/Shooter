@@ -3,20 +3,20 @@ package br.unb.shooter.entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public abstract class Weapon {
+public abstract class Weapon extends Entity{
 
     private Entity owner;
-    private Vector2 position;
 
     /**
      * Constructor.
      */
     public Weapon() {
         owner = null;
-        position = new Vector2();
+        setPositionX(0f);
+        setPositionY(0f);
     }
 
-    public abstract void update(float deltaTime);
+    public abstract void update();
 
     public abstract void render(SpriteBatch batch);
 
@@ -24,16 +24,10 @@ public abstract class Weapon {
         return owner;
     }
 
-    public Vector2 getPosition() {
-        return position;
-    }
-
     public void setOwner(Entity owner) {
         this.owner = owner;
-    }
-
-    public void setPosition(Vector2 position) {
-        this.position = position;
+        setPositionX(this.owner.getPositionX());
+        setPositionY(this.owner.getPositionY());
     }
 
 }
