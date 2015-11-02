@@ -24,6 +24,8 @@ public class Map {
 
     private Integer tileHeight;
 
+    private Integer rows;
+
     public void create() {
         tiledLoader = new TmxMapLoader();
 
@@ -36,6 +38,8 @@ public class Map {
         this.tileWidth = (int) mapWalls.getTileWidth();
 
         this.tileHeight = (int) mapWalls.getTileHeight();
+
+        this.rows = mapWalls.getWidth();
 
         for (int i = 0; i < mapWalls.getWidth(); i++) {
             for (int j = 0; j < mapWalls.getHeight(); j++) {
@@ -72,6 +76,14 @@ public class Map {
 
     public void setTileHeight(Integer tileHeight) {
         this.tileHeight = tileHeight;
+    }
+
+    public Integer getRows() {
+        return rows;
+    }
+
+    public void setRows(Integer rows) {
+        this.rows = rows;
     }
 
 }

@@ -61,7 +61,7 @@ public class GameScreen extends Screen {
         map = new Map();
         map.create();
 
-        mapCollision = new MapCollision(map.getTileWidth(), map.getTileHeight());
+        mapCollision = new MapCollision(map.getTileWidth(), map.getTileHeight(), map.getRows());
     }
 
     /**
@@ -74,8 +74,10 @@ public class GameScreen extends Screen {
         for (Player player : GameController.getInstance().getPlayersMap().values()) {
             mapCollision.setOldPlayerState(player);
             player.update();
-            if (mapCollision.checkMapCollision(GameController.getInstance().getWallsMap(), player)) {
+            if (mapCollision.checkMapCollisionX(GameController.getInstance().getWallsMap(), player)) {
                 player.setPositionX(mapCollision.getPlayer().getPositionX());
+            }
+            if (mapCollision.checkMapCollisionY(GameController.getInstance().getWallsMap(), player)) {
                 player.setPositionY(mapCollision.getPlayer().getPositionY());
             }
             GdxController.getInstance().getPlayerGdx().update(player, Gdx.graphics.getDeltaTime());

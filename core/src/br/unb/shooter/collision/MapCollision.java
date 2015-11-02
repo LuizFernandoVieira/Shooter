@@ -12,9 +12,12 @@ public class MapCollision {
 
     private Integer tileHeight;
 
-    public MapCollision(Integer tileWidth, Integer tileHeight) {
+    private Integer columns;
+
+    public MapCollision(Integer tileWidth, Integer tileHeight, Integer columns) {
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
+        this.columns = columns;
     }
 
     public void setOldPlayerState(Player player) {
@@ -26,25 +29,31 @@ public class MapCollision {
         this.player.setHeight(player.getHeight());
     }
 
-    public Boolean checkMapCollision(HashMap<Integer, Wall> walls, Player player) {
+    public Boolean checkMapCollisionX(HashMap<Integer, Wall> walls, Player player) {
         Integer x1 = (int) (player.getPositionX() / tileWidth);
         Integer y1 = (int) (player.getPositionY() / tileHeight);
         Integer x2 = (int) ((player.getPositionX() + player.getWidth()) / tileWidth);
         Integer y2 = (int) ((player.getPositionY() + player.getHeight()) / tileHeight);
-        Integer x3 = (int) ((player.getPositionX() + player.getWidth() / 2) / tileWidth);
-        Integer y3 = (int) ((player.getPositionY() + player.getWidth() / 2) / tileWidth);
 
-        Boolean v1 = walls.containsKey(x1 + y1 * 50);
-        Boolean v2 = walls.containsKey(x1 + y2 * 50);
-        Boolean v3 = walls.containsKey(x2 + y1 * 50);
-        Boolean v4 = walls.containsKey(x2 + y2 * 50);
-        Boolean v5 = walls.containsKey(x1 + y3 * 50);
-        Boolean v6 = walls.containsKey(x2 + y3 * 50);
-        Boolean v7 = walls.containsKey(x3 + y1 * 50);
-        Boolean v8 = walls.containsKey(x3 + y2 * 50);
+        for (int i = y1; i <= y2; i++) {
+            if (walls.containsKey(x1 + i * columns) || walls.containsKey(x2 + i * columns)) {
+                return true;
+            }
+        }
 
-        if (v1 || v2 || v3 || v4 || v5 || v6 || v7 || v8) {
-            return true;
+        return false;
+    }
+
+    public Boolean checkMapCollisionY(HashMap<Integer, Wall> walls, Player player) {
+        Integer x1 = (int) (player.getPositionX() / tileWidth);
+        Integer y1 = (int) (player.getPositionY() / tileHeight);
+        Integer x2 = (int) ((player.getPositionX() + player.getWidth()) / tileWidth);
+        Integer y2 = (int) ((player.getPositionY() + player.getHeight()) / tileHeight);
+
+        for (int i = x1; i <= x2; i++) {
+            if (walls.containsKey(i + y1 * columns) || walls.containsKey(i + y2 * columns)) {
+                return true;
+            }
         }
 
         return false;
