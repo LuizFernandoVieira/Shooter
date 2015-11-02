@@ -14,7 +14,7 @@ public class WeaponGdx {
 
     public void draw(SpriteBatch batch, Weapon weapon) {
         Double rotation = ((FireWeapon) weapon).getAngle();
-        System.out.println(rotation);
-        batch.draw(weaponTexture.getFrame(), weapon.getPositionX(), weapon.getPositionY(), 0, 0, weapon.getWidth(), weapon.getHeight(), 1, 1, rotation.intValue());
+        batch.draw(weaponTexture.getFrame(), weapon.getPositionX(), weapon.getPositionY(), 0, 0, weapon.getWidth(),
+                weapon.getHeight(), 1, 1, rotation.intValue());
     }
 }

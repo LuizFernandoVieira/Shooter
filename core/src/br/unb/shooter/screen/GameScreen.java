@@ -48,7 +48,7 @@ public class GameScreen extends Screen {
         // debugGdx = new DebugGdx(getStage(), getSkin());
 
         GdxController.getInstance().getPlayerGdx().initGraphics();
-        
+
         GdxController.getInstance().getWeaponGdx().initGraphics();
 
         GdxController.getInstance().getMarkGdx().initGraphics();
@@ -121,7 +121,6 @@ public class GameScreen extends Screen {
         }
         batch.end();
 
-        // debugGdx.draw(camera);
     }
 
     public void dispose() {
