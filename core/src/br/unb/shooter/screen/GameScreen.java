@@ -48,6 +48,8 @@ public class GameScreen extends Screen {
         // debugGdx = new DebugGdx(getStage(), getSkin());
 
         GdxController.getInstance().getPlayerGdx().initGraphics();
+        
+        GdxController.getInstance().getWeaponGdx().initGraphics();
 
         GdxController.getInstance().getMarkGdx().initGraphics();
 
@@ -112,6 +114,7 @@ public class GameScreen extends Screen {
         batch.begin();
         for (Player player : GameController.getInstance().getPlayersMap().values()) {
             GdxController.getInstance().getPlayerGdx().draw(batch, player);
+            GdxController.getInstance().getWeaponGdx().draw(batch, player.getWeapon());
         }
         for (Shot shot : GameController.getInstance().getShotsMap().values()) {
             GdxController.getInstance().getShotGdx().draw(batch, shot);

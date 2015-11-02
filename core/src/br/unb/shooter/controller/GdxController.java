@@ -7,6 +7,7 @@ import br.unb.shooter.entity.graphic.player.IPlayerState;
 import br.unb.shooter.entity.graphic.player.PlayerGdx;
 import br.unb.shooter.entity.graphic.shot.ShotGdx;
 import br.unb.shooter.entity.graphic.targetmark.TargetMarkGdx;
+import br.unb.shooter.entity.graphic.weapon.WeaponGdx;
 
 public class GdxController {
     private static GdxController instance;
@@ -16,6 +17,8 @@ public class GdxController {
     private TargetMarkGdx markGdx;
 
     private ShotGdx shotGdx;
+    
+    private WeaponGdx weaponGdx;
 
     public static GdxController getInstance() {
         if (instance == null) {
@@ -68,5 +71,15 @@ public class GdxController {
     public void setShotGdx(ShotGdx shotGdx) {
         this.shotGdx = shotGdx;
     }
+    
+    public WeaponGdx getWeaponGdx() {
+        if(weaponGdx == null) {
+            weaponGdx = new WeaponGdx();
+        }
+        return weaponGdx;
+    }
 
+    public void setWeaponGdx(WeaponGdx weaponGdx) {
+        this.weaponGdx = weaponGdx;
+    }
 }
