@@ -94,14 +94,14 @@ public class GameController {
      * Initialize game state.
      */
     public void startGame() {
-        Float positionXPlayer1 = 0f;
-        Float positionXPlayer2 = 64f;
-        Float positionXPlayer3 = 128f;
-        Float positionXPlayer4 = 192f;
-        Float positionYPlayer1 = 0f;
-        Float positionYPlayer2 = 0f;
-        Float positionYPlayer3 = 0f;
-        Float positionYPlayer4 = 0f;
+        Float positionXPlayer1 = 280f;
+        Float positionXPlayer2 = 280f;
+        Float positionXPlayer3 = 280f;
+        Float positionXPlayer4 = 280f;
+        Float positionYPlayer1 = 267f;
+        Float positionYPlayer2 = 267f;
+        Float positionYPlayer3 = 267f;
+        Float positionYPlayer4 = 267f;
 
         Integer index = 0;
         for (Player player : GameController.getInstance().playersMap.values()) {

@@ -56,10 +56,8 @@ public class Map {
     }
 
     public void draw(OrthographicCamera camera) {
-        camera.setToOrtho(false);
         renderer.setView(camera);
         renderer.render();
-        camera.setToOrtho(true);
     }
 
     public Integer getTileWidth() {

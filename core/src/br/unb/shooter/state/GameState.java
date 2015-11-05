@@ -15,6 +15,7 @@ public class GameState extends State {
 
         if (!NetController.getInstance().getIsMultiplayer()) {
             GameController.getInstance().createServerPlayer("Player");
+            GameController.getInstance().startGame();
         }
     }
 
