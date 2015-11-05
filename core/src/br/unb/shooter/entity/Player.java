@@ -2,218 +2,246 @@ package br.unb.shooter.entity;
 
 public class Player extends Entity {
 
-    private Integer health;
-    private Boolean moveUp;
-    private Boolean moveRight;
-    private Boolean moveDown;
-    private Boolean moveLeft;
-    private String name;
-    private Integer connectionId;
-    private Integer movingOffset;
-    private Integer facing;
-    private Integer previousFacing;
+	private Integer health;
+	private Boolean moveUp;
+	private Boolean moveRight;
+	private Boolean moveDown;
+	private Boolean moveLeft;
+	private String name;
+	private Integer connectionId;
+	private Integer velocity;
+	private Integer facing;
+	private Integer previousFacing;
 
-    private Float targetX;
+	private Float targetX;
 
-    private Float targetY;
+	private Float targetY;
 
-    private Boolean isMoving;
+	private Boolean isMoving;
 
-    private Boolean isChangingState;
+	private Boolean isChangingState;
 
-    private Boolean isShooting;
-    
-    private Weapon weapon;
+	private Boolean isShooting;
 
-    /**
-     * Constructor.
-     */
-    public Player() {
-        moveUp = false;
-        moveRight = false;
-        moveDown = false;
-        moveLeft = false;
-        isMoving = false;
-        isChangingState = false;
-        isShooting = false;
-        movingOffset = 3;
-        positionX = 0f;
-        positionY = 0f;
-        width = 0;
-        height = 0;
-        facing = 0;
-        weapon = new FireWeapon();
-        weapon.setOwner(this);
-    }
+	private Weapon weapon;
 
-    /**
-     * Set moving status.
-     */
-    public void setMovingState() {
-        if (moveUp || moveRight || moveDown || moveLeft) {
-            isMoving = true;
-        } else {
-            isMoving = false;
-        }
-        isChangingState = true;
-    }
+	private Float startX;
 
-    /**
-     * Set facing.
-     * 
-     * @param x
-     * @param y
-     */
-    public void setFacing(Float x, Float y) {
-        Float offsetX = x - (positionX + width / 2);
+	private Float startY;
 
-        previousFacing = facing;
+	/**
+	 * Constructor.
+	 */
+	public Player() {
+		moveUp = false;
+		moveRight = false;
+		moveDown = false;
+		moveLeft = false;
+		isMoving = false;
+		isChangingState = false;
+		isShooting = false;
+		velocity = 3;
+		positionX = 0f;
+		positionY = 0f;
+		width = 0;
+		height = 0;
+		facing = 0;
+		weapon = new FireWeapon();
+		weapon.setOwner(this);
+	}
 
-        if (offsetX > 0) {
-            facing = 0;
-        } else {
-            facing = 1;
-        }
-        if (facing != previousFacing) {
-            isChangingState = true;
-        }
-    }
+	/**
+	 * Set moving status.
+	 */
+	public void setMovingState() {
+		if (moveUp || moveRight || moveDown || moveLeft) {
+			isMoving = true;
+		} else {
+			isMoving = false;
+		}
+		isChangingState = true;
+	}
 
-    /**
-     * Updates player.
-     */
-    public void update() {
-        if (moveUp) {
-            setPositionY(getPositionY() + movingOffset);
-        }
-        if (moveDown) {
-            setPositionY(getPositionY() - movingOffset);
-        }
-        if (moveRight) {
-            setPositionX(getPositionX() + movingOffset);
-        }
-        if (moveLeft) {
-            setPositionX(getPositionX() - movingOffset);
-        }
-        
-        weapon.update();
-    }
+	/**
+	 * Set facing.
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	public void setFacing(Float x, Float y) {
+		Float offsetX = x - (positionX + width / 2);
 
-    public Integer getHealth() {
-        return health;
-    }
+		previousFacing = facing;
 
-    public void setHealth(Integer health) {
-        this.health = health;
-    }
+		if (offsetX > 0) {
+			facing = 0;
+		} else {
+			facing = 1;
+		}
+		if (facing != previousFacing) {
+			isChangingState = true;
+		}
+	}
 
-    public Boolean getMoveUp() {
-        return moveUp;
-    }
+	/**
+	 * Updates player.
+	 */
+	public void update() {
+		if (moveUp) {
+			setPositionY(getPositionY() + velocity);
+		}
+		if (moveDown) {
+			setPositionY(getPositionY() - velocity);
+		}
+		if (moveRight) {
+			setPositionX(getPositionX() + velocity);
+		}
+		if (moveLeft) {
+			setPositionX(getPositionX() - velocity);
+		}
 
-    public void setMoveUp(Boolean moveUp) {
-        this.moveUp = moveUp;
-    }
+		weapon.update();
+	}
 
-    public Boolean getMoveRight() {
-        return moveRight;
-    }
+	public Integer getHealth() {
+		return health;
+	}
 
-    public void setMoveRight(Boolean moveRight) {
-        this.moveRight = moveRight;
-    }
+	public void setHealth(Integer health) {
+		this.health = health;
+	}
 
-    public Boolean getMoveDown() {
-        return moveDown;
-    }
+	public Boolean getMoveUp() {
+		return moveUp;
+	}
 
-    public void setMoveDown(Boolean moveDown) {
-        this.moveDown = moveDown;
-    }
+	public void setMoveUp(Boolean moveUp) {
+		this.moveUp = moveUp;
+	}
 
-    public Boolean getMoveLeft() {
-        return moveLeft;
-    }
+	public Boolean getMoveRight() {
+		return moveRight;
+	}
 
-    public void setMoveLeft(Boolean moveLeft) {
-        this.moveLeft = moveLeft;
-    }
+	public void setMoveRight(Boolean moveRight) {
+		this.moveRight = moveRight;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public Boolean getMoveDown() {
+		return moveDown;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setMoveDown(Boolean moveDown) {
+		this.moveDown = moveDown;
+	}
 
-    public Integer getConnectionId() {
-        return connectionId;
-    }
+	public Boolean getMoveLeft() {
+		return moveLeft;
+	}
 
-    public void setConnectionId(Integer connectionId) {
-        this.connectionId = connectionId;
-    }
+	public void setMoveLeft(Boolean moveLeft) {
+		this.moveLeft = moveLeft;
+	}
 
-    public Boolean getIsMoving() {
-        return isMoving;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setIsMoving(Boolean isMoving) {
-        this.isMoving = isMoving;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Boolean getIsChangingState() {
-        return isChangingState;
-    }
+	public Integer getConnectionId() {
+		return connectionId;
+	}
 
-    public void setIsChangingState(Boolean isChangingState) {
-        this.isChangingState = isChangingState;
-    }
+	public void setConnectionId(Integer connectionId) {
+		this.connectionId = connectionId;
+	}
 
-    @Override
-    public String toString() {
-        return this.name == null ? "" : this.name;
-    }
+	public Boolean getIsMoving() {
+		return isMoving;
+	}
 
-    public Integer getFacing() {
-        return facing;
-    }
+	public void setIsMoving(Boolean isMoving) {
+		this.isMoving = isMoving;
+	}
 
-    public void setFacing(Integer facing) {
-        this.facing = facing;
-    }
+	public Boolean getIsChangingState() {
+		return isChangingState;
+	}
 
-    public Boolean getIsShooting() {
-        return isShooting;
-    }
+	public void setIsChangingState(Boolean isChangingState) {
+		this.isChangingState = isChangingState;
+	}
 
-    public void setIsShooting(Boolean isShooting) {
-        this.isShooting = isShooting;
-    }
+	@Override
+	public String toString() {
+		return this.name == null ? "" : this.name;
+	}
 
-    public Float getTargetX() {
-        return targetX;
-    }
+	public Integer getFacing() {
+		return facing;
+	}
 
-    public void setTargetX(Float targetX) {
-        this.targetX = targetX;
-    }
+	public void setFacing(Integer facing) {
+		this.facing = facing;
+	}
 
-    public Float getTargetY() {
-        return targetY;
-    }
+	public Boolean getIsShooting() {
+		return isShooting;
+	}
 
-    public void setTargetY(Float targetY) {
-        this.targetY = targetY;
-    }
+	public void setIsShooting(Boolean isShooting) {
+		this.isShooting = isShooting;
+	}
 
-    public Weapon getWeapon() {
-        return weapon;
-    }
+	public Float getTargetX() {
+		return targetX;
+	}
 
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
-    }
+	public void setTargetX(Float targetX) {
+		this.targetX = targetX;
+	}
+
+	public Float getTargetY() {
+		return targetY;
+	}
+
+	public void setTargetY(Float targetY) {
+		this.targetY = targetY;
+	}
+
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+	}
+
+	public Float getStartX() {
+		return startX;
+	}
+
+	public void setStartX(Float startX) {
+		this.startX = startX;
+	}
+
+	public Float getStartY() {
+		return startY;
+	}
+
+	public void setStartY(Float startY) {
+		this.startY = startY;
+	}
+
+	public Integer getVelocity() {
+		return velocity;
+	}
+
+	public void setVelocity(Integer velocity) {
+		this.velocity = velocity;
+	}
 
 }

@@ -12,76 +12,112 @@ import br.unb.shooter.entity.Wall;
 
 public class Map {
 
-    private TiledMap tiledMap;
+	private TiledMap tiledMap;
 
-    private TmxMapLoader tiledLoader;
+	private TmxMapLoader tiledLoader;
 
-    private OrthogonalTiledMapRenderer renderer;
+	private OrthogonalTiledMapRenderer renderer;
 
-    private TiledMapTileLayer mapWalls;
+	private TiledMapTileLayer mapWalls;
 
-    private Integer tileWidth;
+	private Float tileWidth;
 
-    private Integer tileHeight;
+	private Float tileHeight;
 
-    private Integer rows;
+	private Float cols;
 
-    public void create() {
-        tiledLoader = new TmxMapLoader();
+	private Float rows;
 
-        tiledMap = tiledLoader.load("tiledmap.tmx");
+	private OrthographicCamera camera;
 
-        renderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
+	public Map(OrthographicCamera camera) {
+		this.camera = camera;
 
-        mapWalls = (TiledMapTileLayer) tiledMap.getLayers().get("foreground");
+		tiledLoader = new TmxMapLoader();
 
-        this.tileWidth = (int) mapWalls.getTileWidth();
+		tiledMap = tiledLoader.load("tiledmap.tmx");
 
-        this.tileHeight = (int) mapWalls.getTileHeight();
+		renderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
 
-        this.rows = mapWalls.getWidth();
+		mapWalls = (TiledMapTileLayer) tiledMap.getLayers().get("foreground");
 
-        for (int i = 0; i < mapWalls.getWidth(); i++) {
-            for (int j = 0; j < mapWalls.getHeight(); j++) {
-                Cell cell = mapWalls.getCell(i, j);
-                if (cell != null) {
-                    GameController.getInstance()
-                            .addWall(new Wall(i * mapWalls.getTileWidth(), j * mapWalls.getTileHeight(),
-                                    Float.valueOf(mapWalls.getTileWidth()).intValue(),
-                                    Float.valueOf(mapWalls.getTileHeight()).intValue()));
-                }
-            }
-        }
+		this.tileWidth = mapWalls.getTileWidth();
 
-    }
+		this.tileHeight = mapWalls.getTileHeight();
 
-    public void draw(OrthographicCamera camera) {
-        renderer.setView(camera);
-        renderer.render();
-    }
+		this.cols = Float.valueOf(mapWalls.getWidth());
 
-    public Integer getTileWidth() {
-        return tileWidth;
-    }
+		this.rows = Float.valueOf(mapWalls.getHeight());
 
-    public void setTileWidth(Integer tileWidth) {
-        this.tileWidth = tileWidth;
-    }
+		for (int i = 0; i < mapWalls.getWidth(); i++) {
+			for (int j = 0; j < mapWalls.getHeight(); j++) {
+				Cell cell = mapWalls.getCell(i, j);
+				if (cell != null) {
+					GameController.getInstance()
+							.addWall(new Wall(i * mapWalls.getTileWidth(), j * mapWalls.getTileHeight(),
+									Float.valueOf(mapWalls.getTileWidth()).intValue(),
+									Float.valueOf(mapWalls.getTileHeight()).intValue()));
+				}
+			}
+		}
 
-    public Integer getTileHeight() {
-        return tileHeight;
-    }
+	}
 
-    public void setTileHeight(Integer tileHeight) {
-        this.tileHeight = tileHeight;
-    }
+	public void update() {
+		camera.update();
+	}
 
-    public Integer getRows() {
-        return rows;
-    }
+	public void draw() {
+		renderer.setView(camera);
+		renderer.render();
+	}
 
-    public void setRows(Integer rows) {
-        this.rows = rows;
-    }
+	public Float getTileWidth() {
+		return tileWidth;
+	}
+
+	public void setTileWidth(Float tileWidth) {
+		this.tileWidth = tileWidth;
+	}
+
+	public Float getTileHeight() {
+		return tileHeight;
+	}
+
+	public void setTileHeight(Float tileHeight) {
+		this.tileHeight = tileHeight;
+	}
+
+	public OrthographicCamera getCamera() {
+		return camera;
+	}
+
+	public void setCamera(OrthographicCamera camera) {
+		this.camera = camera;
+	}
+
+	public Float getCols() {
+		return cols;
+	}
+
+	public void setCols(Float cols) {
+		this.cols = cols;
+	}
+
+	public Float getRows() {
+		return rows;
+	}
+
+	public void setRows(Float rows) {
+		this.rows = rows;
+	}
+
+	public TiledMapTileLayer getMapWalls() {
+		return mapWalls;
+	}
+
+	public void setMapWalls(TiledMapTileLayer mapWalls) {
+		this.mapWalls = mapWalls;
+	}
 
 }

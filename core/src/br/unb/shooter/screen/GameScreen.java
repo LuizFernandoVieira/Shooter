@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import br.unb.shooter.collision.MapCollision;
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.GdxController;
 import br.unb.shooter.debug.DebugGdx;
@@ -17,122 +16,137 @@ import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
 import br.unb.shooter.input.GameInputProcessor;
 import br.unb.shooter.map.Map;
+import br.unb.shooter.movement.Movement;
 import br.unb.shooter.util.Constants;
 
 public class GameScreen extends Screen {
 
-    private SpriteBatch batch;
-    private OrthographicCamera camera;
-    private Viewport viewport;
+	private SpriteBatch batch;
+	private OrthographicCamera camera;
+	private Viewport viewport;
 
-    private DebugGdx debugGdx;
+	private DebugGdx debugGdx;
 
-    private Map map;
+	private Map map;
 
-    private MapCollision mapCollision;
+	// private MapCollision mapCollision;
 
-    /**
-     * Constructor.
-     */
-    public GameScreen() {
-        super();
-    }
+	private Movement movement;
 
-    @Override
-    public void create() {
-        batch = new SpriteBatch();
-        camera = new OrthographicCamera();
-        camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewport = new ExtendViewport(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT, camera);
+	/**
+	 * Constructor.
+	 */
+	public GameScreen() {
+		super();
+	}
 
-        GdxController.getInstance().getPlayerGdx().initGraphics();
+	@Override
+	public void create() {
+		batch = new SpriteBatch();
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		viewport = new ExtendViewport(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT, camera);
 
-        GdxController.getInstance().getWeaponGdx().initGraphics();
+		GdxController.getInstance().getPlayerGdx().initGraphics();
 
-        GdxController.getInstance().getMarkGdx().initGraphics();
+		GdxController.getInstance().getWeaponGdx().initGraphics();
 
-        GdxController.getInstance().getShotGdx().initGraphics();
+		GdxController.getInstance().getMarkGdx().initGraphics();
 
-        Gdx.input.setInputProcessor(new GameInputProcessor());
+		GdxController.getInstance().getShotGdx().initGraphics();
 
-        Gdx.input.setCursorImage(GdxController.getInstance().getMarkGdx().getPixmap(), 16, 13);
+		Gdx.input.setInputProcessor(new GameInputProcessor());
 
-        map = new Map();
-        map.create();
+		Gdx.input.setCursorImage(GdxController.getInstance().getMarkGdx().getPixmap(), 16, 13);
 
-        mapCollision = new MapCollision(map.getTileWidth(), map.getTileHeight(), map.getRows());
-    }
+		map = new Map(camera);
 
-    /**
-     * Updates the screen.
-     */
-    @Override
-    public void update() {
-        GameController.getInstance().getPlayer().setFacing(GameController.getInstance().getMouseX(),
-                GameController.getInstance().getMouseY());
-        for (Player player : GameController.getInstance().getPlayersMap().values()) {
-            mapCollision.setOldPlayerState(player);
-            player.update();
-            if (mapCollision.checkMapCollisionX(GameController.getInstance().getWallsMap(), player)) {
-                Float x = player.getPositionX();
-                player.setPositionX(mapCollision.getPlayer().getPositionX());
-                if (mapCollision.checkMapCollisionY(GameController.getInstance().getWallsMap(), player)) {
-                    player.setPositionX(x);
-                }
-            }
-            if (mapCollision.checkMapCollisionY(GameController.getInstance().getWallsMap(), player)) {
-                player.setPositionY(mapCollision.getPlayer().getPositionY());
-            }
-            GdxController.getInstance().getPlayerGdx().update(player, Gdx.graphics.getDeltaTime());
-            if (player.getIsShooting()) {
-                GameController.getInstance().createShot(player);
-            }
-        }
-        List<Integer> ids = new ArrayList<Integer>();
-        for (Shot shot : GameController.getInstance().getShotsMap().values()) {
-            shot.update();
-            if (shot.getFinish()) {
-                ids.add(shot.getId());
-                GameController.getInstance().getRemovedShots().add(shot.getId());
-            }
-        }
-        for (Integer id : ids) {
-            GameController.getInstance().getShotsMap().remove(id);
-        }
+		// mapCollision = new MapCollision(map.getTileWidth(),
+		// map.getTileHeight(), map.getRows());
 
-        camera.update();
-    }
+		movement = new Movement();
 
-    /**
-     * Renders game screen.
-     */
-    @Override
-    public void draw() {
-        super.draw();
+		movement.setCamera(camera);
+		movement.setPlayer(GameController.getInstance().getPlayer());
+		movement.setMapWidth(map.getCols() * map.getTileWidth());
+		movement.setMapHeight(map.getRows() * map.getTileHeight());
+		movement.setMapX(0f);
+		movement.setMapY(0f);
+		movement.setMovementBoxHeight(300f);
+		movement.setMovementBoxWidth(300f);
+		movement.setMovementBoxX(150f);
+		movement.setMovementBoxY(150f);
+		movement.setMapCols(map.getCols());
+		movement.setMapRows(map.getRows());
+		movement.setMapTileHeight(map.getTileHeight());
+		movement.setMapTileWidth(map.getTileWidth());
+		movement.setWalls(GameController.getInstance().getWallsMap());
+	}
 
-        if (map != null) {
-            map.draw(camera);
-        }
+	/**
+	 * Updates the screen.
+	 */
+	@Override
+	public void update() {
+		// Updates the mouse.
+		GameController.getInstance().getPlayer().setFacing(GameController.getInstance().getMouseX(),
+				GameController.getInstance().getMouseY());
 
-        batch.begin();
-        for (Player player : GameController.getInstance().getPlayersMap().values()) {
-            GdxController.getInstance().getPlayerGdx().draw(batch, player);
-            GdxController.getInstance().getWeaponGdx().draw(batch, player.getWeapon());
-        }
-        for (Shot shot : GameController.getInstance().getShotsMap().values()) {
-            GdxController.getInstance().getShotGdx().draw(batch, shot);
-        }
-        batch.end();
+		// Updates the player.
+		Player player = GameController.getInstance().getPlayer();
+		movement.setPlayer(player);
+		movement.update();
 
-    }
+		GdxController.getInstance().getPlayerGdx().update(player, Gdx.graphics.getDeltaTime());
+		if (player.getIsShooting()) {
+			GameController.getInstance().createShot(player);
+		}
 
-    public void dispose() {
-        batch.dispose();
-        debugGdx.dispose();
-    }
+		// Updates shots.
+		List<Integer> ids = new ArrayList<Integer>();
+		for (Shot shot : GameController.getInstance().getShotsMap().values()) {
+			shot.update();
+			if (shot.getFinish()) {
+				ids.add(shot.getId());
+				GameController.getInstance().getRemovedShots().add(shot.getId());
+			}
+		}
+		for (Integer id : ids) {
+			GameController.getInstance().getShotsMap().remove(id);
+		}
 
-    public void resize() {
-        viewport.update(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
-    }
+		// Updates map.
+		map.update();
+	}
+
+	/**
+	 * Renders game screen.
+	 */
+	@Override
+	public void draw() {
+		super.draw();
+
+		map.draw();
+
+		batch.begin();
+		for (Player player : GameController.getInstance().getPlayersMap().values()) {
+			GdxController.getInstance().getPlayerGdx().draw(batch, player);
+			GdxController.getInstance().getWeaponGdx().draw(batch, player.getWeapon());
+		}
+		for (Shot shot : GameController.getInstance().getShotsMap().values()) {
+			GdxController.getInstance().getShotGdx().draw(batch, shot);
+		}
+		batch.end();
+
+	}
+
+	public void dispose() {
+		batch.dispose();
+		debugGdx.dispose();
+	}
+
+	public void resize() {
+		viewport.update(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
+	}
 
 }
