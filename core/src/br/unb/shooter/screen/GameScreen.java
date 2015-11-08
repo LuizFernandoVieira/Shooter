@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.GdxController;
 import br.unb.shooter.debug.DebugGdx;
+import br.unb.shooter.entity.FireWeapon;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
 import br.unb.shooter.input.GameInputProcessor;
@@ -131,7 +132,7 @@ public class GameScreen extends Screen {
 		batch.begin();
 		for (Player player : GameController.getInstance().getPlayersMap().values()) {
 			GdxController.getInstance().getPlayerGdx().draw(batch, player);
-			GdxController.getInstance().getWeaponGdx().draw(batch, player.getWeapon());
+			GdxController.getInstance().getWeaponGdx().draw(batch, (FireWeapon)player.getWeapon());
 		}
 		for (Shot shot : GameController.getInstance().getShotsMap().values()) {
 			GdxController.getInstance().getShotGdx().draw(batch, shot);

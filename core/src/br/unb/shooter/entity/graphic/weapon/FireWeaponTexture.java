@@ -4,19 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public abstract class WeaponTexture {
-    
-    protected Texture texture;
+public class FireWeaponTexture extends WeaponTexture {
 
-    protected TextureRegion frame;
-
-    public WeaponTexture() {
+    public FireWeaponTexture() {
+        
         texture = new Texture(Gdx.files.internal("bubblesgun.png"));
 
         frame = new TextureRegion(texture, 0, 0, 39, 28);
+        
     }
 
-    public TextureRegion getFrame() {
-        return frame;
-    }
 }

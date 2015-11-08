@@ -8,17 +8,22 @@ import br.unb.shooter.util.Constants;
 public class FireWeapon extends Weapon{
     
     private Double angle;
+    private Integer facing;
+    
+    private float xOffset = 15f;
+    private float yOffset = 9f;
     
     public FireWeapon() {
         setWidth(39);
         setHeight(28);
         setAngle(0.0);
+        setFacing(0);
     }
 
     @Override
     public void update() {
-        setPositionX(getOwner().getPositionX());
-        setPositionY(getOwner().getPositionY());
+        setPositionX(getOwner().getPositionX() + xOffset);
+        setPositionY(getOwner().getPositionY() + yOffset);
         
         GameController.getInstance().getPlayer().setTargetX(Float.valueOf(GameController.getInstance().getMouseX()));
         GameController.getInstance().getPlayer().setTargetY(Float.valueOf(GameController.getInstance().getMouseY()));
@@ -39,6 +44,7 @@ public class FireWeapon extends Weapon{
                 Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
 
                 setAngle(Math.toDegrees(angle));
+                setFacing(p.getFacing());
             }
         }
     }
@@ -54,6 +60,14 @@ public class FireWeapon extends Weapon{
     
     public void setAngle(Double angle) {
         this.angle = angle;
+    }
+
+    public Integer getFacing() {
+        return facing;
+    }
+
+    public void setFacing(Integer facing) {
+        this.facing = facing;
     }
     
 }
