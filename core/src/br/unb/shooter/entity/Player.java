@@ -3,13 +3,18 @@ package br.unb.shooter.entity;
 public class Player extends Entity {
 
 	private Integer health;
+
 	private Boolean moveUp;
 	private Boolean moveRight;
 	private Boolean moveDown;
 	private Boolean moveLeft;
+
 	private String name;
+
 	private Integer connectionId;
+
 	private Integer velocity;
+
 	private Integer facing;
 	private Integer previousFacing;
 
@@ -28,6 +33,10 @@ public class Player extends Entity {
 	private Float startX;
 
 	private Float startY;
+
+	private Float offsetX;
+
+	private Float offsetY;
 
 	/**
 	 * Constructor.
@@ -48,6 +57,8 @@ public class Player extends Entity {
 		facing = 0;
 		weapon = new FireWeapon();
 		weapon.setOwner(this);
+		offsetX = 0f;
+		offsetY = 0f;
 	}
 
 	/**
@@ -242,6 +253,22 @@ public class Player extends Entity {
 
 	public void setVelocity(Integer velocity) {
 		this.velocity = velocity;
+	}
+
+	public Float getOffsetX() {
+		return offsetX;
+	}
+
+	public void setOffsetX(Float offsetX) {
+		this.offsetX = offsetX;
+	}
+
+	public Float getOffsetY() {
+		return offsetY;
+	}
+
+	public void setOffsetY(Float offsetY) {
+		this.offsetY = offsetY;
 	}
 
 }

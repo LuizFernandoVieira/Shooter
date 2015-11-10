@@ -8,6 +8,7 @@ import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
 import br.unb.shooter.entity.Wall;
+import br.unb.shooter.movement.Movement;
 
 public class GameController {
 
@@ -35,11 +36,14 @@ public class GameController {
 
 	private Float mouseY;
 
+	private Movement movement;
+
 	public GameController() {
 		shotsMap = new HashMap<Integer, Shot>();
 		mouseX = 0f;
 		mouseY = 0f;
 		removedShots = new ArrayList<Integer>();
+		movement = new Movement();
 	}
 
 	/**
@@ -112,6 +116,8 @@ public class GameController {
 				player.setPositionY(positionYPlayer1);
 				player.setStartX(positionXPlayer1);
 				player.setStartY(positionYPlayer1);
+				player.setOffsetX(300f - positionXPlayer1);
+				player.setOffsetY(300f - positionYPlayer1);
 			}
 			if (index == 1) {
 				player.setPositionX(positionXPlayer2);
@@ -133,6 +139,9 @@ public class GameController {
 			}
 			index++;
 		}
+
+		movement.setCameraX(300f);
+		movement.setCameraY(300f);
 	}
 
 	/**
@@ -277,6 +286,14 @@ public class GameController {
 
 	public void setWallsMap(HashMap<Integer, Wall> wallsMap) {
 		this.wallsMap = wallsMap;
+	}
+
+	public Movement getMovement() {
+		return movement;
+	}
+
+	public void setMovement(Movement movement) {
+		this.movement = movement;
 	}
 
 }

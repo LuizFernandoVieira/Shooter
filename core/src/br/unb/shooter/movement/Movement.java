@@ -42,20 +42,39 @@ public class Movement {
 
 	private Float mapRows;
 
+	private Float cameraX;
+
+	private Float cameraY;
+
 	public Movement() {
 		mapCollision = new MapCollision(mapTileWidth, mapTileHeight, mapCols);
 	}
 
 	public void update() {
 		mapCollision.setOldPlayerState(player);
-		// if player is inside movementBox or
-		// if player is out of movement box and scroll reaches boundaries
+
 		player.update();
-		if (player.getPositionX() < movementBoxX || player.getPositionX() > (movementBoxX + movementBoxWidth)
-				|| player.getPositionY() < movementBoxY || player.getPositionY() > (movementBoxY + movementBoxHeight)) {
-			player.setPositionY(mapCollision.getPlayer().getPositionY());
+
+		if (player.getPositionX() < 0) {
 			player.setPositionX(mapCollision.getPlayer().getPositionX());
 		}
+
+		if (player.getPositionY() < 0) {
+			player.setPositionY(mapCollision.getPlayer().getPositionY());
+		}
+
+		if ((player.getPositionX() + player.getWidth()) > mapWidth) {
+			player.setPositionX(mapCollision.getPlayer().getPositionX());
+		}
+
+		if ((player.getPositionY() + player.getHeight()) > mapHeight) {
+			player.setPositionY(mapCollision.getPlayer().getPositionY());
+		}
+
+		camera.position.x = player.getPositionX() + player.getOffsetX();
+		camera.position.y = player.getPositionY() + player.getOffsetY();
+
+		camera.update();
 
 		// if
 		// (mapCollision.checkMapCollisionX(GameController.getInstance().getWallsMap(),
@@ -193,6 +212,22 @@ public class Movement {
 
 	public void setMapRows(Float mapRows) {
 		this.mapRows = mapRows;
+	}
+
+	public Float getCameraX() {
+		return cameraX;
+	}
+
+	public void setCameraX(Float cameraX) {
+		this.cameraX = cameraX;
+	}
+
+	public Float getCameraY() {
+		return cameraY;
+	}
+
+	public void setCameraY(Float cameraY) {
+		this.cameraY = cameraY;
 	}
 
 }

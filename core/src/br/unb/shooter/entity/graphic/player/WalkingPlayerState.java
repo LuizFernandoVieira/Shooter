@@ -8,39 +8,39 @@ import br.unb.shooter.entity.Player;
 
 public class WalkingPlayerState implements IPlayerState {
 
-    private float stateTime;
+	private float stateTime;
 
-    private TextureRegion[] walkingFrames;
+	private TextureRegion[] walkingFrames;
 
-    private TextureRegion currentFrame;
+	private TextureRegion currentFrame;
 
-    private Animation walkingAnimation;
+	private Animation walkingAnimation;
 
-    @Override
-    public void create() {
-        walkingAnimation = new Animation(0.1f, walkingFrames);
-        stateTime = 0;
-    }
+	@Override
+	public void create() {
+		walkingAnimation = new Animation(0.1f, walkingFrames);
+		stateTime = 0;
+	}
 
-    @Override
-    public void draw(SpriteBatch batch, Player player) {
-        batch.draw(currentFrame, player.getPositionX(), player.getPositionY(), player.getWidth(), player.getHeight());
-    }
+	@Override
+	public void draw(SpriteBatch batch, Player player) {
+		batch.draw(currentFrame, player.getStartX(), player.getStartY(), player.getWidth(), player.getHeight());
+	}
 
-    @Override
-    public void update(float deltaTime, Player player) {
-        stateTime += deltaTime;
-        currentFrame = walkingAnimation.getKeyFrame(stateTime, true);
-        player.setWidth(currentFrame.getRegionWidth());
-        player.setHeight(currentFrame.getRegionHeight());
-    }
+	@Override
+	public void update(float deltaTime, Player player) {
+		stateTime += deltaTime;
+		currentFrame = walkingAnimation.getKeyFrame(stateTime, true);
+		player.setWidth(currentFrame.getRegionWidth());
+		player.setHeight(currentFrame.getRegionHeight());
+	}
 
-    public TextureRegion[] getWalkingFrames() {
-        return walkingFrames;
-    }
+	public TextureRegion[] getWalkingFrames() {
+		return walkingFrames;
+	}
 
-    public void setWalkingFrames(TextureRegion[] walkingFrames) {
-        this.walkingFrames = walkingFrames;
-    }
+	public void setWalkingFrames(TextureRegion[] walkingFrames) {
+		this.walkingFrames = walkingFrames;
+	}
 
 }
