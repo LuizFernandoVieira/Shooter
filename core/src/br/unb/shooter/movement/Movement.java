@@ -2,6 +2,7 @@ package br.unb.shooter.movement;
 
 import java.util.HashMap;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import br.unb.shooter.collision.MapCollision;
@@ -46,6 +47,8 @@ public class Movement {
 
 	private Float cameraY;
 
+	private Boolean cameraBoundaries;
+
 	public Movement() {
 		mapCollision = new MapCollision(mapTileWidth, mapTileHeight, mapCols);
 	}
@@ -55,6 +58,23 @@ public class Movement {
 
 		player.update();
 
+		Float oldCameraX = camera.position.x;
+		Float oldCameraY = camera.position.y;
+
+		camera.position.x = player.getPositionX() + player.getOffsetX();
+		camera.position.y = player.getPositionY() + player.getOffsetY();
+
+		Gdx.app.log("x", Float.toString(camera.position.x));
+		Gdx.app.log("y", Float.toString(camera.position.y));
+
+		if (camera.position.x < 300f
+				|| (camera.position.y < 300f || camera.position.x > 1300f || camera.position.y > 1300f)) {
+			cameraBoundaries = true;
+		} else {
+			cameraBoundaries = false;
+		}
+
+		// Fix player position.
 		if (player.getPositionX() < 0) {
 			player.setPositionX(mapCollision.getPlayer().getPositionX());
 		}
@@ -71,8 +91,19 @@ public class Movement {
 			player.setPositionY(mapCollision.getPlayer().getPositionY());
 		}
 
-		camera.position.x = player.getPositionX() + player.getOffsetX();
-		camera.position.y = player.getPositionY() + player.getOffsetY();
+		// Fix camera position.
+		if (camera.position.x < 300f) {
+			camera.position.x = oldCameraX;
+		}
+		if (camera.position.y < 300f) {
+			camera.position.y = oldCameraY;
+		}
+		if (camera.position.x > 1300f) {
+			camera.position.x = oldCameraX;
+		}
+		if (camera.position.y > 1300f) {
+			camera.position.y = oldCameraY;
+		}
 
 		camera.update();
 
