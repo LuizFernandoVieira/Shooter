@@ -22,6 +22,13 @@ public class FireWeapon extends Weapon{
 
     @Override
     public void update() {
+        
+        if(getFacing() == 0) {
+            xOffset = 15;
+        } else {
+            xOffset = 27;
+        }
+        
         setPositionX(getOwner().getPositionX() + xOffset);
         setPositionY(getOwner().getPositionY() + yOffset);
         

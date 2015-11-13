@@ -15,10 +15,10 @@ public class FireWeaponGdx {
         Double rotation = fireWeapon.getAngle();
         
         if(fireWeapon.getFacing() == 0) {
-            batch.draw(weaponTexture.getFrame(), fireWeapon.getPositionX(), fireWeapon.getPositionY(), 0, 0, fireWeapon.getWidth(),
+            batch.draw(weaponTexture.getFrame(), fireWeapon.getPositionX(), fireWeapon.getPositionY(), 0, 16, fireWeapon.getWidth(),
                     fireWeapon.getHeight(), 1, 1, rotation.intValue());
         } else {
-            batch.draw(weaponTexture.getFrame(), fireWeapon.getPositionX(), fireWeapon.getPositionY(), 0, 0, fireWeapon.getWidth(),
+            batch.draw(weaponTexture.getFrame(), fireWeapon.getPositionX(), fireWeapon.getPositionY(), 0, 16, fireWeapon.getWidth(),
                     fireWeapon.getHeight(), 1, -1, rotation.intValue());
         }
     }

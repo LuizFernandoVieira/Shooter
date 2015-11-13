@@ -37,6 +37,8 @@ public class Player extends Entity {
 		moveRight = false;
 		moveDown = false;
 		moveLeft = false;
+		targetX = 0f;
+		targetY = 0f;
 		isMoving = false;
 		isChangingState = false;
 		isShooting = false;
