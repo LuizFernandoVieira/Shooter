@@ -73,9 +73,9 @@ public class MovementTest {
 
         log(movement);
 
-        player.setMoveLeft(true);
+        player.setMoveRight(true);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 400; i++) {
             movement.update();
             log(movement);
         }
