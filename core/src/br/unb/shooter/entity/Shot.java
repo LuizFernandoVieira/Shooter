@@ -17,8 +17,8 @@ public class Shot extends Entity {
     public Shot() {
         setPositionX(0f);
         setPositionY(0f);
-        setHeight(6);
-        setWidth(6);
+        setHeight(6f);
+        setWidth(6f);
         finish = false;
         sequence = 0;
     }

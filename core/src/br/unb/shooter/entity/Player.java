@@ -2,275 +2,303 @@ package br.unb.shooter.entity;
 
 public class Player extends Entity {
 
-	private Integer health;
+    public static final Float PLAYER_OFFSET_X = 21f;
 
-	private Boolean moveUp;
-	private Boolean moveRight;
-	private Boolean moveDown;
-	private Boolean moveLeft;
+    public static final Float PLAYER_OFFSET_Y = 33f;
 
-	private String name;
+    private Integer health;
 
-	private Integer connectionId;
+    private Boolean moveUp;
+    private Boolean moveRight;
+    private Boolean moveDown;
+    private Boolean moveLeft;
 
-	private Integer velocity;
+    private String name;
 
-	private Integer facing;
-	private Integer previousFacing;
+    private Integer connectionId;
 
-	private Float targetX;
+    private Integer velocity;
 
-	private Float targetY;
+    private Integer facing;
+    private Integer previousFacing;
 
-	private Boolean isMoving;
+    private Float targetX;
 
-	private Boolean isChangingState;
+    private Float targetY;
 
-	private Boolean isShooting;
+    private Boolean isMoving;
 
-	private Weapon weapon;
+    private Boolean isChangingState;
 
-	private Float startX;
+    private Boolean isShooting;
 
-	private Float startY;
+    private Weapon weapon;
 
-	private Float offsetX;
+    private Float startX;
 
-	private Float offsetY;
+    private Float startY;
 
-	/**
-	 * Constructor.
-	 */
-	public Player() {
-		moveUp = false;
-		moveRight = false;
-		moveDown = false;
-		moveLeft = false;
-		targetX = 0f;
-		targetY = 0f;
-		isMoving = false;
-		isChangingState = false;
-		isShooting = false;
-		velocity = 3;
-		positionX = 0f;
-		positionY = 0f;
-		width = 0;
-		height = 0;
-		facing = 0;
-		weapon = new FireWeapon();
-		weapon.setOwner(this);
-		offsetX = 0f;
-		offsetY = 0f;
-	}
+    private Float screenX;
 
-	/**
-	 * Set moving status.
-	 */
-	public void setMovingState() {
-		if (moveUp || moveRight || moveDown || moveLeft) {
-			isMoving = true;
-		} else {
-			isMoving = false;
-		}
-		isChangingState = true;
-	}
+    private Float screenY;
 
-	/**
-	 * Set facing.
-	 * 
-	 * @param x
-	 * @param y
-	 */
-	public void setFacing(Float x, Float y) {
-		Float offsetX = x - (positionX + width / 2);
+    private Float offsetX;
 
-		previousFacing = facing;
+    private Float offsetY;
 
-		if (offsetX > 0) {
-			facing = 0;
-		} else {
-			facing = 1;
-		}
-		if (facing != previousFacing) {
-			isChangingState = true;
-		}
-	}
+    /**
+     * Constructor.
+     */
+    public Player() {
+        moveUp = false;
+        moveRight = false;
+        moveDown = false;
+        moveLeft = false;
+        targetX = 0f;
+        targetY = 0f;
+        isMoving = false;
+        isChangingState = false;
+        isShooting = false;
+        velocity = 3;
+        positionX = 0f;
+        positionY = 0f;
+        width = 0f;
+        height = 0f;
+        facing = 0;
+        weapon = new FireWeapon();
+        weapon.setOwner(this);
+        offsetX = 0f;
+        offsetY = 0f;
+        screenX = 0f;
+        screenY = 0f;
+        startX = 0f;
+        startY = 0f;
+    }
 
-	/**
-	 * Updates player.
-	 */
-	public void update() {
-		if (moveUp) {
-			setPositionY(getPositionY() + velocity);
-		}
-		if (moveDown) {
-			setPositionY(getPositionY() - velocity);
-		}
-		if (moveRight) {
-			setPositionX(getPositionX() + velocity);
-		}
-		if (moveLeft) {
-			setPositionX(getPositionX() - velocity);
-		}
+    /**
+     * Set moving status.
+     */
+    public void setMovingState() {
+        if (moveUp || moveRight || moveDown || moveLeft) {
+            isMoving = true;
+        } else {
+            isMoving = false;
+        }
+        isChangingState = true;
+    }
 
-		weapon.update();
-	}
+    /**
+     * Set facing.
+     * 
+     * @param x
+     * @param y
+     */
+    public void setFacing(Float x, Float y) {
+        Float offsetX = x - (positionX + width / 2);
 
-	public Integer getHealth() {
-		return health;
-	}
+        previousFacing = facing;
 
-	public void setHealth(Integer health) {
-		this.health = health;
-	}
+        if (offsetX > 0) {
+            facing = 0;
+        } else {
+            facing = 1;
+        }
+        if (facing != previousFacing) {
+            isChangingState = true;
+        }
+    }
 
-	public Boolean getMoveUp() {
-		return moveUp;
-	}
+    /**
+     * Updates player.
+     */
+    public void update() {
+        if (moveUp) {
+            setPositionY(getPositionY() + velocity);
+        }
+        if (moveDown) {
+            setPositionY(getPositionY() - velocity);
+        }
+        if (moveRight) {
+            setPositionX(getPositionX() + velocity);
+        }
+        if (moveLeft) {
+            setPositionX(getPositionX() - velocity);
+        }
 
-	public void setMoveUp(Boolean moveUp) {
-		this.moveUp = moveUp;
-	}
+        weapon.update();
+    }
 
-	public Boolean getMoveRight() {
-		return moveRight;
-	}
+    public Integer getHealth() {
+        return health;
+    }
 
-	public void setMoveRight(Boolean moveRight) {
-		this.moveRight = moveRight;
-	}
+    public void setHealth(Integer health) {
+        this.health = health;
+    }
 
-	public Boolean getMoveDown() {
-		return moveDown;
-	}
+    public Boolean getMoveUp() {
+        return moveUp;
+    }
 
-	public void setMoveDown(Boolean moveDown) {
-		this.moveDown = moveDown;
-	}
+    public void setMoveUp(Boolean moveUp) {
+        this.moveUp = moveUp;
+    }
 
-	public Boolean getMoveLeft() {
-		return moveLeft;
-	}
+    public Boolean getMoveRight() {
+        return moveRight;
+    }
 
-	public void setMoveLeft(Boolean moveLeft) {
-		this.moveLeft = moveLeft;
-	}
+    public void setMoveRight(Boolean moveRight) {
+        this.moveRight = moveRight;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Boolean getMoveDown() {
+        return moveDown;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setMoveDown(Boolean moveDown) {
+        this.moveDown = moveDown;
+    }
 
-	public Integer getConnectionId() {
-		return connectionId;
-	}
+    public Boolean getMoveLeft() {
+        return moveLeft;
+    }
 
-	public void setConnectionId(Integer connectionId) {
-		this.connectionId = connectionId;
-	}
+    public void setMoveLeft(Boolean moveLeft) {
+        this.moveLeft = moveLeft;
+    }
 
-	public Boolean getIsMoving() {
-		return isMoving;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setIsMoving(Boolean isMoving) {
-		this.isMoving = isMoving;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Boolean getIsChangingState() {
-		return isChangingState;
-	}
+    public Integer getConnectionId() {
+        return connectionId;
+    }
 
-	public void setIsChangingState(Boolean isChangingState) {
-		this.isChangingState = isChangingState;
-	}
+    public void setConnectionId(Integer connectionId) {
+        this.connectionId = connectionId;
+    }
 
-	@Override
-	public String toString() {
-		return this.name == null ? "" : this.name;
-	}
+    public Boolean getIsMoving() {
+        return isMoving;
+    }
 
-	public Integer getFacing() {
-		return facing;
-	}
+    public void setIsMoving(Boolean isMoving) {
+        this.isMoving = isMoving;
+    }
 
-	public void setFacing(Integer facing) {
-		this.facing = facing;
-	}
+    public Boolean getIsChangingState() {
+        return isChangingState;
+    }
 
-	public Boolean getIsShooting() {
-		return isShooting;
-	}
+    public void setIsChangingState(Boolean isChangingState) {
+        this.isChangingState = isChangingState;
+    }
 
-	public void setIsShooting(Boolean isShooting) {
-		this.isShooting = isShooting;
-	}
+    @Override
+    public String toString() {
+        return this.name == null ? "" : this.name;
+    }
 
-	public Float getTargetX() {
-		return targetX;
-	}
+    public Integer getFacing() {
+        return facing;
+    }
 
-	public void setTargetX(Float targetX) {
-		this.targetX = targetX;
-	}
+    public void setFacing(Integer facing) {
+        this.facing = facing;
+    }
 
-	public Float getTargetY() {
-		return targetY;
-	}
+    public Boolean getIsShooting() {
+        return isShooting;
+    }
 
-	public void setTargetY(Float targetY) {
-		this.targetY = targetY;
-	}
+    public void setIsShooting(Boolean isShooting) {
+        this.isShooting = isShooting;
+    }
 
-	public Weapon getWeapon() {
-		return weapon;
-	}
+    public Float getTargetX() {
+        return targetX;
+    }
 
-	public void setWeapon(Weapon weapon) {
-		this.weapon = weapon;
-	}
+    public void setTargetX(Float targetX) {
+        this.targetX = targetX;
+    }
 
-	public Float getStartX() {
-		return startX;
-	}
+    public Float getTargetY() {
+        return targetY;
+    }
 
-	public void setStartX(Float startX) {
-		this.startX = startX;
-	}
+    public void setTargetY(Float targetY) {
+        this.targetY = targetY;
+    }
 
-	public Float getStartY() {
-		return startY;
-	}
+    public Weapon getWeapon() {
+        return weapon;
+    }
 
-	public void setStartY(Float startY) {
-		this.startY = startY;
-	}
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
 
-	public Integer getVelocity() {
-		return velocity;
-	}
+    public Float getStartX() {
+        return startX;
+    }
 
-	public void setVelocity(Integer velocity) {
-		this.velocity = velocity;
-	}
+    public void setStartX(Float startX) {
+        this.startX = startX;
+    }
 
-	public Float getOffsetX() {
-		return offsetX;
-	}
+    public Float getStartY() {
+        return startY;
+    }
 
-	public void setOffsetX(Float offsetX) {
-		this.offsetX = offsetX;
-	}
+    public void setStartY(Float startY) {
+        this.startY = startY;
+    }
 
-	public Float getOffsetY() {
-		return offsetY;
-	}
+    public Integer getVelocity() {
+        return velocity;
+    }
 
-	public void setOffsetY(Float offsetY) {
-		this.offsetY = offsetY;
-	}
+    public void setVelocity(Integer velocity) {
+        this.velocity = velocity;
+    }
+
+    public Float getOffsetX() {
+        return offsetX;
+    }
+
+    public void setOffsetX(Float offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    public Float getOffsetY() {
+        return offsetY;
+    }
+
+    public void setOffsetY(Float offsetY) {
+        this.offsetY = offsetY;
+    }
+
+    public Float getScreenX() {
+        return screenX;
+    }
+
+    public void setScreenX(Float screenX) {
+        this.screenX = screenX;
+    }
+
+    public Float getScreenY() {
+        return screenY;
+    }
+
+    public void setScreenY(Float screenY) {
+        this.screenY = screenY;
+    }
 
 }

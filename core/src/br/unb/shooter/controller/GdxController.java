@@ -8,7 +8,7 @@ import br.unb.shooter.entity.graphic.player.PlayerGdx;
 import br.unb.shooter.entity.graphic.shot.ShotGdx;
 import br.unb.shooter.entity.graphic.targetmark.TargetMarkGdx;
 import br.unb.shooter.entity.graphic.weapon.FireWeaponGdx;
-import br.unb.shooter.entity.graphic.weapon.WeaponGdx;
+import br.unb.shooter.map.MapGdx;
 
 public class GdxController {
     private static GdxController instance;
@@ -18,8 +18,10 @@ public class GdxController {
     private TargetMarkGdx markGdx;
 
     private ShotGdx shotGdx;
-    
+
     private FireWeaponGdx weaponGdx;
+
+    private MapGdx mapGdx;
 
     public static GdxController getInstance() {
         if (instance == null) {
@@ -72,9 +74,9 @@ public class GdxController {
     public void setShotGdx(ShotGdx shotGdx) {
         this.shotGdx = shotGdx;
     }
-    
+
     public FireWeaponGdx getWeaponGdx() {
-        if(weaponGdx == null) {
+        if (weaponGdx == null) {
             weaponGdx = new FireWeaponGdx();
         }
         return weaponGdx;
@@ -83,4 +85,17 @@ public class GdxController {
     public void setWeaponGdx(FireWeaponGdx weaponGdx) {
         this.weaponGdx = weaponGdx;
     }
+
+    public MapGdx getMapGdx() {
+        if (mapGdx == null) {
+            mapGdx = new MapGdx();
+        }
+
+        return mapGdx;
+    }
+
+    public void setMapGdx(MapGdx mapGdx) {
+        this.mapGdx = mapGdx;
+    }
+
 }

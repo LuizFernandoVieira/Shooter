@@ -5,8 +5,8 @@ public class Entity {
     private Integer id;
     protected Float positionX;
     protected Float positionY;
-    protected Integer width;
-    protected Integer height;
+    protected Float width;
+    protected Float height;
 
     public Entity() {
     }
@@ -35,19 +35,19 @@ public class Entity {
         this.positionY = positionY;
     }
 
-    public Integer getWidth() {
+    public Float getWidth() {
         return width;
     }
 
-    public void setWidth(Integer width) {
+    public void setWidth(Float width) {
         this.width = width;
     }
 
-    public Integer getHeight() {
+    public Float getHeight() {
         return height;
     }
 
-    public void setHeight(Integer height) {
+    public void setHeight(Float height) {
         this.height = height;
     }
 

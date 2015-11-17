@@ -7,8 +7,8 @@ public class TargetMark extends Entity {
     public TargetMark() {
         this.positionX = 0f;
         this.positionY = 0f;
-        this.width = 12;
-        this.height = 12;
+        this.width = 12f;
+        this.height = 12f;
     }
 
     public void update(float screenX, float screenY) {

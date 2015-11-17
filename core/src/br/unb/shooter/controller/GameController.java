@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.unb.shooter.entity.Enemy;
+import br.unb.shooter.entity.Map;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
 import br.unb.shooter.entity.Wall;
@@ -12,288 +13,292 @@ import br.unb.shooter.movement.Movement;
 
 public class GameController {
 
-	private Player player;
+    private Player player;
 
-	private String serverName;
+    private String serverName;
 
-	private HashMap<Integer, Player> playersMap;
+    private Map map;
 
-	private HashMap<Integer, Integer> shotsSequenceMap;
+    private HashMap<Integer, Player> playersMap;
 
-	private HashMap<Integer, Enemy> enemiesMap;
+    private HashMap<Integer, Integer> shotsSequenceMap;
 
-	private HashMap<Integer, Shot> shotsMap;
+    private HashMap<Integer, Enemy> enemiesMap;
 
-	private HashMap<Integer, Wall> wallsMap;
+    private HashMap<Integer, Shot> shotsMap;
 
-	private List<Integer> removedShots;
+    private HashMap<Integer, Wall> wallsMap;
 
-	private static GameController instance;
+    private List<Integer> removedShots;
 
-	private Boolean isStarted = false;
+    private static GameController instance;
 
-	private Float mouseX;
+    private Boolean isStarted = false;
 
-	private Float mouseY;
+    private Float mouseX;
 
-	private Movement movement;
+    private Float mouseY;
 
-	public GameController() {
-		shotsMap = new HashMap<Integer, Shot>();
-		mouseX = 0f;
-		mouseY = 0f;
-		removedShots = new ArrayList<Integer>();
-		movement = new Movement();
-	}
+    private Movement movement;
 
-	/**
-	 * Create a singleton from GameController.
-	 * 
-	 * @return GameController instance
-	 */
-	public static GameController getInstance() {
-		if (instance == null) {
-			instance = new GameController();
-		}
+    public GameController() {
+        shotsMap = new HashMap<Integer, Shot>();
+        mouseX = 0f;
+        mouseY = 0f;
+        removedShots = new ArrayList<Integer>();
+        movement = new Movement();
+        map = new Map();
+        movement.setMap(map);
+    }
 
-		return instance;
-	}
+    /**
+     * Create a singleton from GameController.
+     * 
+     * @return GameController instance
+     */
+    public static GameController getInstance() {
+        if (instance == null) {
+            instance = new GameController();
+        }
 
-	/**
-	 * Create a player.
-	 * 
-	 * @param name
-	 *            Player's name
-	 */
-	public void createServerPlayer(String name) {
-		player = new Player();
-		player.setName(name);
-		player.setId(1);
+        return instance;
+    }
 
-		if (playersMap == null) {
-			playersMap = new HashMap<Integer, Player>();
-		}
+    /**
+     * Create a player.
+     * 
+     * @param name Player's name
+     */
+    public void createServerPlayer(String name) {
+        player = new Player();
+        player.setName(name);
+        player.setId(1);
 
-		playersMap.put(player.getId(), player);
+        if (playersMap == null) {
+            playersMap = new HashMap<Integer, Player>();
+        }
 
-		GdxController.getInstance().addPlayer(player);
-	}
+        playersMap.put(player.getId(), player);
 
-	/**
-	 * Create a player on server from a connect message.
-	 * 
-	 * @param name
-	 *            Player's name
-	 */
-	public void createClientPlayer(String name) {
-		if (playersMap != null) {
-			Player player = new Player();
-			player.setName(name);
-			player.setId(playersMap.size() + 1);
-			playersMap.put(player.getId(), player);
+        GdxController.getInstance().addPlayer(player);
+    }
 
-			GdxController.getInstance().addPlayer(player);
-		}
-	}
+    /**
+     * Create a player on server from a connect message.
+     * 
+     * @param name Player's name
+     */
+    public void createClientPlayer(String name) {
+        if (playersMap != null) {
+            Player player = new Player();
+            player.setName(name);
+            player.setId(playersMap.size() + 1);
+            playersMap.put(player.getId(), player);
 
-	/**
-	 * Initialize game state.
-	 */
-	public void startGame() {
-		Float positionXPlayer1 = 280f;
-		Float positionXPlayer2 = 280f;
-		Float positionXPlayer3 = 280f;
-		Float positionXPlayer4 = 280f;
-		Float positionYPlayer1 = 267f;
-		Float positionYPlayer2 = 267f;
-		Float positionYPlayer3 = 267f;
-		Float positionYPlayer4 = 267f;
+            GdxController.getInstance().addPlayer(player);
+        }
+    }
 
-		Integer index = 0;
-		for (Player player : GameController.getInstance().playersMap.values()) {
-			if (index == 0) {
-				player.setPositionX(positionXPlayer1);
-				player.setPositionY(positionYPlayer1);
-				player.setStartX(positionXPlayer1);
-				player.setStartY(positionYPlayer1);
-				player.setOffsetX(300f - positionXPlayer1);
-				player.setOffsetY(300f - positionYPlayer1);
-			}
-			if (index == 1) {
-				player.setPositionX(positionXPlayer2);
-				player.setPositionY(positionYPlayer2);
-				player.setStartX(positionXPlayer2);
-				player.setStartY(positionYPlayer2);
-			}
-			if (index == 2) {
-				player.setPositionX(positionXPlayer3);
-				player.setPositionY(positionYPlayer3);
-				player.setStartX(positionXPlayer3);
-				player.setStartY(positionYPlayer3);
-			}
-			if (index == 3) {
-				player.setPositionX(positionXPlayer4);
-				player.setPositionY(positionYPlayer4);
-				player.setStartX(positionXPlayer4);
-				player.setStartY(positionYPlayer4);
-			}
-			index++;
-		}
+    /**
+     * Initialize game state.
+     */
+    public void startGame() {
+        Float positionXPlayer1 = 280f;
+        Float positionXPlayer2 = 280f;
+        Float positionXPlayer3 = 280f;
+        Float positionXPlayer4 = 280f;
+        Float positionYPlayer1 = 267f;
+        Float positionYPlayer2 = 267f;
+        Float positionYPlayer3 = 267f;
+        Float positionYPlayer4 = 267f;
 
-		movement.setCameraX(300f);
-		movement.setCameraY(300f);
-	}
+        Integer index = 0;
+        for (Player player : GameController.getInstance().playersMap.values()) {
+            if (index == 0) {
+                player.setPositionX(positionXPlayer1);
+                player.setPositionY(positionYPlayer1);
+                player.setStartX(positionXPlayer1);
+                player.setStartY(positionYPlayer1);
+                player.setScreenX(positionXPlayer1);
+                player.setScreenY(positionYPlayer1);
+                player.setOffsetX(Player.PLAYER_OFFSET_X);
+                player.setOffsetY(Player.PLAYER_OFFSET_Y);
+            }
+            if (index == 1) {
+                player.setPositionX(positionXPlayer2);
+                player.setPositionY(positionYPlayer2);
+                player.setStartX(positionXPlayer2);
+                player.setStartY(positionYPlayer2);
+            }
+            if (index == 2) {
+                player.setPositionX(positionXPlayer3);
+                player.setPositionY(positionYPlayer3);
+                player.setStartX(positionXPlayer3);
+                player.setStartY(positionYPlayer3);
+            }
+            if (index == 3) {
+                player.setPositionX(positionXPlayer4);
+                player.setPositionY(positionYPlayer4);
+                player.setStartX(positionXPlayer4);
+                player.setStartY(positionYPlayer4);
+            }
+            index++;
+        }
 
-	/**
-	 * Create a shot.
-	 * 
-	 * @param player
-	 */
-	public void createShot(Player player) {
-		if (shotsMap == null) {
-			shotsMap = new HashMap<Integer, Shot>();
-		}
+        movement.getCamera().setPositionX(300f);
+        movement.getCamera().setPositionY(300f);
+    }
 
-		if (shotsSequenceMap == null) {
-			shotsSequenceMap = new HashMap<Integer, Integer>();
-		}
+    /**
+     * Create a shot.
+     * 
+     * @param player
+     */
+    public void createShot(Player player) {
+        if (shotsMap == null) {
+            shotsMap = new HashMap<Integer, Shot>();
+        }
 
-		if (!shotsSequenceMap.containsKey(player.getId())) {
-			shotsSequenceMap.put(player.getId(), 0);
-		}
+        if (shotsSequenceMap == null) {
+            shotsSequenceMap = new HashMap<Integer, Integer>();
+        }
 
-		Shot shot = new Shot();
+        if (!shotsSequenceMap.containsKey(player.getId())) {
+            shotsSequenceMap.put(player.getId(), 0);
+        }
 
-		shotsSequenceMap.put(player.getId(), shotsSequenceMap.get(player.getId()) + 1);
+        Shot shot = new Shot();
 
-		shot.create(player, shotsSequenceMap.get(player.getId()));
+        shotsSequenceMap.put(player.getId(), shotsSequenceMap.get(player.getId()) + 1);
 
-		// Hash function that generates global shot sequence
-		Integer shotSequence = ((player.getId() - 1) + (shotsSequenceMap.get(player.getId()) - 1) * 4) + 1;
+        shot.create(player, shotsSequenceMap.get(player.getId()));
 
-		shot.setId(shotSequence);
+        // Hash function that generates global shot sequence
+        Integer shotSequence = ((player.getId() - 1) + (shotsSequenceMap.get(player.getId()) - 1) * 4) + 1;
 
-		shotsMap.put(shotSequence, shot);
-	}
+        shot.setId(shotSequence);
 
-	/**
-	 * Remove one shot.
-	 *
-	 * @param shot
-	 */
-	public void removeShot(Shot shot) {
-		shotsMap.remove(shot.getId());
-	}
+        shotsMap.put(shotSequence, shot);
+    }
 
-	/**
-	 * Reset player state.
-	 */
-	public void resetPlayersState() {
-		for (Player player : playersMap.values()) {
-			if (player.getIsChangingState()) {
-				player.setIsChangingState(false);
-			}
-			if (player.getIsShooting()) {
-				player.setIsShooting(false);
-			}
-		}
-	}
+    /**
+     * Remove one shot.
+     *
+     * @param shot
+     */
+    public void removeShot(Shot shot) {
+        shotsMap.remove(shot.getId());
+    }
 
-	public void addWall(Wall wall) {
-		if (this.wallsMap == null) {
-			this.wallsMap = new HashMap<Integer, Wall>();
-		}
-		Integer cellX = (int) (wall.getPositionX() / 32);
-		Integer cellY = (int) (wall.getPositionY() / 32);
-		this.wallsMap.put(cellX + (cellY * 50), wall);
-	}
+    /**
+     * Reset player state.
+     */
+    public void resetPlayersState() {
+        for (Player player : playersMap.values()) {
+            if (player.getIsChangingState()) {
+                player.setIsChangingState(false);
+            }
+            if (player.getIsShooting()) {
+                player.setIsShooting(false);
+            }
+        }
+    }
 
-	public Player getPlayer() {
-		return player;
-	}
+    public void addWall(Wall wall) {
+        if (this.wallsMap == null) {
+            this.wallsMap = new HashMap<Integer, Wall>();
+        }
+        Integer cellX = (int) (wall.getPositionX() / 32);
+        Integer cellY = (int) (wall.getPositionY() / 32);
+        this.wallsMap.put(cellX + (cellY * 50), wall);
+    }
 
-	public void setPlayer(Player player) {
-		this.player = player;
-	}
+    public Player getPlayer() {
+        return player;
+    }
 
-	public HashMap<Integer, Player> getPlayersMap() {
-		return playersMap;
-	}
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
-	public void setPlayersMap(HashMap<Integer, Player> playersMap) {
-		this.playersMap = playersMap;
-	}
+    public HashMap<Integer, Player> getPlayersMap() {
+        return playersMap;
+    }
 
-	public HashMap<Integer, Enemy> getEnemiesMap() {
-		return enemiesMap;
-	}
+    public void setPlayersMap(HashMap<Integer, Player> playersMap) {
+        this.playersMap = playersMap;
+    }
 
-	public void setEnemiesMap(HashMap<Integer, Enemy> enemiesMap) {
-		this.enemiesMap = enemiesMap;
-	}
+    public HashMap<Integer, Enemy> getEnemiesMap() {
+        return enemiesMap;
+    }
 
-	public HashMap<Integer, Shot> getShotsMap() {
-		return shotsMap;
-	}
+    public void setEnemiesMap(HashMap<Integer, Enemy> enemiesMap) {
+        this.enemiesMap = enemiesMap;
+    }
 
-	public void setShotsMap(HashMap<Integer, Shot> shotsMap) {
-		this.shotsMap = shotsMap;
-	}
+    public HashMap<Integer, Shot> getShotsMap() {
+        return shotsMap;
+    }
 
-	public String getServerName() {
-		return serverName;
-	}
+    public void setShotsMap(HashMap<Integer, Shot> shotsMap) {
+        this.shotsMap = shotsMap;
+    }
 
-	public void setServerName(String serverName) {
-		this.serverName = serverName;
-	}
+    public String getServerName() {
+        return serverName;
+    }
 
-	public Boolean getIsStarted() {
-		return isStarted;
-	}
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
+    }
 
-	public void setIsStarted(Boolean isStarted) {
-		this.isStarted = isStarted;
-	}
+    public Boolean getIsStarted() {
+        return isStarted;
+    }
 
-	public Float getMouseX() {
-		return mouseX;
-	}
+    public void setIsStarted(Boolean isStarted) {
+        this.isStarted = isStarted;
+    }
 
-	public void setMouseX(Float mouseX) {
-		this.mouseX = mouseX;
-	}
+    public Float getMouseX() {
+        return mouseX;
+    }
 
-	public Float getMouseY() {
-		return mouseY;
-	}
+    public void setMouseX(Float mouseX) {
+        this.mouseX = mouseX;
+    }
 
-	public void setMouseY(Float mouseY) {
-		this.mouseY = mouseY;
-	}
+    public Float getMouseY() {
+        return mouseY;
+    }
 
-	public List<Integer> getRemovedShots() {
-		return removedShots;
-	}
+    public void setMouseY(Float mouseY) {
+        this.mouseY = mouseY;
+    }
 
-	public void setRemovedShots(List<Integer> removedShots) {
-		this.removedShots = removedShots;
-	}
+    public List<Integer> getRemovedShots() {
+        return removedShots;
+    }
 
-	public HashMap<Integer, Wall> getWallsMap() {
-		return wallsMap;
-	}
+    public void setRemovedShots(List<Integer> removedShots) {
+        this.removedShots = removedShots;
+    }
 
-	public void setWallsMap(HashMap<Integer, Wall> wallsMap) {
-		this.wallsMap = wallsMap;
-	}
+    public HashMap<Integer, Wall> getWallsMap() {
+        return wallsMap;
+    }
 
-	public Movement getMovement() {
-		return movement;
-	}
+    public void setWallsMap(HashMap<Integer, Wall> wallsMap) {
+        this.wallsMap = wallsMap;
+    }
 
-	public void setMovement(Movement movement) {
-		this.movement = movement;
-	}
+    public Movement getMovement() {
+        return movement;
+    }
+
+    public void setMovement(Movement movement) {
+        this.movement = movement;
+    }
 
 }
