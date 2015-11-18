@@ -88,6 +88,12 @@ public class Movement {
 		if (camera.getPositionY() > CAMERA_TOP) {
 			camera.setPositionY(oldCamera.getPositionY());
 		}
+		
+		player.getWeapon().update();
+		
+		
+//		System.out.println("movement: " + player.getPositionX());
+		
 	}
 
 	public static Float getPlayerOffsetX(float playerStartX) {

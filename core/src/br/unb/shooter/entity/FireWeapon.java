@@ -1,5 +1,7 @@
 package br.unb.shooter.entity;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import br.unb.shooter.util.Constants;

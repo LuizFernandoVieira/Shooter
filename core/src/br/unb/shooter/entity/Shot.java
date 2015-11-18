@@ -27,8 +27,13 @@ public class Shot extends Entity {
         Float playerXCentered = player.getPositionX() + (player.getWidth() / 2);
         Float playerYCentered = player.getPositionY() + (player.getHeight() / 2);
 
-        Float mouseXCorrected = player.getTargetX();
-        Float mouseYCorrected = (Constants.CAMERA_HEIGHT - player.getTargetY());
+        // Float mouseXCorrected = player.getTargetX();
+        // Float mouseYCorrected = (Constants.CAMERA_HEIGHT -
+        // player.getTargetY());
+
+        Float mouseXCorrected = player.getTargetX() + (player.getPositionX() - player.getScreenX());
+        Float mouseYCorrected = (Constants.CAMERA_HEIGHT - player.getTargetY())
+                + (player.getPositionY() - player.getScreenY());
 
         Float deltaX = (mouseXCorrected - playerXCentered);
         Float deltaY = (mouseYCorrected - playerYCentered);
@@ -41,6 +46,10 @@ public class Shot extends Entity {
         setPlayer(player);
         setSequence(sequence);
 
+//          System.out.println(player.getPositionX() - player.getScreenX());
+//        System.out.println("mira: " + (player.getTargetX() + (player.getPositionX() - player.getScreenX())));
+//        System.out.println("weapon: " + player.getWeapon().getPositionX());
+        
         this.finish = false;
     }
 
@@ -53,6 +62,7 @@ public class Shot extends Entity {
             Double y = getPositionY() + VELOCITY * Math.sin(angle);
             setPositionX(x.floatValue());
             setPositionY(y.floatValue());
+            System.out.println(getPositionX());
         }
     }
 

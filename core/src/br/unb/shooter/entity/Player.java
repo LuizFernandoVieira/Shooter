@@ -125,7 +125,7 @@ public class Player extends Entity {
             setPositionX(getPositionX() - velocity);
         }
 
-        weapon.update();
+        //weapon.update();
     }
 
     public Integer getHealth() {
