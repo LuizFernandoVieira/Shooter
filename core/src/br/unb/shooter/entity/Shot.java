@@ -53,7 +53,6 @@ public class Shot extends Entity {
             Double y = getPositionY() + VELOCITY * Math.sin(angle);
             setPositionX(x.floatValue());
             setPositionY(y.floatValue());
-            System.out.println(getPositionX());
         }
     }
 
