@@ -94,7 +94,7 @@ public class Player extends Entity {
      * @param y
      */
     public void setFacing(Float x, Float y) {
-        Float offsetX = x - (positionX + width / 2);
+        Float offsetX = x - (screenX + width / 2);
 
         previousFacing = facing;
 
@@ -125,7 +125,7 @@ public class Player extends Entity {
             setPositionX(getPositionX() - velocity);
         }
 
-        //weapon.update();
+        // weapon.update();
     }
 
     public Integer getHealth() {
