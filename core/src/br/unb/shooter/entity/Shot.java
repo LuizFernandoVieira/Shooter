@@ -24,16 +24,11 @@ public class Shot extends Entity {
     }
 
     public void create(Player player, Integer sequence) {
-        Float playerXCentered = player.getPositionX() + (player.getWidth() / 2);
-        Float playerYCentered = player.getPositionY() + (player.getHeight() / 2);
+        Float playerXCentered = player.getScreenX() + player.getOffsetX();
+        Float playerYCentered = player.getScreenY() + player.getOffsetY();
 
-        // Float mouseXCorrected = player.getTargetX();
-        // Float mouseYCorrected = (Constants.CAMERA_HEIGHT -
-        // player.getTargetY());
-
-        Float mouseXCorrected = player.getTargetX() + (player.getPositionX() - player.getScreenX());
-        Float mouseYCorrected = (Constants.CAMERA_HEIGHT - player.getTargetY())
-                + (player.getPositionY() - player.getScreenY());
+        Float mouseXCorrected = player.getTargetX();
+        Float mouseYCorrected = (Constants.CAMERA_HEIGHT - player.getTargetY());
 
         Float deltaX = (mouseXCorrected - playerXCentered);
         Float deltaY = (mouseYCorrected - playerYCentered);
@@ -46,10 +41,6 @@ public class Shot extends Entity {
         setPlayer(player);
         setSequence(sequence);
 
-//          System.out.println(player.getPositionX() - player.getScreenX());
-//        System.out.println("mira: " + (player.getTargetX() + (player.getPositionX() - player.getScreenX())));
-//        System.out.println("weapon: " + player.getWeapon().getPositionX());
-        
         this.finish = false;
     }
 
