@@ -1,13 +1,20 @@
 package br.unb.shooter.map;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 
 import br.unb.shooter.controller.GameController;
+import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.Wall;
 
 public class MapGdx {
@@ -38,21 +45,19 @@ public class MapGdx {
                 }
             }
         }
-        
-//        objects = tiled_map.getLayers().get("objects").getObjects();
-//        for (MapObject object : objects) {
-//            String name = object.getName();
-//            RectangleMapObject rectangleObject = (RectangleMapObject)object;
-//            Rectangle rectangle = rectangleObject.getRectangle();
-//            if (name.equals("enemy")) {
-////              Sprite enemy = new Sprite(new Texture("kenny/PNG/Enemies/frog.png"));
-//                Sprite enemy = new Sprite(new Texture("sapoloco.png"));
-//                // System.out.println("x: " + rectangle.x);
-//                // System.out.println("y: " + rectangle.y);
-//                enemy.setPosition(rectangle.x, rectangle.y);
-//                enemies.add(enemy);
-//            }   
-//        }
+
+        MapObjects objects = tiledMap.getLayers().get("objects").getObjects();
+        for (MapObject object : objects) {
+            if( object.getName() != null) {
+                String name = object.getName();
+                if (name.equals("enemy")) {
+                    Enemy enemy = new Enemy();
+                    enemy.setPositionX((Float) object.getProperties().get("x"));
+                    enemy.setPositionY((Float) object.getProperties().get("y") + (Float) object.getProperties().get("height"));
+                    GameController.getInstance().addEnemy(enemy);
+                }
+            }
+        }
 
     }
 

@@ -213,6 +213,15 @@ public class GameController {
         this.wallsMap.put(cellX + (cellY * 50), wall);
     }
 
+    public void addEnemy(Enemy enemy) {
+        if (this.enemiesMap == null) {
+            this.enemiesMap = new HashMap<Integer, Enemy>();
+        }
+        Integer cellX = Math.round((enemy.getPositionX()));
+        Integer cellY = Math.round(enemy.getPositionY());
+        this.enemiesMap.put(cellX + cellY, enemy);
+    }
+    
     public Player getPlayer() {
         return player;
     }

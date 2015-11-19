@@ -13,6 +13,7 @@ import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.GdxController;
 import br.unb.shooter.debug.DebugGdx;
 import br.unb.shooter.entity.Camera;
+import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.FireWeapon;
 import br.unb.shooter.entity.Map;
 import br.unb.shooter.entity.Player;
@@ -46,6 +47,8 @@ public class GameScreen extends Screen {
         viewport = new ExtendViewport(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT, camera);
 
         GdxController.getInstance().getPlayerGdx().initGraphics();
+        
+        GdxController.getInstance().getEnemyGdx().initGraphics();
 
         GdxController.getInstance().getWeaponGdx().initGraphics();
 
@@ -101,6 +104,12 @@ public class GameScreen extends Screen {
         if (player.getIsShooting()) {
             GameController.getInstance().createShot(player, movement.getMap());
         }
+        
+        // Updates the enemies
+        for (Enemy enemy : GameController.getInstance().getEnemiesMap().values()) {
+//            enemy.update();
+            GdxController.getInstance().getEnemyGdx().update(enemy, Gdx.graphics.getDeltaTime());
+        }
 
         // Updates shots.
         List<Integer> ids = new ArrayList<Integer>();
@@ -137,6 +146,10 @@ public class GameScreen extends Screen {
         for (Player player : GameController.getInstance().getPlayersMap().values()) {
             GdxController.getInstance().getPlayerGdx().draw(batch, player);
             GdxController.getInstance().getWeaponGdx().draw(batch, (FireWeapon) player.getWeapon());
+        }
+        for (Enemy enemy : GameController.getInstance().getEnemiesMap().values()) {
+            GdxController.getInstance().getEnemyGdx().draw(batch, enemy);
+            GdxController.getInstance().getWeaponGdx().draw(batch, (FireWeapon) enemy.getWeapon());
         }
         for (Shot shot : GameController.getInstance().getShotsMap().values()) {
             GdxController.getInstance().getShotGdx().draw(batch, shot);

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="2">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="15">
  <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" tilecount="2">
   <image source="tiles.png" width="64" height="32"/>
+ </tileset>
+ <tileset firstgid="3" name="enemySheet" tilewidth="41" tileheight="64" tilecount="1">
+  <image source="bubblesidle.png" width="41" height="64"/>
  </tileset>
  <layer name="ground" width="50" height="50">
   <data encoding="base64">
@@ -14,6 +17,9 @@
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="1" name="enemy" x="1001.83" y="289.281" width="63.9464" height="60.9013"/>
+  <object id="5" name="enemy" type="enemy" gid="3" x="289" y="1497" width="41" height="64"/>
+  <object id="9" name="enemy" gid="3" x="482.488" y="1309.61" width="41" height="64"/>
+  <object id="12" name="enemy" gid="3" x="635.721" y="1058.87" width="41" height="64"/>
+  <object id="13" name="enemy" gid="3" x="810.846" y="1272.8" width="41" height="64"/>
  </objectgroup>
 </map>

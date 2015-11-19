@@ -2,7 +2,10 @@ package br.unb.shooter.controller;
 
 import java.util.HashMap;
 
+import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.Player;
+import br.unb.shooter.entity.graphic.enemy.EnemyGdx;
+import br.unb.shooter.entity.graphic.enemy.IEnemyState;
 import br.unb.shooter.entity.graphic.player.IPlayerState;
 import br.unb.shooter.entity.graphic.player.PlayerGdx;
 import br.unb.shooter.entity.graphic.shot.ShotGdx;
@@ -14,6 +17,8 @@ public class GdxController {
     private static GdxController instance;
 
     private PlayerGdx playerGdx;
+    
+    private EnemyGdx enemyGdx;
 
     private TargetMarkGdx markGdx;
 
@@ -51,6 +56,29 @@ public class GdxController {
 
     public void setPlayerGdx(PlayerGdx playerGdx) {
         this.playerGdx = playerGdx;
+    }
+    
+    /**
+     * Add enemy to gdx controller.
+     */
+    public void addEnemy(Enemy enemy) {
+        if (enemyGdx == null) {
+            enemyGdx = new EnemyGdx();
+            enemyGdx.setStateMap(new HashMap<Integer, IEnemyState>());
+        }
+        enemyGdx.getStateMap().put(enemy.getId(), enemyGdx.getDefaultState());
+    }
+
+    public EnemyGdx getEnemyGdx() {
+        if (enemyGdx == null) {
+            enemyGdx = new EnemyGdx();
+            enemyGdx.setStateMap(new HashMap<Integer, IEnemyState>());
+        }
+        return enemyGdx;
+    }
+
+    public void setEnemyGdx(EnemyGdx enemyGdx) {
+        this.enemyGdx = enemyGdx;
     }
 
     public TargetMarkGdx getMarkGdx() {
