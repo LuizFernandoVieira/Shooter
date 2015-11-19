@@ -1,9 +1,8 @@
 package br.unb.shooter.entity;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import br.unb.shooter.controller.GameController;
 import br.unb.shooter.util.Constants;
 
 public class FireWeapon extends Weapon {
@@ -33,6 +32,9 @@ public class FireWeapon extends Weapon {
         setPositionX(getOwner().getPositionX() + xOffset);
         setPositionY(getOwner().getPositionY() + yOffset);
 
+        GameController.getInstance().getPlayer().setTargetX(Float.valueOf(GameController.getInstance().getMouseX()));
+        GameController.getInstance().getPlayer().setTargetY(Float.valueOf(GameController.getInstance().getMouseY()));
+
         // isso fica temporariamente ate colocarmos a logica da mira nos
         // inimigos
         if (getOwner() != null) {
@@ -41,8 +43,11 @@ public class FireWeapon extends Weapon {
                 Float playerXCentered = p.getPositionX() + (p.getWidth() / 2);
                 Float playerYCentered = p.getPositionY() + (p.getHeight() / 2);
 
-                Float mouseXCorrected = p.getTargetX();
-                Float mouseYCorrected = (Constants.CAMERA_HEIGHT) - p.getTargetY();
+                Float mapX = GameController.getInstance().getMovement().getMap().getPositionX();
+                Float mapY = GameController.getInstance().getMovement().getMap().getPositionY();
+
+                Float mouseXCorrected = p.getTargetX() + mapX;
+                Float mouseYCorrected = (Constants.CAMERA_HEIGHT - p.getTargetY()) + mapY;
 
                 Float deltaX = (mouseXCorrected - playerXCentered);
                 Float deltaY = (mouseYCorrected - playerYCentered);

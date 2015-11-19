@@ -38,10 +38,6 @@ public class Player extends Entity {
 
     private Float startY;
 
-    private Float screenX;
-
-    private Float screenY;
-
     private Float offsetX;
 
     private Float offsetY;
@@ -125,7 +121,7 @@ public class Player extends Entity {
             setPositionX(getPositionX() - velocity);
         }
 
-        // weapon.update();
+        weapon.update();
     }
 
     public Integer getHealth() {
@@ -283,22 +279,6 @@ public class Player extends Entity {
 
     public void setOffsetY(Float offsetY) {
         this.offsetY = offsetY;
-    }
-
-    public Float getScreenX() {
-        return screenX;
-    }
-
-    public void setScreenX(Float screenX) {
-        this.screenX = screenX;
-    }
-
-    public Float getScreenY() {
-        return screenY;
-    }
-
-    public void setScreenY(Float screenY) {
-        this.screenY = screenY;
     }
 
 }

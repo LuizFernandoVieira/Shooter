@@ -5,6 +5,8 @@ public class Entity {
     private Integer id;
     protected Float positionX;
     protected Float positionY;
+    protected Float screenX;
+    protected Float screenY;
     protected Float width;
     protected Float height;
 
@@ -49,6 +51,22 @@ public class Entity {
 
     public void setHeight(Float height) {
         this.height = height;
+    }
+
+    public Float getScreenX() {
+        return screenX;
+    }
+
+    public void setScreenX(Float screenX) {
+        this.screenX = screenX;
+    }
+
+    public Float getScreenY() {
+        return screenY;
+    }
+
+    public void setScreenY(Float screenY) {
+        this.screenY = screenY;
     }
 
 }
