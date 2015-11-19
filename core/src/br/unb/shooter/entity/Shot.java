@@ -38,10 +38,13 @@ public class Shot extends Entity {
         Float deltaY = (mouseYCorrected - playerYCentered);
 
         Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
+        
+        Float x = (float) Math.cos(angle.floatValue());
+        Float y = (float) Math.sin(angle.floatValue());
 
         setAngle(angle);
-        setPositionX(playerXCentered);
-        setPositionY(playerYCentered);
+        setPositionX(playerXCentered + x*39);
+        setPositionY(playerYCentered + y*39);
         setPlayer(player);
         setSequence(sequence);
 

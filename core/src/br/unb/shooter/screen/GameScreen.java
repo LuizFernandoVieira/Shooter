@@ -80,7 +80,7 @@ public class GameScreen extends Screen {
         movement.getCamera().setPositionX(300f);
         movement.getCamera().setPositionY(300f);
         movement.getCamera().setWidth(camera.viewportWidth);
-        movement.getCamera().setHeight(camera.viewportHeight);
+        movement.getCamera().setHeight(camera.viewportHeight);        
     }
 
     /**

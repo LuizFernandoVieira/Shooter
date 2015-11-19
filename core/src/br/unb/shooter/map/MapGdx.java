@@ -38,6 +38,21 @@ public class MapGdx {
                 }
             }
         }
+        
+//        objects = tiled_map.getLayers().get("objects").getObjects();
+//        for (MapObject object : objects) {
+//            String name = object.getName();
+//            RectangleMapObject rectangleObject = (RectangleMapObject)object;
+//            Rectangle rectangle = rectangleObject.getRectangle();
+//            if (name.equals("enemy")) {
+////              Sprite enemy = new Sprite(new Texture("kenny/PNG/Enemies/frog.png"));
+//                Sprite enemy = new Sprite(new Texture("sapoloco.png"));
+//                // System.out.println("x: " + rectangle.x);
+//                // System.out.println("y: " + rectangle.y);
+//                enemy.setPosition(rectangle.x, rectangle.y);
+//                enemies.add(enemy);
+//            }   
+//        }
 
     }
 
