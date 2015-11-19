@@ -154,7 +154,7 @@ public class GameController {
      * 
      * @param player
      */
-    public void createShot(Player player) {
+    public void createShot(Player player, Map map) {
         if (shotsMap == null) {
             shotsMap = new HashMap<Integer, Shot>();
         }

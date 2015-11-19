@@ -98,7 +98,7 @@ public class GameScreen extends Screen {
 
         GdxController.getInstance().getPlayerGdx().update(player, Gdx.graphics.getDeltaTime());
         if (player.getIsShooting()) {
-            GameController.getInstance().createShot(player);
+            GameController.getInstance().createShot(player, movement.getMap());
         }
 
         // Updates shots.

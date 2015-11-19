@@ -2,6 +2,7 @@ package br.unb.shooter.entity.graphic.shot;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import br.unb.shooter.controller.GameController;
 import br.unb.shooter.entity.Shot;
 
 public class ShotGdx {
@@ -12,6 +13,9 @@ public class ShotGdx {
     }
 
     public void draw(SpriteBatch batch, Shot shot) {
-        batch.draw(shotTexture.getFrame(), shot.getPositionX(), shot.getPositionY(), shot.getWidth(), shot.getHeight());
+        Float mapX = GameController.getInstance().getMovement().getMap().getPositionX();
+        Float mapY = GameController.getInstance().getMovement().getMap().getPositionY();
+        batch.draw(shotTexture.getFrame(), shot.getPositionX() - mapX, shot.getPositionY() - mapY, shot.getWidth(),
+                shot.getHeight());
     }
 }

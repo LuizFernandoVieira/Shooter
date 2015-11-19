@@ -1,5 +1,6 @@
 package br.unb.shooter.entity;
 
+import br.unb.shooter.controller.GameController;
 import br.unb.shooter.util.Constants;
 
 public class Shot extends Entity {
@@ -24,11 +25,14 @@ public class Shot extends Entity {
     }
 
     public void create(Player player, Integer sequence) {
-        Float playerXCentered = player.getScreenX() + player.getOffsetX();
-        Float playerYCentered = player.getScreenY() + player.getOffsetY();
+        Float playerXCentered = player.getPositionX() + player.getOffsetX();
+        Float playerYCentered = player.getPositionY() + player.getOffsetY();
 
-        Float mouseXCorrected = player.getTargetX();
-        Float mouseYCorrected = (Constants.CAMERA_HEIGHT - player.getTargetY());
+        Float mapX = GameController.getInstance().getMovement().getMap().getPositionX();
+        Float mapY = GameController.getInstance().getMovement().getMap().getPositionY();
+
+        Float mouseXCorrected = player.getTargetX() + mapX;
+        Float mouseYCorrected = (Constants.CAMERA_HEIGHT - player.getTargetY()) + mapY;
 
         Float deltaX = (mouseXCorrected - playerXCentered);
         Float deltaY = (mouseYCorrected - playerYCentered);
@@ -45,8 +49,11 @@ public class Shot extends Entity {
     }
 
     public void update() {
-        if (getPositionX() < 0 || getPositionX() > Constants.CAMERA_WIDTH || getPositionY() < 0
-                || getPositionY() > Constants.CAMERA_HEIGHT) {
+        Float mapX = GameController.getInstance().getMovement().getMap().getPositionX();
+        Float mapY = GameController.getInstance().getMovement().getMap().getPositionY();
+
+        if (getPositionX() < 0 || getPositionX() > (mapX + Constants.CAMERA_WIDTH) || getPositionY() < 0
+                || getPositionY() > (mapY + Constants.CAMERA_HEIGHT)) {
             this.finish = true;
         } else {
             Double x = getPositionX() + VELOCITY * Math.cos(angle);
