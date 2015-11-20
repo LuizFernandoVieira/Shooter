@@ -1,5 +1,9 @@
 package br.unb.shooter.movement;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+
+import br.unb.shooter.collision.MapCollision;
+import br.unb.shooter.controller.GdxController;
 import br.unb.shooter.entity.Camera;
 import br.unb.shooter.entity.Map;
 import br.unb.shooter.entity.Player;
@@ -21,11 +25,14 @@ public class Movement {
 
     private Map map;
 
+    private MapCollision collision;
+
     public Movement() {
         player = new Player();
         oldPlayer = new Player();
         camera = new Camera();
         oldCamera = new Camera();
+        collision = new MapCollision();
     }
 
     public void update() {
@@ -42,6 +49,20 @@ public class Movement {
 
         camera.setPositionX(player.getPositionX() + player.getOffsetX());
         camera.setPositionY(player.getPositionY() + player.getOffsetY());
+
+        TiledMapTileLayer foreground = GdxController.getInstance().getMapGdx().getForeground();
+
+        if (collision.checkMapCollisionX(foreground, player)) {
+            Float x = player.getPositionX();
+            player.setPositionX(oldPlayer.getPositionX());
+            if (collision.checkMapCollisionY(foreground, player)) {
+                player.setPositionX(x);
+            }
+        }
+
+        if (collision.checkMapCollisionY(foreground, player)) {
+            player.setPositionY(oldPlayer.getPositionY());
+        }
 
         if (player.getPositionX() < 0) {
             player.setPositionX(oldPlayer.getPositionX());
@@ -130,6 +151,14 @@ public class Movement {
 
     public void setOldPlayer(Player oldPlayer) {
         this.oldPlayer = oldPlayer;
+    }
+
+    public MapCollision getCollision() {
+        return collision;
+    }
+
+    public void setCollision(MapCollision collision) {
+        this.collision = collision;
     }
 
 }

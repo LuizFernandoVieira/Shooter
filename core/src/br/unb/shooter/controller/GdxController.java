@@ -6,12 +6,12 @@ import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.graphic.enemy.EnemyGdx;
 import br.unb.shooter.entity.graphic.enemy.IEnemyState;
+import br.unb.shooter.entity.graphic.map.MapGdx;
 import br.unb.shooter.entity.graphic.player.IPlayerState;
 import br.unb.shooter.entity.graphic.player.PlayerGdx;
 import br.unb.shooter.entity.graphic.shot.ShotGdx;
 import br.unb.shooter.entity.graphic.targetmark.TargetMarkGdx;
 import br.unb.shooter.entity.graphic.weapon.FireWeaponGdx;
-import br.unb.shooter.map.MapGdx;
 
 public class GdxController {
     private static GdxController instance;

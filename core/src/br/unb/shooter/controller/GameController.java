@@ -8,7 +8,6 @@ import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.Map;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
-import br.unb.shooter.entity.Wall;
 import br.unb.shooter.movement.Movement;
 
 public class GameController {
@@ -26,8 +25,6 @@ public class GameController {
     private HashMap<Integer, Enemy> enemiesMap;
 
     private HashMap<Integer, Shot> shotsMap;
-
-    private HashMap<Integer, Wall> wallsMap;
 
     private List<Integer> removedShots;
 
@@ -123,6 +120,8 @@ public class GameController {
                 player.setScreenY(positionYPlayer1);
                 player.setOffsetX(Player.PLAYER_OFFSET_X);
                 player.setOffsetY(Player.PLAYER_OFFSET_Y);
+                player.setHeight(66f);
+                player.setWidth(42f);
             }
             if (index == 1) {
                 player.setPositionX(positionXPlayer2);
@@ -204,15 +203,6 @@ public class GameController {
         }
     }
 
-    public void addWall(Wall wall) {
-        if (this.wallsMap == null) {
-            this.wallsMap = new HashMap<Integer, Wall>();
-        }
-        Integer cellX = (int) (wall.getPositionX() / 32);
-        Integer cellY = (int) (wall.getPositionY() / 32);
-        this.wallsMap.put(cellX + (cellY * 50), wall);
-    }
-
     public void addEnemy(Enemy enemy) {
         if (this.enemiesMap == null) {
             this.enemiesMap = new HashMap<Integer, Enemy>();
@@ -221,7 +211,7 @@ public class GameController {
         Integer cellY = Math.round(enemy.getPositionY());
         this.enemiesMap.put(cellX + cellY, enemy);
     }
-    
+
     public Player getPlayer() {
         return player;
     }
@@ -292,14 +282,6 @@ public class GameController {
 
     public void setRemovedShots(List<Integer> removedShots) {
         this.removedShots = removedShots;
-    }
-
-    public HashMap<Integer, Wall> getWallsMap() {
-        return wallsMap;
-    }
-
-    public void setWallsMap(HashMap<Integer, Wall> wallsMap) {
-        this.wallsMap = wallsMap;
     }
 
     public Movement getMovement() {
