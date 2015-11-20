@@ -26,8 +26,6 @@ public abstract class Weapon extends Entity{
 
     public void setOwner(Entity owner) {
         this.owner = owner;
-        setPositionX(this.owner.getPositionX());
-        setPositionY(this.owner.getPositionY());
     }
 
 }

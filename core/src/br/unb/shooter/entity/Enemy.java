@@ -16,6 +16,10 @@ public class Enemy extends Entity{
     private Integer facing;
     private Integer previousFacing;
     
+    private Float targetX;
+
+    private Float targetY;
+    
     private Boolean isMoving;
 
     private Boolean isChangingState;
@@ -33,6 +37,8 @@ public class Enemy extends Entity{
         moveRight = false;
         moveDown = false;
         moveLeft = false;
+        targetX = 0f;
+        targetY = 0f;
         isMoving = false;
         isChangingState = false;
         isShooting = false;
@@ -208,5 +214,21 @@ public class Enemy extends Entity{
 
     public void setStartY(Float startY) {
         this.startY = startY;
+    }
+
+    public Float getTargetX() {
+        return targetX;
+    }
+
+    public void setTargetX(Float targetX) {
+        this.targetX = targetX;
+    }
+
+    public Float getTargetY() {
+        return targetY;
+    }
+
+    public void setTargetY(Float targetY) {
+        this.targetY = targetY;
     }
 }

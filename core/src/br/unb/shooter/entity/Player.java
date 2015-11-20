@@ -32,7 +32,7 @@ public class Player extends Entity {
 
     private Boolean isShooting;
 
-    private Weapon weapon;
+//    private Weapon weapon;
 
     private Float startX;
 
@@ -61,8 +61,8 @@ public class Player extends Entity {
         width = 0f;
         height = 0f;
         facing = 0;
-        weapon = new FireWeapon();
-        weapon.setOwner(this);
+//        weapon = new FireWeapon();
+//        weapon.setOwner(this);
         offsetX = 0f;
         offsetY = 0f;
         screenX = 0f;
@@ -121,7 +121,7 @@ public class Player extends Entity {
             setPositionX(getPositionX() - velocity);
         }
 
-        weapon.update();
+//        weapon.update();
     }
 
     public Integer getHealth() {
@@ -233,13 +233,13 @@ public class Player extends Entity {
         this.targetY = targetY;
     }
 
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
-    }
+//    public Weapon getWeapon() {
+//        return weapon;
+//    }
+//
+//    public void setWeapon(Weapon weapon) {
+//        this.weapon = weapon;
+//    }
 
     public Float getStartX() {
         return startX;

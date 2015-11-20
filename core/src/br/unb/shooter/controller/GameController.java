@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.unb.shooter.entity.Enemy;
+import br.unb.shooter.entity.FireWeapon;
 import br.unb.shooter.entity.Map;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
+import br.unb.shooter.entity.Weapon;
 import br.unb.shooter.movement.Movement;
 
 public class GameController {
@@ -23,6 +25,8 @@ public class GameController {
     private HashMap<Integer, Integer> shotsSequenceMap;
 
     private HashMap<Integer, Enemy> enemiesMap;
+    
+    private HashMap<Integer, FireWeapon> weaponsMap;
 
     private HashMap<Integer, Shot> shotsMap;
 
@@ -77,7 +81,7 @@ public class GameController {
 
         playersMap.put(player.getId(), player);
 
-        GdxController.getInstance().addPlayer(player);
+        GdxController.getInstance().addPlayer(player);     
     }
 
     /**
@@ -146,6 +150,23 @@ public class GameController {
 
         movement.getCamera().setPositionX(300f);
         movement.getCamera().setPositionY(300f);
+        
+        // armas
+        if (weaponsMap == null) {
+            weaponsMap = new HashMap<Integer, FireWeapon>();            
+        }
+        
+        FireWeapon weapon = new FireWeapon();
+        weapon.setOwner(player);
+        weaponsMap.put(player.getId(), weapon);
+        GdxController.getInstance().addWeapon(weapon);
+        
+//        for (Integer key : playersMap.keySet()) {
+//            FireWeapon weapon = new FireWeapon();
+//            weapon.setOwner(playersMap.get(key));
+//            weaponsMap.put(key, weapon);
+//            GdxController.getInstance().addWeapon(weapon);
+//        }
     }
 
     /**
@@ -290,6 +311,14 @@ public class GameController {
 
     public void setMovement(Movement movement) {
         this.movement = movement;
+    }
+
+    public HashMap<Integer, FireWeapon> getWeaponsMap() {
+        return weaponsMap;
+    }
+
+    public void setWeaponsMap(HashMap<Integer, FireWeapon> weaponsMap) {
+        this.weaponsMap = weaponsMap;
     }
 
 }

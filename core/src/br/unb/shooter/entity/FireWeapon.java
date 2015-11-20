@@ -23,40 +23,57 @@ public class FireWeapon extends Weapon {
     @Override
     public void update() {
 
-        if (getFacing() == 0) {
-            xOffset = 15;
-        } else {
-            xOffset = 27;
-        }
-
-        setPositionX(getOwner().getPositionX() + xOffset);
-        setPositionY(getOwner().getPositionY() + yOffset);
-
-        GameController.getInstance().getPlayer().setTargetX(Float.valueOf(GameController.getInstance().getMouseX()));
-        GameController.getInstance().getPlayer().setTargetY(Float.valueOf(GameController.getInstance().getMouseY()));
-
-        // isso fica temporariamente ate colocarmos a logica da mira nos
-        // inimigos
         if (getOwner() != null) {
+            
+            if (getFacing() == 0) {
+                xOffset = 15;
+            } else {
+                xOffset = 27;
+            }
+    
+            setPositionX(getOwner().getPositionX() + xOffset);
+            setPositionY(getOwner().getPositionY() + yOffset);
+    
+            GameController.getInstance().getPlayer().setTargetX(Float.valueOf(GameController.getInstance().getMouseX()));
+            GameController.getInstance().getPlayer().setTargetY(Float.valueOf(GameController.getInstance().getMouseY()));
+            
+            Float mapX = GameController.getInstance().getMovement().getMap().getPositionX();
+            Float mapY = GameController.getInstance().getMovement().getMap().getPositionY();
+            
+            Float deltaX = 0f;
+            Float deltaY = 0f;
+
             if (getOwner() instanceof Player) {
                 Player p = (Player) getOwner();
                 Float playerXCentered = p.getPositionX() + (p.getWidth() / 2);
                 Float playerYCentered = p.getPositionY() + (p.getHeight() / 2);
 
-                Float mapX = GameController.getInstance().getMovement().getMap().getPositionX();
-                Float mapY = GameController.getInstance().getMovement().getMap().getPositionY();
-
                 Float mouseXCorrected = p.getTargetX() + mapX;
                 Float mouseYCorrected = (Constants.CAMERA_HEIGHT - p.getTargetY()) + mapY;
 
-                Float deltaX = (mouseXCorrected - playerXCentered);
-                Float deltaY = (mouseYCorrected - playerYCentered);
+                deltaX = (mouseXCorrected - playerXCentered);
+                deltaY = (mouseYCorrected - playerYCentered);
 
-                Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
-
-                setAngle(Math.toDegrees(angle));
-                setFacing(p.getFacing());
+                setFacing(p.getFacing());                
             }
+            if (getOwner() instanceof Enemy) {
+                Enemy e = (Enemy) getOwner();
+                Float enemyXCentered = e.getPositionX() + (e.getWidth() / 2);
+                Float enemyYCentered = e.getPositionY() + (e.getHeight() / 2);
+
+                Float mouseXCorrected = e.getTargetX() + mapX;
+                Float mouseYCorrected = (Constants.CAMERA_HEIGHT - e.getTargetY()) + mapY;
+
+                deltaX = (mouseXCorrected - enemyXCentered);
+                deltaY = (mouseYCorrected - enemyYCentered);
+
+                setFacing(e.getFacing());
+            }
+            
+            Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
+
+            setAngle(Math.toDegrees(angle));
+           
         }
     }
 

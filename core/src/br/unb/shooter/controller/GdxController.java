@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.Player;
+import br.unb.shooter.entity.Weapon;
 import br.unb.shooter.entity.graphic.enemy.EnemyGdx;
 import br.unb.shooter.entity.graphic.enemy.IEnemyState;
 import br.unb.shooter.entity.graphic.map.MapGdx;
@@ -12,6 +13,7 @@ import br.unb.shooter.entity.graphic.player.PlayerGdx;
 import br.unb.shooter.entity.graphic.shot.ShotGdx;
 import br.unb.shooter.entity.graphic.targetmark.TargetMarkGdx;
 import br.unb.shooter.entity.graphic.weapon.FireWeaponGdx;
+import br.unb.shooter.entity.graphic.weapon.WeaponGdx;
 
 public class GdxController {
     private static GdxController instance;
@@ -81,6 +83,15 @@ public class GdxController {
         this.enemyGdx = enemyGdx;
     }
 
+    /**
+     * Add weapon to gdx controller
+     */
+    public void addWeapon(Weapon weapon) {
+        if (weaponGdx == null) {
+            weaponGdx = new FireWeaponGdx();
+        }
+    }
+    
     public TargetMarkGdx getMarkGdx() {
         if (markGdx == null) {
             markGdx = new TargetMarkGdx();
@@ -106,7 +117,7 @@ public class GdxController {
     public FireWeaponGdx getWeaponGdx() {
         if (weaponGdx == null) {
             weaponGdx = new FireWeaponGdx();
-        }
+        }        
         return weaponGdx;
     }
 

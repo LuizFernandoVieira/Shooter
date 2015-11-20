@@ -1,5 +1,8 @@
 package br.unb.shooter.state;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+
 import br.unb.shooter.controller.NetController;
 
 public class StateMachine {
@@ -10,7 +13,7 @@ public class StateMachine {
 		state.create(this);
 	}
 
-	public void update() {
+	public void update() {	    
 		NetController.getInstance().getMessageQueue().executeMessages();
 
 		state.update();

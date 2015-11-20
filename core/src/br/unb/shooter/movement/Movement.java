@@ -110,7 +110,7 @@ public class Movement {
             camera.setPositionY(oldCamera.getPositionY());
         }
 
-        player.getWeapon().update();
+//        player.getWeapon().update();
     }
 
     public static Float getPlayerOffsetX(float playerStartX) {

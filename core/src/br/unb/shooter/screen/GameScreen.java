@@ -63,7 +63,6 @@ public class GameScreen extends Screen {
         Gdx.input.setCursorImage(GdxController.getInstance().getMarkGdx().getPixmap(), 16, 13);
 
         movement = GameController.getInstance().getMovement();
-
         movement.setPlayer(GameController.getInstance().getPlayer());
         Map map = new Map();
         map.setWidth(GdxController.getInstance().getMapGdx().getForeground().getWidth()
@@ -104,6 +103,11 @@ public class GameScreen extends Screen {
         if (player.getIsShooting()) {
             GameController.getInstance().createShot(player, movement.getMap());
         }
+        
+        // Updates the weapon
+        for (FireWeapon weapon : GameController.getInstance().getWeaponsMap().values()) {     
+            weapon.update();
+        }
 
         // Updates the enemies
         for (Enemy enemy : GameController.getInstance().getEnemiesMap().values()) {
@@ -143,16 +147,17 @@ public class GameScreen extends Screen {
         GdxController.getInstance().getMapGdx().draw(camera);
 
         batch.begin();
-        for (Player player : GameController.getInstance().getPlayersMap().values()) {
-            GdxController.getInstance().getPlayerGdx().draw(batch, player);
-            GdxController.getInstance().getWeaponGdx().draw(batch, (FireWeapon) player.getWeapon());
-        }
         for (Enemy enemy : GameController.getInstance().getEnemiesMap().values()) {
             GdxController.getInstance().getEnemyGdx().draw(batch, enemy);
-            GdxController.getInstance().getWeaponGdx().draw(batch, (FireWeapon) enemy.getWeapon());
+        }
+        for (Player player : GameController.getInstance().getPlayersMap().values()) {
+            GdxController.getInstance().getPlayerGdx().draw(batch, player);
         }
         for (Shot shot : GameController.getInstance().getShotsMap().values()) {
             GdxController.getInstance().getShotGdx().draw(batch, shot);
+        }
+        for (FireWeapon weapon : GameController.getInstance().getWeaponsMap().values()) {
+            GdxController.getInstance().getWeaponGdx().draw(batch, weapon);
         }
         batch.end();
 
