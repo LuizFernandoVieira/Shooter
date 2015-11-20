@@ -28,6 +28,12 @@ public abstract class State implements IState {
     public void dispose() {
         screen.dispose();
     }
+    
+    @Override
+    public void resize (int width, int height)
+    {
+        screen.resize(width, height);
+    }   
 
     public Screen getScreen() {
         return screen;

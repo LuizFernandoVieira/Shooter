@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import br.unb.shooter.controller.GameController;
@@ -44,7 +45,7 @@ public class GameScreen extends Screen {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewport = new ExtendViewport(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT, camera);
+        viewport = new ScreenViewport(camera);
 
         GdxController.getInstance().getPlayerGdx().initGraphics();
 
@@ -83,6 +84,8 @@ public class GameScreen extends Screen {
         movement.getCamera().setPositionY(300f);
         movement.getCamera().setWidth(camera.viewportWidth);
         movement.getCamera().setHeight(camera.viewportHeight);
+
+        debugGdx = new DebugGdx();
     }
 
     /**
@@ -103,9 +106,14 @@ public class GameScreen extends Screen {
         if (player.getIsShooting()) {
             GameController.getInstance().createShot(player, movement.getMap());
         }
-        
+
+        // for (Player p :
+        // GameController.getInstance().getPlayersMap().values()) {
+        // p.update();
+        // }
+
         // Updates the weapon
-        for (FireWeapon weapon : GameController.getInstance().getWeaponsMap().values()) {     
+        for (FireWeapon weapon : GameController.getInstance().getWeaponsMap().values()) {
             weapon.update();
         }
 
@@ -135,6 +143,8 @@ public class GameScreen extends Screen {
         camera.position.y = movement.getCamera().getPositionY();
 
         camera.update();
+
+        debugGdx.update(player, GameController.getInstance().getMouseX(), GameController.getInstance().getMouseY());
     }
 
     /**
@@ -161,6 +171,8 @@ public class GameScreen extends Screen {
         }
         batch.end();
 
+        debugGdx.draw(camera);
+
     }
 
     public void dispose() {
@@ -168,8 +180,9 @@ public class GameScreen extends Screen {
         debugGdx.dispose();
     }
 
-    public void resize() {
-        viewport.update(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height);
     }
 
 }

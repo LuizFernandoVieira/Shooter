@@ -105,7 +105,7 @@ public class GameController {
      */
     public void startGame() {
         Float positionXPlayer1 = 280f;
-        Float positionXPlayer2 = 280f;
+        Float positionXPlayer2 = 500f;
         Float positionXPlayer3 = 280f;
         Float positionXPlayer4 = 280f;
         Float positionYPlayer1 = 267f;
@@ -132,6 +132,12 @@ public class GameController {
                 player.setPositionY(positionYPlayer2);
                 player.setStartX(positionXPlayer2);
                 player.setStartY(positionYPlayer2);
+                player.setScreenX(positionXPlayer2);
+                player.setScreenY(positionYPlayer2);
+                player.setOffsetX(Player.PLAYER_OFFSET_X);
+                player.setOffsetY(Player.PLAYER_OFFSET_Y);
+                player.setHeight(66f);
+                player.setWidth(42f);
             }
             if (index == 2) {
                 player.setPositionX(positionXPlayer3);
@@ -190,7 +196,7 @@ public class GameController {
         Shot shot = new Shot();
 
         shotsSequenceMap.put(player.getId(), shotsSequenceMap.get(player.getId()) + 1);
-
+    
         shot.create(player, shotsSequenceMap.get(player.getId()));
 
         // Hash function that generates global shot sequence

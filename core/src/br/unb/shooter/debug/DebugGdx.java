@@ -1,5 +1,6 @@
 package br.unb.shooter.debug;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 
 import br.unb.shooter.controller.GameController;
+import br.unb.shooter.entity.Camera;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.util.Constants;
 
@@ -27,8 +29,8 @@ public class DebugGdx {
 
     private Label label;
 
-    private Integer mouseX;
-    private Integer mouseY;
+    private Float mouseX;
+    private Float mouseY;
 
     private Player player;
 
@@ -51,10 +53,11 @@ public class DebugGdx {
         table.add(label).align(Align.topLeft);
     }
 
-    public void update(Player player, Integer mouseX, Integer mouseY) {
-        text = "Player x: " + player.getPositionX() + " y: " + player.getPositionY() + " Mouse x: " + mouseX + " y: "
-                + (Constants.CAMERA_HEIGHT - mouseY);
-        label.setText(text);
+    public void update(Player player, Float mouseX, Float mouseY) {
+        // text = "Player x: " + player.getPositionX() + " y: " +
+        // player.getPositionY() + " Mouse x: " + mouseX + " y: "
+        // + (Constants.CAMERA_HEIGHT - mouseY);
+        // label.setText(text);
         this.mouseX = mouseX;
         this.mouseY = mouseY;
         this.player = player;
@@ -66,7 +69,7 @@ public class DebugGdx {
             drawGrid();
         }
         if (drawCircles) {
-            drawCircles();
+            drawCircles(camera);
         }
         if (drawRectangles) {
             drawRectangles();
@@ -88,11 +91,13 @@ public class DebugGdx {
         shapeRenderer.end();
     }
 
-    private void drawCircles() {
+    private void drawCircles(OrthographicCamera camera) {
+        shapeRenderer.setProjectionMatrix(camera.projection);
         shapeRenderer.begin(ShapeType.Line);
         shapeRenderer.setColor(Color.ORANGE);
-        shapeRenderer.circle(mouseX, mouseY, 10);
+        shapeRenderer.circle(mouseX - 300f, Constants.CAMERA_HEIGHT - mouseY - 300f, 10);
         shapeRenderer.end();
+        shapeRenderer.setProjectionMatrix(camera.combined);
     }
 
     private void drawRectangles() {
@@ -101,17 +106,27 @@ public class DebugGdx {
         float x = player.getPositionX();
         float y = player.getPositionY();
         shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.rect(x, (Constants.CAMERA_HEIGHT - y) - player.getHeight(), player.getWidth(),
-                player.getHeight());
+        shapeRenderer.rect(x, y, player.getWidth(), player.getHeight());
         shapeRenderer.end();
     }
 
     private void drawTrajectory() {
-        Float playerXCentered = player.getPositionX() + (player.getWidth() / 2);
-        Float playerYCentered = Constants.CAMERA_HEIGHT - player.getPositionY() - (player.getHeight() / 2);
 
-        Integer mouseXCorrected = mouseX;
-        Integer mouseYCorrected = mouseY;
+        Integer xOffset = 0;
+        if (player.getFacing() == 0) {
+            xOffset = 15;
+        } else {
+            xOffset = 27;
+        }
+
+        Float playerXCentered = player.getPositionX() + xOffset;
+        Float playerYCentered = player.getPositionY() + 9 + 11;
+
+        Float mapX = GameController.getInstance().getMovement().getMap().getPositionX();
+        Float mapY = GameController.getInstance().getMovement().getMap().getPositionY();
+
+        Float mouseXCorrected = player.getTargetX() + mapX;
+        Float mouseYCorrected = (Constants.CAMERA_HEIGHT - player.getTargetY()) + mapY;
 
         shapeRenderer.begin(ShapeType.Line);
         shapeRenderer.setColor(Color.RED);

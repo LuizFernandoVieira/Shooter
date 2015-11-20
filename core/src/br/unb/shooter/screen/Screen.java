@@ -66,4 +66,7 @@ public abstract class Screen {
         this.machine = machine;
     }
 
+    public void resize(int width, int height) {  
+    };
+
 }

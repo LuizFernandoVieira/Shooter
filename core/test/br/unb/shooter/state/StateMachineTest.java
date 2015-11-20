@@ -17,26 +17,5 @@ public class StateMachineTest {
         Assert.assertEquals(StartState.class, machine.getState().getClass());
     }
 
-    @Test
-    public void testStartToCutsceneTransition() throws Exception {
-        StateMachine machine = new StateMachine();
-
-        StartState startState = EasyMock.createMockBuilder(StartState.class).addMockedMethod("dispose").createMock();
-
-        startState.dispose();
-
-        EasyMock.expectLastCall().times(1);
-
-        EasyMock.replay(startState);
-
-        machine.setState(startState);
-
-        startState.setMachine(machine);
-
-        startState.handle(StateEventEnum.TIMER_END);
-
-        Assert.assertEquals(CutsceneState.class, machine.getState().getClass());
-
-        EasyMock.verify(startState);
-    }
+    
 }

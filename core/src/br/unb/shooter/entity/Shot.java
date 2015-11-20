@@ -25,8 +25,16 @@ public class Shot extends Entity {
     }
 
     public void create(Player player, Integer sequence) {
-        Float playerXCentered = player.getPositionX() + player.getOffsetX();
-        Float playerYCentered = player.getPositionY() + player.getOffsetY();
+        
+        Integer xOffset = 0;
+        if (player.getFacing() == 0) {
+            xOffset = 15;
+        } else {
+            xOffset = 27;
+        }
+
+        Float playerXCentered = player.getPositionX() + xOffset;
+        Float playerYCentered = player.getPositionY() + 9 + 11;
 
         Float mapX = GameController.getInstance().getMovement().getMap().getPositionX();
         Float mapY = GameController.getInstance().getMovement().getMap().getPositionY();

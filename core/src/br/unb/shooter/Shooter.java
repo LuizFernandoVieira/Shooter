@@ -26,4 +26,10 @@ public class Shooter extends ApplicationAdapter {
 
         machine.draw();
     }
+    
+    @Override
+    public void resize (int width, int height)
+    {
+        machine.resize(width, height);
+    }   
 }

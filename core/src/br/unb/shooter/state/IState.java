@@ -16,4 +16,6 @@ public interface IState {
     void dispose();
 
     void handle(StateEventEnum event);
+
+    void resize(int width, int height);
 }

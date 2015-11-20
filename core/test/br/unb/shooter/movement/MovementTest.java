@@ -75,10 +75,10 @@ public class MovementTest {
 
         player.setMoveRight(true);
 
-        for (int i = 0; i < 400; i++) {
-            movement.update();
-            log(movement);
-        }
+//        for (int i = 0; i < 400; i++) {
+//            movement.update();
+//            log(movement);
+//        }
 
         Assert.assertTrue(true);
     }

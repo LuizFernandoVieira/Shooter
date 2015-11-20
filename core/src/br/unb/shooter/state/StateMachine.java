@@ -56,4 +56,8 @@ public class StateMachine {
 		this.state = state;
 	}
 
+    public void resize (int width, int height)
+    {
+        this.state.resize(width, height);
+    }   
 }
