@@ -6,10 +6,8 @@ import java.util.List;
 
 import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.FireWeapon;
-import br.unb.shooter.entity.Map;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
-import br.unb.shooter.entity.Weapon;
 import br.unb.shooter.movement.Movement;
 
 public class GameController {
@@ -18,14 +16,12 @@ public class GameController {
 
     private String serverName;
 
-    private Map map;
-
     private HashMap<Integer, Player> playersMap;
 
     private HashMap<Integer, Integer> shotsSequenceMap;
 
     private HashMap<Integer, Enemy> enemiesMap;
-    
+
     private HashMap<Integer, FireWeapon> weaponsMap;
 
     private HashMap<Integer, Shot> shotsMap;
@@ -48,8 +44,6 @@ public class GameController {
         mouseY = 0f;
         removedShots = new ArrayList<Integer>();
         movement = new Movement();
-        map = new Map();
-        movement.setMap(map);
     }
 
     /**
@@ -81,7 +75,7 @@ public class GameController {
 
         playersMap.put(player.getId(), player);
 
-        GdxController.getInstance().addPlayer(player);     
+        GdxController.getInstance().addPlayer(player);
     }
 
     /**
@@ -116,63 +110,58 @@ public class GameController {
         Integer index = 0;
         for (Player player : GameController.getInstance().playersMap.values()) {
             if (index == 0) {
-                player.setPositionX(positionXPlayer1);
-                player.setPositionY(positionYPlayer1);
+                player.setX(positionXPlayer1);
+                player.setY(positionYPlayer1);
                 player.setStartX(positionXPlayer1);
                 player.setStartY(positionYPlayer1);
-                player.setScreenX(positionXPlayer1);
-                player.setScreenY(positionYPlayer1);
                 player.setOffsetX(Player.PLAYER_OFFSET_X);
                 player.setOffsetY(Player.PLAYER_OFFSET_Y);
                 player.setHeight(66f);
                 player.setWidth(42f);
             }
             if (index == 1) {
-                player.setPositionX(positionXPlayer2);
-                player.setPositionY(positionYPlayer2);
+                player.setX(positionXPlayer2);
+                player.setY(positionYPlayer2);
                 player.setStartX(positionXPlayer2);
                 player.setStartY(positionYPlayer2);
-                player.setScreenX(positionXPlayer2);
-                player.setScreenY(positionYPlayer2);
                 player.setOffsetX(Player.PLAYER_OFFSET_X);
                 player.setOffsetY(Player.PLAYER_OFFSET_Y);
                 player.setHeight(66f);
                 player.setWidth(42f);
             }
             if (index == 2) {
-                player.setPositionX(positionXPlayer3);
-                player.setPositionY(positionYPlayer3);
+                player.setX(positionXPlayer3);
+                player.setY(positionYPlayer3);
                 player.setStartX(positionXPlayer3);
                 player.setStartY(positionYPlayer3);
+                player.setOffsetX(Player.PLAYER_OFFSET_X);
+                player.setOffsetY(Player.PLAYER_OFFSET_Y);
+                player.setHeight(66f);
+                player.setWidth(42f);
             }
             if (index == 3) {
-                player.setPositionX(positionXPlayer4);
-                player.setPositionY(positionYPlayer4);
+                player.setX(positionXPlayer4);
+                player.setY(positionYPlayer4);
                 player.setStartX(positionXPlayer4);
                 player.setStartY(positionYPlayer4);
+                player.setOffsetX(Player.PLAYER_OFFSET_X);
+                player.setOffsetY(Player.PLAYER_OFFSET_Y);
+                player.setHeight(66f);
+                player.setWidth(42f);
             }
             index++;
         }
 
-        movement.getCamera().setPositionX(300f);
-        movement.getCamera().setPositionY(300f);
-        
         // armas
         if (weaponsMap == null) {
-            weaponsMap = new HashMap<Integer, FireWeapon>();            
+            weaponsMap = new HashMap<Integer, FireWeapon>();
         }
-        
+
         FireWeapon weapon = new FireWeapon();
         weapon.setOwner(player);
         weaponsMap.put(player.getId(), weapon);
         GdxController.getInstance().addWeapon(weapon);
-        
-//        for (Integer key : playersMap.keySet()) {
-//            FireWeapon weapon = new FireWeapon();
-//            weapon.setOwner(playersMap.get(key));
-//            weaponsMap.put(key, weapon);
-//            GdxController.getInstance().addWeapon(weapon);
-//        }
+
     }
 
     /**
@@ -180,7 +169,7 @@ public class GameController {
      * 
      * @param player
      */
-    public void createShot(Player player, Map map) {
+    public void createShot(Player player) {
         if (shotsMap == null) {
             shotsMap = new HashMap<Integer, Shot>();
         }
@@ -196,7 +185,7 @@ public class GameController {
         Shot shot = new Shot();
 
         shotsSequenceMap.put(player.getId(), shotsSequenceMap.get(player.getId()) + 1);
-    
+
         shot.create(player, shotsSequenceMap.get(player.getId()));
 
         // Hash function that generates global shot sequence
@@ -234,8 +223,8 @@ public class GameController {
         if (this.enemiesMap == null) {
             this.enemiesMap = new HashMap<Integer, Enemy>();
         }
-        Integer cellX = Math.round((enemy.getPositionX()));
-        Integer cellY = Math.round(enemy.getPositionY());
+        Integer cellX = Math.round((enemy.getX()));
+        Integer cellY = Math.round(enemy.getY());
         this.enemiesMap.put(cellX + cellY, enemy);
     }
 

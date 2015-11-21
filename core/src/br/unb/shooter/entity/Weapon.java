@@ -12,8 +12,8 @@ public abstract class Weapon extends Entity{
      */
     public Weapon() {
         owner = null;
-        setPositionX(0f);
-        setPositionY(0f);
+        setX(0f);
+        setY(0f);
     }
 
     public abstract void update();

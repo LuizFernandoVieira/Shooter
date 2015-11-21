@@ -1,7 +1,5 @@
 package br.unb.shooter.entity;
 
-import com.badlogic.gdx.Gdx;
-
 public class Player extends Entity {
 
     public static final Float PLAYER_OFFSET_X = 21f;
@@ -34,8 +32,6 @@ public class Player extends Entity {
 
     private Boolean isShooting;
 
-    // private Weapon weapon;
-
     private Float startX;
 
     private Float startY;
@@ -58,17 +54,13 @@ public class Player extends Entity {
         isChangingState = false;
         isShooting = false;
         velocity = 3;
-        positionX = 0f;
-        positionY = 0f;
+        x = 0f;
+        y = 0f;
         width = 0f;
         height = 0f;
         facing = 0;
-        // weapon = new FireWeapon();
-        // weapon.setOwner(this);
         offsetX = 0f;
         offsetY = 0f;
-        screenX = 0f;
-        screenY = 0f;
         startX = 0f;
         startY = 0f;
     }
@@ -87,12 +79,9 @@ public class Player extends Entity {
 
     /**
      * Set facing.
-     * 
-     * @param x
-     * @param y
      */
-    public void setFacing(Float x, Float y) {
-        Float offsetX = x - (screenX + width / 2);
+    public void setFacing() {
+        Float offsetX = targetX - (x + width / 2);
 
         previousFacing = facing;
 
@@ -111,19 +100,19 @@ public class Player extends Entity {
      */
     public void update() {
         if (moveUp) {
-            setPositionY(getPositionY() + velocity);
+            setY(getY() + velocity);
         }
         if (moveDown) {
-            setPositionY(getPositionY() - velocity);
+            setY(getY() - velocity);
         }
         if (moveRight) {
-            setPositionX(getPositionX() + velocity);
+            setX(getX() + velocity);
         }
         if (moveLeft) {
-            setPositionX(getPositionX() - velocity);
+            setX(getX() - velocity);
         }
 
-        // weapon.update();
+        setFacing();
     }
 
     public Integer getHealth() {

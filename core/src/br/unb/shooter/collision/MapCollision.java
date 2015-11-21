@@ -15,17 +15,17 @@ public class MapCollision {
     public void setOldPlayerState(Player player) {
         this.player = new Player();
 
-        this.player.setPositionX(player.getPositionX());
-        this.player.setPositionY(player.getPositionY());
+        this.player.setX(player.getX());
+        this.player.setY(player.getY());
         this.player.setWidth(player.getWidth());
         this.player.setHeight(player.getHeight());
     }
 
     public Boolean checkMapCollisionX(TiledMapTileLayer mapLayer, Player player) {
-        Integer x1 = (int) (player.getPositionX() / mapLayer.getTileWidth());
-        Integer y1 = (int) (player.getPositionY() / mapLayer.getTileHeight());
-        Integer x2 = (int) ((player.getPositionX() + player.getWidth()) / mapLayer.getTileWidth());
-        Integer y2 = (int) ((player.getPositionY() + player.getHeight()) / mapLayer.getTileHeight());
+        Integer x1 = (int) (player.getX() / mapLayer.getTileWidth());
+        Integer y1 = (int) (player.getY() / mapLayer.getTileHeight());
+        Integer x2 = (int) ((player.getX() + player.getWidth()) / mapLayer.getTileWidth());
+        Integer y2 = (int) ((player.getY() + player.getHeight()) / mapLayer.getTileHeight());
 
         Boolean retorno = false;
         for (int i = y1; i <= y2; i++) {
@@ -37,10 +37,10 @@ public class MapCollision {
     }
 
     public Boolean checkMapCollisionY(TiledMapTileLayer mapLayer, Player player) {
-        Integer x1 = (int) (player.getPositionX() / mapLayer.getTileWidth());
-        Integer y1 = (int) (player.getPositionY() / mapLayer.getTileHeight());
-        Integer x2 = (int) ((player.getPositionX() + player.getWidth()) / mapLayer.getTileWidth());
-        Integer y2 = (int) ((player.getPositionY() + player.getHeight()) / mapLayer.getTileHeight());
+        Integer x1 = (int) (player.getX() / mapLayer.getTileWidth());
+        Integer y1 = (int) (player.getY() / mapLayer.getTileHeight());
+        Integer x2 = (int) ((player.getX() + player.getWidth()) / mapLayer.getTileWidth());
+        Integer y2 = (int) ((player.getY() + player.getHeight()) / mapLayer.getTileHeight());
 
         Boolean retorno = false;
         for (int i = x1; i <= x2; i++) {

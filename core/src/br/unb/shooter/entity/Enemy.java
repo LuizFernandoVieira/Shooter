@@ -1,7 +1,7 @@
 package br.unb.shooter.entity;
 
-public class Enemy extends Entity{
-    
+public class Enemy extends Entity {
+
     private Integer health;
 
     private Boolean moveUp;
@@ -10,16 +10,16 @@ public class Enemy extends Entity{
     private Boolean moveLeft;
 
     private String name;
-    
+
     private Integer velocity;
 
     private Integer facing;
     private Integer previousFacing;
-    
+
     private Float targetX;
 
     private Float targetY;
-    
+
     private Boolean isMoving;
 
     private Boolean isChangingState;
@@ -31,7 +31,7 @@ public class Enemy extends Entity{
     private Float startX;
 
     private Float startY;
-    
+
     public Enemy() {
         moveUp = false;
         moveRight = false;
@@ -43,18 +43,16 @@ public class Enemy extends Entity{
         isChangingState = false;
         isShooting = false;
         velocity = 3;
-        positionX = 0f;
-        positionY = 0f;
+        x = 0f;
+        y = 0f;
         width = 0f;
         height = 0f;
         facing = 0;
         weapon = new FireWeapon();
         weapon.setOwner(this);
-        screenX = 0f;
-        screenY = 0f;
         startX = 0f;
     }
-    
+
     public void setMovingState() {
         if (moveUp || moveRight || moveDown || moveLeft) {
             isMoving = true;
@@ -64,8 +62,8 @@ public class Enemy extends Entity{
         isChangingState = true;
     }
 
-    public void setFacing(Float x, Float y) {
-        Float offsetX = x - (screenX + width / 2);
+    public void setFacing() {
+        Float offsetX = targetX - (x + width / 2);
 
         previousFacing = facing;
 
@@ -78,24 +76,24 @@ public class Enemy extends Entity{
             isChangingState = true;
         }
     }
-    
+
     public void update() {
         if (moveUp) {
-            setPositionY(getPositionY() + velocity);
+            setY(getY() + velocity);
         }
         if (moveDown) {
-            setPositionY(getPositionY() - velocity);
+            setY(getY() - velocity);
         }
         if (moveRight) {
-            setPositionX(getPositionX() + velocity);
+            setX(getX() + velocity);
         }
         if (moveLeft) {
-            setPositionX(getPositionX() - velocity);
+            setX(getX() - velocity);
         }
 
-        weapon.update();
+        setFacing();
     }
-    
+
     public Integer getHealth() {
         return health;
     }

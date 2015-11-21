@@ -83,8 +83,8 @@ public class ServerUpdateMessage extends Message {
 
             player.setId(Integer.valueOf(slices[offset + 0]));
             player.setName(slices[offset + 1]);
-            player.setPositionX(Float.valueOf(slices[offset + 2]));
-            player.setPositionY(Float.valueOf(slices[offset + 3]));
+            player.setX(Float.valueOf(slices[offset + 2]));
+            player.setY(Float.valueOf(slices[offset + 3]));
             player.setIsMoving(slices[offset + 4].equals("1") ? true : false);
             player.setFacing(Integer.valueOf(slices[offset + 5]));
 
@@ -105,8 +105,8 @@ public class ServerUpdateMessage extends Message {
             Shot shot = new Shot();
 
             shot.setId(Integer.valueOf(slices[offset + 0]));
-            shot.setPositionX(Float.valueOf(slices[offset + 1]));
-            shot.setPositionY(Float.valueOf(slices[offset + 2]));
+            shot.setX(Float.valueOf(slices[offset + 1]));
+            shot.setY(Float.valueOf(slices[offset + 2]));
             shot.setAngle(Double.valueOf(slices[offset + 3]));
             shot.setFinish(slices[offset + 4].equals(Constants.ONE));
             shot.setPlayer(new Player());
@@ -144,15 +144,15 @@ public class ServerUpdateMessage extends Message {
 
         for (Player player : players) {
             message += (Constants.SPACE + player.getId() + Constants.SPACE + player.getName() + Constants.SPACE
-                    + player.getPositionX() + Constants.SPACE + player.getPositionY() + Constants.SPACE
+                    + player.getX() + Constants.SPACE + player.getY() + Constants.SPACE
                     + (player.getIsMoving() ? "1" : "0") + Constants.SPACE + player.getFacing());
         }
 
         message += Constants.SPACE + this.shotsLength;
 
         for (Shot shot : shots) {
-            message += (Constants.SPACE + shot.getId() + Constants.SPACE + shot.getPositionX() + Constants.SPACE
-                    + shot.getPositionY() + Constants.SPACE + shot.getAngle() + Constants.SPACE
+            message += (Constants.SPACE + shot.getId() + Constants.SPACE + shot.getX() + Constants.SPACE
+                    + shot.getY() + Constants.SPACE + shot.getAngle() + Constants.SPACE
                     + Constants.convertBoolean(shot.getFinish())) + Constants.SPACE + shot.getPlayer().getId()
                     + Constants.SPACE + shot.getSequence();
         }
@@ -173,8 +173,8 @@ public class ServerUpdateMessage extends Message {
         // Set current server player status
         for (Player player : players) {
             Player playerOnClient = GameController.getInstance().getPlayersMap().get(player.getId());
-            playerOnClient.setPositionX(player.getPositionX());
-            playerOnClient.setPositionY(player.getPositionY());
+            playerOnClient.setX(player.getX());
+            playerOnClient.setY(player.getY());
             playerOnClient.setIsMoving(player.getIsMoving());
             playerOnClient.setFacing(player.getFacing());
         }
@@ -185,8 +185,8 @@ public class ServerUpdateMessage extends Message {
                 shotOnClient = new Shot();
                 GameController.getInstance().getShotsMap().put(shot.getId(), shot);
             }
-            shotOnClient.setPositionX(shot.getPositionX());
-            shotOnClient.setPositionY(shot.getPositionY());
+            shotOnClient.setX(shot.getX());
+            shotOnClient.setY(shot.getY());
             shotOnClient.setAngle(shot.getAngle());
             shotOnClient.setFinish(shot.getFinish());
             shotOnClient.setPlayer(shot.getPlayer());

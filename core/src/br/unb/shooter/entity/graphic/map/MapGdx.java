@@ -36,8 +36,8 @@ public class MapGdx {
                 String name = object.getName();
                 if (name.equals("enemy")) {
                     Enemy enemy = new Enemy();
-                    enemy.setPositionX((Float) object.getProperties().get("x"));
-                    enemy.setPositionY(
+                    enemy.setX((Float) object.getProperties().get("x"));
+                    enemy.setY(
                             (Float) object.getProperties().get("y") + (Float) object.getProperties().get("height"));
                     GameController.getInstance().addEnemy(enemy);
                 }

@@ -1,6 +1,5 @@
 package br.unb.shooter.debug;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -12,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 
 import br.unb.shooter.controller.GameController;
-import br.unb.shooter.entity.Camera;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.util.Constants;
 
@@ -103,8 +101,8 @@ public class DebugGdx {
     private void drawRectangles() {
         shapeRenderer.begin(ShapeType.Line);
         Player player = GameController.getInstance().getPlayer();
-        float x = player.getPositionX();
-        float y = player.getPositionY();
+        float x = player.getX();
+        float y = player.getY();
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.rect(x, y, player.getWidth(), player.getHeight());
         shapeRenderer.end();
@@ -119,18 +117,15 @@ public class DebugGdx {
             xOffset = 27;
         }
 
-        Float playerXCentered = player.getPositionX() + xOffset;
-        Float playerYCentered = player.getPositionY() + 9 + 11;
+        Float playerXCentered = player.getX() + xOffset;
+        Float playerYCentered = player.getY() + 9 + 11;
 
-        Float mapX = GameController.getInstance().getMovement().getMap().getPositionX();
-        Float mapY = GameController.getInstance().getMovement().getMap().getPositionY();
-
-        Float mouseXCorrected = player.getTargetX() + mapX;
-        Float mouseYCorrected = (Constants.CAMERA_HEIGHT - player.getTargetY()) + mapY;
+        Float mouseX = player.getTargetX();
+        Float mouseY = player.getTargetY();
 
         shapeRenderer.begin(ShapeType.Line);
         shapeRenderer.setColor(Color.RED);
-        shapeRenderer.line(playerXCentered, playerYCentered, mouseXCorrected, mouseYCorrected);
+        shapeRenderer.line(playerXCentered, playerYCentered, mouseX, mouseY);
         shapeRenderer.end();
     }
 

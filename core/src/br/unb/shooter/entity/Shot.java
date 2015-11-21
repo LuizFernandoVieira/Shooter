@@ -1,8 +1,5 @@
 package br.unb.shooter.entity;
 
-import br.unb.shooter.controller.GameController;
-import br.unb.shooter.util.Constants;
-
 public class Shot extends Entity {
 
     public static final Integer VELOCITY = 8;
@@ -16,8 +13,8 @@ public class Shot extends Entity {
     private Integer sequence;
 
     public Shot() {
-        setPositionX(0f);
-        setPositionY(0f);
+        setX(0f);
+        setY(0f);
         setHeight(6f);
         setWidth(6f);
         finish = false;
@@ -25,7 +22,7 @@ public class Shot extends Entity {
     }
 
     public void create(Player player, Integer sequence) {
-        
+
         Integer xOffset = 0;
         if (player.getFacing() == 0) {
             xOffset = 15;
@@ -33,26 +30,23 @@ public class Shot extends Entity {
             xOffset = 27;
         }
 
-        Float playerXCentered = player.getPositionX() + xOffset;
-        Float playerYCentered = player.getPositionY() + 9 + 11;
+        Float playerXCentered = player.getX() + xOffset;
+        Float playerYCentered = player.getY() + 9 + 11;
 
-        Float mapX = GameController.getInstance().getMovement().getMap().getPositionX();
-        Float mapY = GameController.getInstance().getMovement().getMap().getPositionY();
+        Float mouseX = player.getTargetX();
+        Float mouseY = player.getTargetY();
 
-        Float mouseXCorrected = player.getTargetX() + mapX;
-        Float mouseYCorrected = (Constants.CAMERA_HEIGHT - player.getTargetY()) + mapY;
-
-        Float deltaX = (mouseXCorrected - playerXCentered);
-        Float deltaY = (mouseYCorrected - playerYCentered);
+        Float deltaX = (mouseX - playerXCentered);
+        Float deltaY = (mouseY - playerYCentered);
 
         Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
-        
+
         Float x = (float) Math.cos(angle.floatValue());
         Float y = (float) Math.sin(angle.floatValue());
 
         setAngle(angle);
-        setPositionX(playerXCentered + x*39);
-        setPositionY(playerYCentered + y*39);
+        setX(playerXCentered + x * 39);
+        setY(playerYCentered + y * 39);
         setPlayer(player);
         setSequence(sequence);
 
@@ -60,18 +54,11 @@ public class Shot extends Entity {
     }
 
     public void update() {
-        Float mapX = GameController.getInstance().getMovement().getMap().getPositionX();
-        Float mapY = GameController.getInstance().getMovement().getMap().getPositionY();
-
-        if (getPositionX() < 0 || getPositionX() > (mapX + Constants.CAMERA_WIDTH) || getPositionY() < 0
-                || getPositionY() > (mapY + Constants.CAMERA_HEIGHT)) {
-            this.finish = true;
-        } else {
-            Double x = getPositionX() + VELOCITY * Math.cos(angle);
-            Double y = getPositionY() + VELOCITY * Math.sin(angle);
-            setPositionX(x.floatValue());
-            setPositionY(y.floatValue());
-        }
+        // TODO: fix shot end
+        Double x = getX() + VELOCITY * Math.cos(angle);
+        Double y = getY() + VELOCITY * Math.sin(angle);
+        setX(x.floatValue());
+        setY(y.floatValue());
     }
 
     public Boolean getFinish() {

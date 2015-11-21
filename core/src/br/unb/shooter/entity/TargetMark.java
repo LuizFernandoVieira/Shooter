@@ -1,19 +1,17 @@
 package br.unb.shooter.entity;
 
-import br.unb.shooter.util.Constants;
-
 public class TargetMark extends Entity {
 
     public TargetMark() {
-        this.positionX = 0f;
-        this.positionY = 0f;
+        this.x = 0f;
+        this.y = 0f;
         this.width = 12f;
         this.height = 12f;
     }
 
-    public void update(float screenX, float screenY) {
-        this.positionX = screenX;
-        this.positionY = Constants.CAMERA_HEIGHT - screenY;
+    public void update(float mapX, float mapY) {
+        this.x = mapX;
+        this.y = mapY;
     }
 
 }

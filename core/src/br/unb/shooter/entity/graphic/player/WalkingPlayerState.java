@@ -24,7 +24,7 @@ public class WalkingPlayerState implements IPlayerState {
 
     @Override
     public void draw(SpriteBatch batch, Player player) {
-        batch.draw(currentFrame, player.getScreenX(), player.getScreenY(), player.getWidth(), player.getHeight());
+        batch.draw(currentFrame, player.getX(), player.getY(), player.getWidth(), player.getHeight());
     }
 
     @Override

@@ -6,22 +6,19 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.GdxController;
 import br.unb.shooter.debug.DebugGdx;
-import br.unb.shooter.entity.Camera;
 import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.FireWeapon;
-import br.unb.shooter.entity.Map;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
 import br.unb.shooter.input.GameInputProcessor;
 import br.unb.shooter.movement.Movement;
-import br.unb.shooter.util.Constants;
 
 public class GameScreen extends Screen {
 
@@ -45,7 +42,7 @@ public class GameScreen extends Screen {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewport = new ScreenViewport(camera);
+        viewport = new StretchViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         GdxController.getInstance().getPlayerGdx().initGraphics();
 
@@ -65,25 +62,6 @@ public class GameScreen extends Screen {
 
         movement = GameController.getInstance().getMovement();
         movement.setPlayer(GameController.getInstance().getPlayer());
-        Map map = new Map();
-        map.setWidth(GdxController.getInstance().getMapGdx().getForeground().getWidth()
-                * GdxController.getInstance().getMapGdx().getForeground().getTileWidth());
-        map.setHeight(GdxController.getInstance().getMapGdx().getForeground().getHeight()
-                * GdxController.getInstance().getMapGdx().getForeground().getTileHeight());
-        map.setPositionX(0f);
-        map.setPositionY(0f);
-        map.setCols((float) GdxController.getInstance().getMapGdx().getForeground().getWidth());
-        map.setRows((float) GdxController.getInstance().getMapGdx().getForeground().getHeight());
-        map.getTile().setWidth(GdxController.getInstance().getMapGdx().getForeground().getTileWidth());
-        map.getTile().setHeight(GdxController.getInstance().getMapGdx().getForeground().getTileHeight());
-        movement.setMap(map);
-        movement.setCamera(new Camera());
-        movement.getCamera().setStartX(300f);
-        movement.getCamera().setStartY(300f);
-        movement.getCamera().setPositionX(300f);
-        movement.getCamera().setPositionY(300f);
-        movement.getCamera().setWidth(camera.viewportWidth);
-        movement.getCamera().setHeight(camera.viewportHeight);
 
         debugGdx = new DebugGdx();
     }
@@ -93,9 +71,13 @@ public class GameScreen extends Screen {
      */
     @Override
     public void update() {
-        // Updates the mouse.
-        GameController.getInstance().getPlayer().setFacing(GameController.getInstance().getMouseX(),
-                GameController.getInstance().getMouseY());
+        Vector3 mousePosition = new Vector3(GameController.getInstance().getMouseX(),
+                GameController.getInstance().getMouseY(), 0);
+
+        camera.unproject(mousePosition);
+
+        GameController.getInstance().getPlayer().setTargetX(mousePosition.x);
+        GameController.getInstance().getPlayer().setTargetY(mousePosition.y);
 
         // Updates the player.
         Player player = GameController.getInstance().getPlayer();
@@ -104,13 +86,8 @@ public class GameScreen extends Screen {
 
         GdxController.getInstance().getPlayerGdx().update(player, Gdx.graphics.getDeltaTime());
         if (player.getIsShooting()) {
-            GameController.getInstance().createShot(player, movement.getMap());
+            GameController.getInstance().createShot(player);
         }
-
-        // for (Player p :
-        // GameController.getInstance().getPlayersMap().values()) {
-        // p.update();
-        // }
 
         // Updates the weapon
         for (FireWeapon weapon : GameController.getInstance().getWeaponsMap().values()) {
@@ -139,8 +116,38 @@ public class GameScreen extends Screen {
         // Updates map.
         GdxController.getInstance().getMapGdx().update();
 
-        camera.position.x = movement.getCamera().getPositionX();
-        camera.position.y = movement.getCamera().getPositionY();
+        float oldCameraX = camera.position.x;
+        float oldCameraY = camera.position.y;
+
+        camera.position.x = GameController.getInstance().getPlayer().getX()
+                + GameController.getInstance().getPlayer().getOffsetX();
+        camera.position.y = GameController.getInstance().getPlayer().getY()
+                + GameController.getInstance().getPlayer().getOffsetY();
+
+        if (camera.position.x < (camera.viewportWidth / 2)) {
+            camera.position.x = oldCameraX;
+        }
+        if (camera.position.y < (camera.viewportHeight / 2)) {
+            camera.position.y = oldCameraY;
+        }
+
+        float mapWidth = GdxController.getInstance().getMapGdx().getForeground().getTileWidth()
+                * GdxController.getInstance().getMapGdx().getForeground().getWidth();
+        float mapHeight = GdxController.getInstance().getMapGdx().getForeground().getTileHeight()
+                * GdxController.getInstance().getMapGdx().getForeground().getHeight();
+
+        if (camera.position.x < (camera.viewportWidth / 2)) {
+            camera.position.x = oldCameraX;
+        }
+        if (camera.position.y < (camera.viewportHeight / 2)) {
+            camera.position.y = oldCameraY;
+        }
+        if (camera.position.x > (mapWidth - (camera.viewportWidth / 2))) {
+            camera.position.x = oldCameraX;
+        }
+        if (camera.position.y > (mapHeight - (camera.viewportHeight / 2))) {
+            camera.position.y = oldCameraY;
+        }
 
         camera.update();
 
@@ -156,6 +163,7 @@ public class GameScreen extends Screen {
 
         GdxController.getInstance().getMapGdx().draw(camera);
 
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
         for (Enemy enemy : GameController.getInstance().getEnemiesMap().values()) {
             GdxController.getInstance().getEnemyGdx().draw(batch, enemy);
