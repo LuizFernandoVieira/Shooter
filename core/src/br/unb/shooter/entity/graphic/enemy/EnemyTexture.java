@@ -23,9 +23,9 @@ public class EnemyTexture {
     private TextureRegion idleLeft;
 
     public EnemyTexture() {
-        textureWalking = new Texture(Gdx.files.internal("bubbleswalking.png"));
+        textureWalking = new Texture(Gdx.files.internal("enemy.png"));
 
-        textureIdle = new Texture(Gdx.files.internal("bubblesidle.png"));
+        textureIdle = new Texture(Gdx.files.internal("enemy.png"));
 
         walkingRight = new TextureRegion[8];
 
