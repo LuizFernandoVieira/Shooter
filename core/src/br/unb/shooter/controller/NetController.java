@@ -180,8 +180,7 @@ public class NetController {
      * @param player
      */
     public void sendPlayerInput(Player player) {
-        ClientInputMessage msg = new ClientInputMessage(player, GameController.getInstance().getMouseX(),
-                GameController.getInstance().getMouseY());
+        ClientInputMessage msg = new ClientInputMessage(player, player.getTargetX(), player.getTargetY());
 
         clientMessages.add(msg);
 

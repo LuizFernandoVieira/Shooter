@@ -1,12 +1,11 @@
-package br.unb.shooter.movement;
+package br.unb.shooter.collision;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
-import br.unb.shooter.collision.MapCollision;
 import br.unb.shooter.controller.GdxController;
 import br.unb.shooter.entity.Player;
 
-public class Movement {
+public class PlayerCollision {
 
     private Player player;
 
@@ -14,18 +13,18 @@ public class Movement {
 
     private MapCollision collision;
 
-    public Movement() {
+    public PlayerCollision() {
         player = new Player();
         oldPlayer = new Player();
         collision = new MapCollision();
     }
 
-    public void update() {
+    public void saveOldPosition() {
         oldPlayer.setX(player.getX());
         oldPlayer.setY(player.getY());
+    }
 
-        player.update();
-
+    public void update() {
         TiledMapTileLayer foreground = GdxController.getInstance().getMapGdx().getForeground();
 
         if (collision.checkMapCollisionX(foreground, player)) {

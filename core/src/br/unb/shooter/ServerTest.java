@@ -8,108 +8,112 @@ import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.NetController;
 
 public class ServerTest {
-	private static State state = new State();
+    private static State state = new State();
 
-	private static Input input = new Input();
+    private static Input input = new Input();
 
-	private static Integer counter = 0;
+    private static Integer counter = 0;
 
-	public static void main(String[] args) {
-		GameController.getInstance().createServerPlayer("Bruno");
+    public static void main(String[] args) {
+        GameController.getInstance().createServerPlayer("Bruno");
 
-		NetController.getInstance().createServerAndListener();
+        NetController.getInstance().createServerAndListener();
 
-		GameController.getInstance().setServerName("Servidor");
+        GameController.getInstance().setServerName("Servidor");
 
-		input.start();
+        input.start();
 
-		while (state.getIsRunning()) {
-			// Update input.
-			if (input.getStop()) {
-				state.setIsRunning(false);
-			}
-			if (input.getStartGame() && !GameController.getInstance().getIsStarted()) {
-				NetController.getInstance().startGame();
-				GameController.getInstance().setIsStarted(true);
-			}
+        System.out.println("Pressione 1 pra iniciar e 0 para sair...");
 
-			// Execute messages.
-			NetController.getInstance().getMessageQueue().executeMessages();
+        while (state.getIsRunning()) {
+            // Update input.
+            if (input.getStop()) {
+                state.setIsRunning(false);
+            }
+            if (input.getStartGame() && !GameController.getInstance().getIsStarted()) {
+                NetController.getInstance().startGame();
+                GameController.getInstance().setIsStarted(true);
+                System.out.println("x: " + GameController.getInstance().getPlayersMap().get(2).getStartX());
+            }
 
-			if (GameController.getInstance().getIsStarted()) {
-				// Update clients.
-				NetController.getInstance().updateGame();
-			}
+            // Execute messages.
+            NetController.getInstance().getMessageQueue().executeMessages();
 
-			try {
-				Thread.sleep(1000L);
-			} catch (InterruptedException e) {
-				Log.error(e.getMessage());
-			}
+            if (GameController.getInstance().getIsStarted()) {
+                System.out.println("x: " + GameController.getInstance().getPlayersMap().get(2).getX());
+                // Update clients.
+                NetController.getInstance().updateGame();
+            }
 
-			counter++;
-		}
+            try {
+                Thread.sleep(100L);
+            } catch (InterruptedException e) {
+                Log.error(e.getMessage());
+            }
 
-		NetController.getInstance().stopServer();
-	}
+            counter++;
+        }
 
-	private static class Input extends Thread {
+        NetController.getInstance().stopServer();
+    }
 
-		private Boolean stop;
+    private static class Input extends Thread {
 
-		private Boolean startGame;
+        private Boolean stop;
 
-		public Input() {
-			stop = false;
-			startGame = false;
-		}
+        private Boolean startGame;
 
-		@Override
-		public void run() {
-			while (!stop) {
-				try {
-					try {
-						int key = System.in.read();
+        public Input() {
+            stop = false;
+            startGame = false;
+        }
 
-						if (key == 48) {
-							stop = true;
-						}
-						if (key == 49) {
-							startGame = true;
-						}
-					} catch (IOException e) {
-						Log.error(e.getMessage());
-					}
+        @Override
+        public void run() {
+            while (!stop) {
+                try {
+                    try {
+                        int key = System.in.read();
 
-					Thread.sleep(100L);
-				} catch (InterruptedException e) {
-					Log.error(e.getMessage());
-				}
-			}
-		}
+                        if (key == 48) {
+                            stop = true;
+                        }
+                        if (key == 49) {
+                            startGame = true;
+                        }
+                    } catch (IOException e) {
+                        Log.error(e.getMessage());
+                    }
 
-		public Boolean getStop() {
-			return stop;
-		}
+                    Thread.sleep(100L);
+                } catch (InterruptedException e) {
+                    Log.error(e.getMessage());
+                }
+            }
+        }
 
-		public Boolean getStartGame() {
-			return startGame;
-		}
-	}
+        public Boolean getStop() {
+            return stop;
+        }
 
-	private static class State {
-		private Boolean isRunning;
+        public Boolean getStartGame() {
+            return startGame;
+        }
+    }
 
-		public State() {
-			isRunning = true;
-		}
+    private static class State {
+        private Boolean isRunning;
 
-		public Boolean getIsRunning() {
-			return isRunning;
-		}
+        public State() {
+            isRunning = true;
+        }
 
-		public void setIsRunning(Boolean isRunning) {
-			this.isRunning = isRunning;
-		}
-	}
+        public Boolean getIsRunning() {
+            return isRunning;
+        }
+
+        public void setIsRunning(Boolean isRunning) {
+            this.isRunning = isRunning;
+        }
+    }
 }

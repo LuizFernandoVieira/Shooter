@@ -151,10 +151,9 @@ public class ServerUpdateMessage extends Message {
         message += Constants.SPACE + this.shotsLength;
 
         for (Shot shot : shots) {
-            message += (Constants.SPACE + shot.getId() + Constants.SPACE + shot.getX() + Constants.SPACE
-                    + shot.getY() + Constants.SPACE + shot.getAngle() + Constants.SPACE
-                    + Constants.convertBoolean(shot.getFinish())) + Constants.SPACE + shot.getPlayer().getId()
-                    + Constants.SPACE + shot.getSequence();
+            message += (Constants.SPACE + shot.getId() + Constants.SPACE + shot.getX() + Constants.SPACE + shot.getY()
+                    + Constants.SPACE + shot.getAngle() + Constants.SPACE + Constants.convertBoolean(shot.getFinish()))
+                    + Constants.SPACE + shot.getPlayer().getId() + Constants.SPACE + shot.getSequence();
         }
 
         message += Constants.SPACE + this.lastInput;

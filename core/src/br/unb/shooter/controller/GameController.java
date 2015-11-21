@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import br.unb.shooter.collision.PlayerCollision;
 import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.FireWeapon;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
-import br.unb.shooter.movement.Movement;
 
 public class GameController {
 
@@ -36,14 +36,14 @@ public class GameController {
 
     private Float mouseY;
 
-    private Movement movement;
+    private PlayerCollision movement;
 
     public GameController() {
         shotsMap = new HashMap<Integer, Shot>();
         mouseX = 0f;
         mouseY = 0f;
         removedShots = new ArrayList<Integer>();
-        movement = new Movement();
+        movement = new PlayerCollision();
     }
 
     /**
@@ -300,11 +300,11 @@ public class GameController {
         this.removedShots = removedShots;
     }
 
-    public Movement getMovement() {
+    public PlayerCollision getMovement() {
         return movement;
     }
 
-    public void setMovement(Movement movement) {
+    public void setMovement(PlayerCollision movement) {
         this.movement = movement;
     }
 

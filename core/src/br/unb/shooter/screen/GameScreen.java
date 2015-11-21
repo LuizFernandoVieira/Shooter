@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import br.unb.shooter.collision.PlayerCollision;
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.GdxController;
 import br.unb.shooter.debug.DebugGdx;
@@ -18,7 +19,6 @@ import br.unb.shooter.entity.FireWeapon;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
 import br.unb.shooter.input.GameInputProcessor;
-import br.unb.shooter.movement.Movement;
 
 public class GameScreen extends Screen {
 
@@ -28,7 +28,7 @@ public class GameScreen extends Screen {
 
     private DebugGdx debugGdx;
 
-    private Movement movement;
+    private PlayerCollision playerCollision;
 
     /**
      * Constructor.
@@ -60,10 +60,10 @@ public class GameScreen extends Screen {
 
         Gdx.input.setCursorImage(GdxController.getInstance().getMarkGdx().getPixmap(), 16, 13);
 
-        movement = GameController.getInstance().getMovement();
-        movement.setPlayer(GameController.getInstance().getPlayer());
+        playerCollision = GameController.getInstance().getMovement();
+        playerCollision.setPlayer(GameController.getInstance().getPlayer());
 
-        debugGdx = new DebugGdx();
+        // debugGdx = new DebugGdx();
     }
 
     /**
@@ -79,15 +79,18 @@ public class GameScreen extends Screen {
         GameController.getInstance().getPlayer().setTargetX(mousePosition.x);
         GameController.getInstance().getPlayer().setTargetY(mousePosition.y);
 
-        // Updates the player.
-        Player player = GameController.getInstance().getPlayer();
-        movement.setPlayer(player);
-        movement.update();
+        playerCollision.saveOldPosition();
 
-        GdxController.getInstance().getPlayerGdx().update(player, Gdx.graphics.getDeltaTime());
-        if (player.getIsShooting()) {
-            GameController.getInstance().createShot(player);
+        // Updates players.
+        for (Player player : GameController.getInstance().getPlayersMap().values()) {
+            player.update();
+            GdxController.getInstance().getPlayerGdx().update(player, Gdx.graphics.getDeltaTime());
+            if (player.getIsShooting()) {
+                GameController.getInstance().createShot(player);
+            }
         }
+
+        playerCollision.update();
 
         // Updates the weapon
         for (FireWeapon weapon : GameController.getInstance().getWeaponsMap().values()) {
@@ -151,7 +154,9 @@ public class GameScreen extends Screen {
 
         camera.update();
 
-        debugGdx.update(player, GameController.getInstance().getMouseX(), GameController.getInstance().getMouseY());
+        // debugGdx.update(player, GameController.getInstance().getMouseX(),
+        // GameController.getInstance().getMouseY());
+
     }
 
     /**
@@ -179,7 +184,7 @@ public class GameScreen extends Screen {
         }
         batch.end();
 
-        debugGdx.draw(camera);
+        // debugGdx.draw(camera);
 
     }
 
