@@ -120,7 +120,30 @@ public class GameInputProcessor implements InputProcessor, ControllerListener {
 
 	@Override
 	public boolean axisMoved(Controller controller, int axisCode, float value) {
-		Gdx.app.log("XBOX", "axis: " + Integer.toString(axisCode) + " value: " + value);
+		Player player = GameController.getInstance().getPlayer();
+
+		// left stick - axis 1 = left/right
+		if (axisCode == 1 && value > 0.5) {
+			player.setMoveRight(true);
+		} else if (axisCode == 1 && value < 0.5) {
+			player.setMoveRight(false);
+		}
+		if (axisCode == 1 && value < -0.5) {
+			player.setMoveLeft(true);
+		} else if (axisCode == 1 && value > -0.5) {
+			player.setMoveLeft(false);
+		}
+		// left stick - axis 0 = down/up - axis 0 = up/down
+		if (axisCode == 0 && value > 0.5) {
+			player.setMoveDown(true);
+		} else if (axisCode == 0 && value < 0.5) {
+			player.setMoveDown(false);
+		}
+		if (axisCode == 0 && value < -0.5) {
+			player.setMoveUp(true);
+		} else if (axisCode == 0 && value > -0.5) {
+			player.setMoveUp(false);
+		}
 		return false;
 	}
 
