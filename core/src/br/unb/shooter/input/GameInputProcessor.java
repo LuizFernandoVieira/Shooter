@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.entity.Player;
+import br.unb.shooter.entity.TargetMark;
 import br.unb.shooter.gamepad.XBox360Pad;
 
 public class GameInputProcessor implements InputProcessor, ControllerListener {
@@ -67,8 +68,6 @@ public class GameInputProcessor implements InputProcessor, ControllerListener {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         GameController.getInstance().getPlayer().setIsShooting(true);
-        GameController.getInstance().getPlayer().setTargetX(Float.valueOf(screenX));
-        GameController.getInstance().getPlayer().setTargetY(Float.valueOf(screenY));
         return false;
     }
 
@@ -104,13 +103,13 @@ public class GameInputProcessor implements InputProcessor, ControllerListener {
 
     @Override
     public void disconnected(Controller controller) {
-        Gdx.app.log("XBOX", "connected");
+        Gdx.app.log("XBOX", "disconnected");
     }
 
     @Override
     public boolean buttonDown(Controller controller, int buttonCode) {
         Player player = GameController.getInstance().getPlayer();
-        Gdx.app.log("XBOX", Integer.toString(buttonCode));
+
         // up
         if (buttonCode == 0) {
             player.setMoveUp(true);
@@ -127,6 +126,10 @@ public class GameInputProcessor implements InputProcessor, ControllerListener {
         if (buttonCode == 3) {
             player.setMoveRight(true);
         }
+        // shoot
+        if (buttonCode == 9) {
+            GameController.getInstance().getPlayer().setIsShooting(true);
+        }
 
         player.setMovingState();
 
@@ -136,7 +139,7 @@ public class GameInputProcessor implements InputProcessor, ControllerListener {
     @Override
     public boolean buttonUp(Controller controller, int buttonCode) {
         Player player = GameController.getInstance().getPlayer();
-        Gdx.app.log("XBOX", Integer.toString(buttonCode));
+
         // up
         if (buttonCode == 0) {
             player.setMoveUp(false);
@@ -162,7 +165,8 @@ public class GameInputProcessor implements InputProcessor, ControllerListener {
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
         Player player = GameController.getInstance().getPlayer();
-        Gdx.app.log("XBOX", "axis: " + Integer.toString(axisCode) + " value: " + value);
+        TargetMark targetMark = GameController.getInstance().getTargetMark();
+
         if (axisCode == XBox360Pad.AXIS_LEFT_X && value > 0.5) {
             player.setMoveRight(true);
         } else if (axisCode == XBox360Pad.AXIS_LEFT_X && value < 0.5) {
@@ -184,6 +188,24 @@ public class GameInputProcessor implements InputProcessor, ControllerListener {
             player.setMoveUp(false);
         }
 
+        // Target mark
+        if (axisCode == XBox360Pad.AXIS_RIGHT_X && value > 0) {
+            targetMark.setMoveRight(true);
+            targetMark.setIntensityX(value);
+        }
+        if (axisCode == XBox360Pad.AXIS_RIGHT_X && value < 0) {
+            targetMark.setMoveLeft(true);
+            targetMark.setIntensityX(value);
+        }
+        if (axisCode == XBox360Pad.AXIS_RIGHT_Y && value > 0) {
+            targetMark.setMoveDown(true);
+            targetMark.setIntensityY(value);
+        }
+        if (axisCode == XBox360Pad.AXIS_RIGHT_Y && value < 0) {
+            targetMark.setMoveUp(true);
+            targetMark.setIntensityY(value);
+        }
+
         player.setMovingState();
 
         return false;
@@ -191,19 +213,16 @@ public class GameInputProcessor implements InputProcessor, ControllerListener {
 
     @Override
     public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-        Gdx.app.log("XBOX", "pov: " + Integer.toString(povCode) + " value: " + value);
         return false;
     }
 
     @Override
     public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
-        Gdx.app.log("XBOX", "slider: " + Integer.toString(sliderCode) + " value: " + value);
         return false;
     }
 
     @Override
     public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
-        Gdx.app.log("XBOX", "slider: " + Integer.toString(sliderCode) + " value: " + value);
         return false;
     }
 

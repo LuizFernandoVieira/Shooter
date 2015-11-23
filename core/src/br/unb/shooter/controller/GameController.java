@@ -9,6 +9,7 @@ import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.FireWeapon;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
+import br.unb.shooter.entity.TargetMark;
 
 public class GameController {
 
@@ -28,6 +29,8 @@ public class GameController {
 
     private List<Integer> removedShots;
 
+    private TargetMark targetMark;
+
     private static GameController instance;
 
     private Boolean isStarted = false;
@@ -44,6 +47,7 @@ public class GameController {
         mouseY = 0f;
         removedShots = new ArrayList<Integer>();
         movement = new PlayerCollision();
+        targetMark = new TargetMark();
     }
 
     /**
@@ -118,6 +122,11 @@ public class GameController {
                 player.setOffsetY(Player.PLAYER_OFFSET_Y);
                 player.setHeight(66f);
                 player.setWidth(42f);
+
+                targetMark.setStartX(positionXPlayer1 + 21f - 16f);
+                targetMark.setStartY(positionYPlayer1 + 33f - 16f);
+                targetMark.setX(targetMark.getStartX());
+                targetMark.setY(targetMark.getStartY());
             }
             if (index == 1) {
                 player.setX(positionXPlayer2);
@@ -314,6 +323,14 @@ public class GameController {
 
     public void setWeaponsMap(HashMap<Integer, FireWeapon> weaponsMap) {
         this.weaponsMap = weaponsMap;
+    }
+
+    public TargetMark getTargetMark() {
+        return targetMark;
+    }
+
+    public void setTargetMark(TargetMark targetMark) {
+        this.targetMark = targetMark;
     }
 
 }

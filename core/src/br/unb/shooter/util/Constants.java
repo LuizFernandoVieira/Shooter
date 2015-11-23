@@ -8,6 +8,8 @@ public class Constants {
     public static final int CAMERA_HEIGHT = 600;
     public static final String NEW_LINE = "\n";
 
+    public static final Boolean CONTROLLER = true;
+
     public static String convertBoolean(Boolean bool) {
         return bool ? "1" : "0";
     }
