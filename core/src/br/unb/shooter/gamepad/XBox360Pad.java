@@ -21,12 +21,12 @@ public class XBox360Pad {
     public static final PovDirection BUTTON_DPAD_LEFT = PovDirection.west;
     public static final int BUTTON_LB = 8;
     public static final int BUTTON_L3 = 6;
-    public static final int BUTTON_RB = 9;
+    public static final int BUTTON_RT = 9;
     public static final int BUTTON_R3 = 7;
-    public static final int AXIS_LEFT_X = 1; // -1 left | +1 right
-    public static final int AXIS_LEFT_Y = 0; // -1 up | +1 down
+    public static final int AXIS_LEFT_X = 2; // -1 left | +1 right
+    public static final int AXIS_LEFT_Y = 3; // -1 up | +1 down
     public static final int AXIS_LEFT_TRIGGER = 4; // 0 to 1f
-    public static final int AXIS_RIGHT_X = 3; // -1 left | +1 right
-    public static final int AXIS_RIGHT_Y = 2; // -1 up | +1 down
+    public static final int AXIS_RIGHT_X = 4; // -1 left | +1 right
+    public static final int AXIS_RIGHT_Y = 5; // -1 up | +1 down
     public static final int AXIS_RIGHT_TRIGGER = 4; // 0 to -1f
 }
