@@ -62,7 +62,9 @@ public class GameScreen extends Screen {
 
         Gdx.input.setInputProcessor(input);
 
-        Controllers.addListener(input);
+        if (Constants.CONTROLLER) {
+            Controllers.addListener(input);
+        }
 
         if (!Constants.CONTROLLER) {
             Gdx.input.setCursorImage(GdxController.getInstance().getMarkGdx().getPixmap(), 16, 13);
