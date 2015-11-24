@@ -4,75 +4,73 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import br.unb.shooter.util.Constants;
+
 public class PlayerTexture {
 
-    private static final Integer WIDTH = 41;
+	private Texture textureWalking;
 
-    private static final Integer HEIGHT = 66;
-    
-    private static final Integer IDLE_WIDTH = 42;
-    
-    private static final Integer IDLE_HEIGHT = 64;
+	private Texture textureIdle;
 
-    private Texture textureWalking;
+	private TextureRegion[] walkingRight;
 
-    private Texture textureIdle;
+	private TextureRegion[] walkingLeft;
 
-    private TextureRegion[] walkingRight;
+	private TextureRegion[] idleRight;
 
-    private TextureRegion[] walkingLeft;
+	private TextureRegion[] idleLeft;
 
-    private TextureRegion[] idleRight;
+	public PlayerTexture() {
+		textureWalking = new Texture(Gdx.files.internal("bubbleswalking.png"));
 
-    private TextureRegion[] idleLeft;
+		textureIdle = new Texture(Gdx.files.internal("bubblesidle.png"));
 
-    public PlayerTexture() {
-        textureWalking = new Texture(Gdx.files.internal("bubbleswalking.png"));
+		walkingRight = new TextureRegion[8];
 
-        textureIdle = new Texture(Gdx.files.internal("bubblesidle.png"));
+		walkingLeft = new TextureRegion[8];
 
-        walkingRight = new TextureRegion[8];
+		idleRight = new TextureRegion[8];
 
-        walkingLeft = new TextureRegion[8];
+		idleLeft = new TextureRegion[8];
 
-        idleRight = new TextureRegion[8];
+		for (int i = 0; i < 8; i++) {
+			walkingRight[i] = new TextureRegion(textureWalking, i * Constants.PLAYER_WALKING_WIDTH, 0,
+					Constants.PLAYER_WALKING_WIDTH, Constants.PLAYER_WALKING_HEIGHT);
+		}
 
-        idleLeft = new TextureRegion[8];
+		for (int i = 0; i < 8; i++) {
+			walkingLeft[i] = new TextureRegion(textureWalking, i * Constants.PLAYER_WALKING_WIDTH, 0,
+					Constants.PLAYER_WALKING_WIDTH, Constants.PLAYER_WALKING_HEIGHT);
+			walkingLeft[i].flip(true, false);
+		}
 
-        for (int i = 0; i < 8; i++) {
-            walkingRight[i] = new TextureRegion(textureWalking, i * WIDTH, 0, WIDTH, HEIGHT);
-        }
+		for (int i = 0; i < 8; i++) {
+			idleRight[i] = new TextureRegion(textureIdle, i * Constants.PLAYER_IDLE_WIDTH, 0,
+					Constants.PLAYER_IDLE_WIDTH, Constants.PLAYER_IDLE_HEIGHT);
+		}
 
-        for (int i = 0; i < 8; i++) {
-            walkingLeft[i] = new TextureRegion(textureWalking, i * WIDTH, 0, WIDTH, HEIGHT);
-            walkingLeft[i].flip(true, false);
-        }
+		for (int i = 0; i < 8; i++) {
+			idleLeft[i] = new TextureRegion(textureIdle, i * Constants.PLAYER_IDLE_WIDTH, 0,
+					Constants.PLAYER_IDLE_WIDTH, Constants.PLAYER_IDLE_HEIGHT);
+			idleLeft[i].flip(true, false);
+		}
 
-        for (int i = 0; i < 8; i++) {
-            idleRight[i] = new TextureRegion(textureIdle, i * IDLE_WIDTH, 0, IDLE_WIDTH, IDLE_HEIGHT);
-        }
+	}
 
-        for (int i = 0; i < 8; i++) {
-            idleLeft[i] = new TextureRegion(textureIdle, i * IDLE_WIDTH, 0, IDLE_WIDTH, IDLE_HEIGHT);
-            idleLeft[i].flip(true, false);
-        }
-        
-    }
+	public TextureRegion[] getIdleRightFrame() {
+		return idleRight;
+	}
 
-    public TextureRegion[] getIdleRightFrame() {
-        return idleRight;
-    }
+	public TextureRegion[] getIdleLeftFrame() {
+		return idleLeft;
+	}
 
-    public TextureRegion[] getIdleLeftFrame() {
-        return idleLeft;
-    }
+	public TextureRegion[] getWalkingRightFrames() {
+		return walkingRight;
+	}
 
-    public TextureRegion[] getWalkingRightFrames() {
-        return walkingRight;
-    }
-
-    public TextureRegion[] getWalkingLeftFrames() {
-        return walkingLeft;
-    }
+	public TextureRegion[] getWalkingLeftFrames() {
+		return walkingLeft;
+	}
 
 }

@@ -11,9 +11,9 @@ public class ShotTexture {
     private TextureRegion frame;
 
     public ShotTexture() {
-        texture = new Texture(Gdx.files.internal("shot.png"));
+        texture = new Texture(Gdx.files.internal("bubblesbullet.png"));
 
-        frame = new TextureRegion(texture, 13, 13, 6, 6);
+        frame = new TextureRegion(texture, 0, 0, 12, 12);
     }
 
     public TextureRegion getFrame() {
