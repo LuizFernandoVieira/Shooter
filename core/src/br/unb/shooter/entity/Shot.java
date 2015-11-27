@@ -6,6 +6,8 @@ public class Shot extends Entity {
 
 	public static final Float VELOCITY = Constants.SHOT_VELOCITY;
 
+	public static final Float DISTANCE = Constants.SHOT_DISTANCE;
+
 	private Boolean finish;
 
 	private Double angle;
@@ -13,6 +15,14 @@ public class Shot extends Entity {
 	private Player player;
 
 	private Integer sequence;
+
+	private Float startX;
+
+	private Float startY;
+
+	private Float endX;
+
+	private Float endY;
 
 	public Shot() {
 		setX(0f);
@@ -51,16 +61,42 @@ public class Shot extends Entity {
 		setY(playerYCentered + y * 39);
 		setPlayer(player);
 		setSequence(sequence);
+		setStartX(getX());
+		setStartY(getY());
+
+		Double endX = getStartX() + DISTANCE * Math.cos(angle);
+		Double endY = getStartY() + DISTANCE * Math.sin(angle);
+		setEndX(endX.floatValue());
+		setEndY(endY.floatValue());
 
 		this.finish = false;
 	}
 
 	public void update() {
-		// TODO: fix shot end
 		Double x = getX() + VELOCITY * Math.cos(angle);
 		Double y = getY() + VELOCITY * Math.sin(angle);
 		setX(x.floatValue());
 		setY(y.floatValue());
+
+		boolean finishX = false;
+		boolean finishY = false;
+
+		if (endX > startX && x > endX) {
+			finishX = true;
+		}
+		if (endX < startX && x < endX) {
+			finishX = true;
+		}
+		if (endY > startY && y > endY) {
+			finishY = true;
+		}
+		if (endY < startY && y < endY) {
+			finishY = true;
+		}
+		if (finishX && finishY) {
+			finish = true;
+		}
+
 	}
 
 	public Boolean getFinish() {
@@ -93,6 +129,38 @@ public class Shot extends Entity {
 
 	public void setSequence(Integer sequence) {
 		this.sequence = sequence;
+	}
+
+	public Float getStartX() {
+		return startX;
+	}
+
+	public void setStartX(Float startX) {
+		this.startX = startX;
+	}
+
+	public Float getStartY() {
+		return startY;
+	}
+
+	public void setStartY(Float startY) {
+		this.startY = startY;
+	}
+
+	public Float getEndX() {
+		return endX;
+	}
+
+	public void setEndX(Float endX) {
+		this.endX = endX;
+	}
+
+	public Float getEndY() {
+		return endY;
+	}
+
+	public void setEndY(Float endY) {
+		this.endY = endY;
 	}
 
 }
