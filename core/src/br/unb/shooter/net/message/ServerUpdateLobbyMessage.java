@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.GdxController;
+import br.unb.shooter.entity.FireWeapon;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.util.Constants;
 
@@ -104,6 +105,17 @@ public class ServerUpdateLobbyMessage extends Message {
                 GameController.getInstance().setPlayer(player);
             }
             GdxController.getInstance().addPlayer(player);
+
+            if (GameController.getInstance().getWeaponsMap() == null) {
+                GameController.getInstance().setWeaponsMap(new HashMap<Integer, FireWeapon>());
+            }
+
+            if (!GameController.getInstance().getWeaponsMap().containsKey(player.getId())) {
+                FireWeapon weapon = new FireWeapon();
+                weapon.setOwner(player);
+                GameController.getInstance().getWeaponsMap().put(player.getId(), weapon);
+                GdxController.getInstance().addWeapon(weapon);
+            }
         }
     }
 
