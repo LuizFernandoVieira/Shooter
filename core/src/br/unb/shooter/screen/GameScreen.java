@@ -86,6 +86,7 @@ public class GameScreen extends Screen {
 
         camera.unproject(mousePosition);
 
+        GameController.getInstance().getPlayer().saveOldTargetXY();
         if (Constants.CONTROLLER) {
             GameController.getInstance().getPlayer()
                     .setTargetX(GameController.getInstance().getTargetMark().getX() + Constants.TARGET_MARK_WIDTH / 2);

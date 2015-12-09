@@ -197,7 +197,8 @@ public class NetController {
             }
             if (!isServer) {
                 if (GameController.getInstance().getPlayer().getIsChangingState()
-                        || GameController.getInstance().getPlayer().getIsShooting()) {
+                        || GameController.getInstance().getPlayer().getIsShooting()
+                        || GameController.getInstance().getPlayer().getIsTargetMoving()) {
                     sendPlayerInput(GameController.getInstance().getPlayer());
                 }
             }
