@@ -189,7 +189,7 @@ public class GameScreen extends Screen {
                         collisionX = true;
                     }
                     if (enemy.getY() < (shot.getY() + shot.getHeight())
-                            && (enemy.getY() + enemy.getHeight()) > shot.getX()) {
+                            && (enemy.getY() + enemy.getHeight()) > shot.getY()) {
                         collisionY = true;
                     }
                     if (collisionX && collisionY) {
