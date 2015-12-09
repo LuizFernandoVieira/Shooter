@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import br.unb.shooter.collision.PlayerCollision;
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.GdxController;
+import br.unb.shooter.controller.NetController;
 import br.unb.shooter.debug.DebugGdx;
 import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.FireWeapon;
@@ -176,6 +177,27 @@ public class GameScreen extends Screen {
         }
 
         camera.update();
+
+        if (NetController.getInstance().getIsServer()) {
+            // Check collision shots and enemies
+            for (Enemy enemy : GameController.getInstance().getEnemiesMap().values()) {
+                for (Shot shot : GameController.getInstance().getShotsMap().values()) {
+                    Boolean collisionX = false;
+                    Boolean collisionY = false;
+                    if (enemy.getX() < (shot.getX() + shot.getWidth())
+                            && (enemy.getX() + enemy.getWidth()) > shot.getX()) {
+                        collisionX = true;
+                    }
+                    if (enemy.getY() < (shot.getY() + shot.getHeight())
+                            && (enemy.getY() + enemy.getHeight()) > shot.getX()) {
+                        collisionY = true;
+                    }
+                    if (collisionX && collisionY) {
+                        shot.setFinish(true);
+                    }
+                }
+            }
+        }
 
         // debugGdx.update(player, GameController.getInstance().getMouseX(),
         // GameController.getInstance().getMouseY());
