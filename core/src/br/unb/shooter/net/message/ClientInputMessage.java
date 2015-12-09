@@ -64,7 +64,6 @@ public class ClientInputMessage extends Message {
         sender.setMovingState();
         sender.setTargetX(mouseX);
         sender.setTargetY(mouseY);
-        sender.update();
         if (leftMouseButton) {
             sender.setIsShooting(true);
         }
