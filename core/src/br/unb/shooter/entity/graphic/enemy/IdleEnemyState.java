@@ -18,7 +18,7 @@ public class IdleEnemyState implements IEnemyState {
 
     @Override
     public void create() {
-        idleAnimation = new Animation(1.5f, idleFrames);
+        idleAnimation = new Animation(0.15f, idleFrames);
         stateTime = 0;
     }
 

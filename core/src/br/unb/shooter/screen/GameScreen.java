@@ -76,9 +76,9 @@ public class GameScreen extends Screen {
         playerCollision.setPlayer(GameController.getInstance().getPlayer());
 
         // debugGdx = new DebugGdx();
-        
+
         MusicController.getInstance().stop();
-        MusicController.getInstance().start("tela2intro.wav");        
+        MusicController.getInstance().start("tela2intro.wav");
     }
 
     /**
@@ -122,7 +122,7 @@ public class GameScreen extends Screen {
 
         // Updates the enemies
         for (Enemy enemy : GameController.getInstance().getEnemiesMap().values()) {
-            // enemy.update();
+            enemy.update();
             GdxController.getInstance().getEnemyGdx().update(enemy, Gdx.graphics.getDeltaTime());
         }
 
@@ -206,11 +206,11 @@ public class GameScreen extends Screen {
         // debugGdx.update(player, GameController.getInstance().getMouseX(),
         // GameController.getInstance().getMouseY());
 
-        if(!MusicController.getInstance().getMusic().isPlaying()) {
+        if (!MusicController.getInstance().getMusic().isPlaying()) {
             MusicController.getInstance().start("tela2loop.wav");
             MusicController.getInstance().getMusic().setLooping(true);
         }
-        
+
     }
 
     /**

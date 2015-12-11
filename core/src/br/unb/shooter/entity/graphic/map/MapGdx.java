@@ -24,7 +24,7 @@ public class MapGdx {
     public void initGraphics() {
         tiledLoader = new TmxMapLoader();
 
-        tiledMap = tiledLoader.load("quarto.tmx");
+        tiledMap = tiledLoader.load("tiledmap.tmx");
 
         renderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
 
@@ -40,6 +40,7 @@ public class MapGdx {
                     enemy.setY(
                             (Float) object.getProperties().get("y") + (Float) object.getProperties().get("height"));
                     GameController.getInstance().addEnemy(enemy);
+                    break;
                 }
             }
         }

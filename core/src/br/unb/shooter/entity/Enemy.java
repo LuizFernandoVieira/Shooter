@@ -1,5 +1,8 @@
 package br.unb.shooter.entity;
 
+import br.unb.shooter.controller.GameController;
+import br.unb.shooter.util.Constants;
+
 public class Enemy extends Entity {
 
     private Integer health;
@@ -63,7 +66,7 @@ public class Enemy extends Entity {
     }
 
     public void setFacing() {
-        Float offsetX = targetX - (x + width / 2);
+        Float offsetX = GameController.getInstance().getPlayer().getX() - (x + width / 2);
 
         previousFacing = facing;
 
@@ -78,6 +81,28 @@ public class Enemy extends Entity {
     }
 
     public void update() {
+        Player player = GameController.getInstance().getPlayer();
+        
+        Float playerXCentered = player.getX();
+        Float playerYCentered = player.getY();
+
+        Float enemyX = this.getX();
+        Float enemyY = this.getY();
+
+        Float deltaX = (enemyX - playerXCentered);
+        Float deltaY = (enemyY - playerYCentered);
+
+        Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());        
+        
+        Float distance = (float) Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+        
+        if(distance < Constants.BEAR_ATTACK_RANGE) {
+            this.isMoving = true;
+        }
+        else {
+            this.isMoving = false;
+        }
+        
         if (moveUp) {
             setY(getY() + velocity);
         }

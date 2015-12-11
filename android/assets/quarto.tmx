@@ -192,7 +192,7 @@
   </tile>
  </tileset>
  <tileset firstgid="42" name="enemy" tilewidth="37" tileheight="55" tilecount="4">
-  <image source="enemy.png" width="148" height="55"/>
+  <image source="bearidle.png" width="148" height="55"/>
  </tileset>
  <layer name="ground" width="50" height="45">
   <data encoding="base64" compression="zlib">

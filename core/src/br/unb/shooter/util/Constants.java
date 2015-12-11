@@ -16,8 +16,11 @@ public class Constants {
     public static final Float PLAYER_OFFSET_X = PLAYER_IDLE_WIDTH / 2;
     public static final Float PLAYER_OFFSET_Y = PLAYER_IDLE_HEIGHT / 2;
 
-    public static final Float ENEMY_WIDTH = 37f;
-    public static final Float ENEMY_HEIGHT = 54f;
+    public static final Float BEAR_WALKING_WIDTH = 37f;
+    public static final Float BEAR_WALKING_HEIGHT = 55f;
+    public static final Float BEAR_IDLE_WIDTH = 37f;
+    public static final Float BEAR_IDLE_HEIGHT = 55f;
+    public static final Float BEAR_ATTACK_RANGE = 220f;
 
     public static final float WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT = 15f;
     public static final float WEAPON_OFFSET_FROM_PLAYER_X_FACING_LEFT = 27f;

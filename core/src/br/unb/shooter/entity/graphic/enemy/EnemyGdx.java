@@ -54,7 +54,21 @@ public class EnemyGdx {
      * @param enemy Enemy
      */
     public void update(Enemy enemy, float deltaTime) {
-        stateMap.put(enemy.getId(), idleRightState);
+        if (enemy.getIsMoving()) {
+            if (enemy.getFacing() == 0) {
+                stateMap.put(enemy.getId(), walkingRightState);
+            }
+            if (enemy.getFacing() == 1) {
+                stateMap.put(enemy.getId(), walkingLeftState);
+            }
+        } else {
+            if (enemy.getFacing() == 0) {
+                stateMap.put(enemy.getId(), idleRightState);
+            }
+            if (enemy.getFacing() == 1) {
+                stateMap.put(enemy.getId(), idleLeftState);
+            }
+        }
 
         stateMap.get(enemy.getId()).update(deltaTime, enemy);
 
