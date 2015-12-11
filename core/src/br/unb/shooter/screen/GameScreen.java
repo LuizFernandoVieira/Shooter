@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import br.unb.shooter.collision.PlayerCollision;
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.GdxController;
+import br.unb.shooter.controller.MusicController;
 import br.unb.shooter.controller.NetController;
 import br.unb.shooter.debug.DebugGdx;
 import br.unb.shooter.entity.Enemy;
@@ -75,6 +76,9 @@ public class GameScreen extends Screen {
         playerCollision.setPlayer(GameController.getInstance().getPlayer());
 
         // debugGdx = new DebugGdx();
+        
+        MusicController.getInstance().stop();
+        MusicController.getInstance().start("tela2intro.wav");        
     }
 
     /**
@@ -202,6 +206,11 @@ public class GameScreen extends Screen {
         // debugGdx.update(player, GameController.getInstance().getMouseX(),
         // GameController.getInstance().getMouseY());
 
+        if(!MusicController.getInstance().getMusic().isPlaying()) {
+            MusicController.getInstance().start("tela2loop.wav");
+            MusicController.getInstance().getMusic().setLooping(true);
+        }
+        
     }
 
     /**

@@ -1,8 +1,5 @@
 package br.unb.shooter.state;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-
 import br.unb.shooter.controller.NetController;
 
 public class StateMachine {

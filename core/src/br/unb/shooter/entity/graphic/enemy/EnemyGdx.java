@@ -38,8 +38,8 @@ public class EnemyGdx {
      */
     public void initGraphics() {
         texture = new EnemyTexture();
-        idleRightState.setCurrentFrame(texture.getIdleRightFrame());
-        idleLeftState.setCurrentFrame(texture.getIdleLeftFrame());
+        idleRightState.setIdleFrames(texture.getIdleRightFrame());
+        idleLeftState.setIdleFrames(texture.getIdleLeftFrame());
         walkingRightState.setWalkingFrames(texture.getWalkingRightFrames());
         walkingLeftState.setWalkingFrames(texture.getWalkingLeftFrames());
         idleRightState.create();

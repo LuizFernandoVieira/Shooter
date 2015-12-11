@@ -24,7 +24,7 @@ public class MapGdx {
     public void initGraphics() {
         tiledLoader = new TmxMapLoader();
 
-        tiledMap = tiledLoader.load("tiledmap.tmx");
+        tiledMap = tiledLoader.load("quarto.tmx");
 
         renderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
 

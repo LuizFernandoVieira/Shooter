@@ -1,11 +1,14 @@
 package br.unb.shooter.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+import br.unb.shooter.controller.MusicController;
 import br.unb.shooter.state.GameState;
 import br.unb.shooter.state.MultiplayerState;
 import br.unb.shooter.util.Constants;
@@ -69,6 +72,10 @@ public class MenuScreen extends Screen {
             }
 
         });
+        
+        if(!MusicController.getInstance().getMusic().isPlaying()) {
+            MusicController.getInstance().start("tela1wraped.wav");
+        }
     }
 
 }
