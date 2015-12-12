@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
-
 import br.unb.shooter.collision.PlayerCollision;
 import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.FireWeapon;
@@ -109,7 +106,7 @@ public class GameController {
             playersMap.put(player.getId(), player);
 
             GdxController.getInstance().addPlayer(player);
-            
+
             if (weaponsMap == null) {
                 weaponsMap = new HashMap<Integer, FireWeapon>();
             }
@@ -217,10 +214,9 @@ public class GameController {
         shot.setId(shotSequence);
 
         shotsMap.put(shotSequence, shot);
-        
-        
+
         MusicController.getInstance().shoot();
-        
+
         return shot;
     }
 

@@ -1,6 +1,5 @@
 package br.unb.shooter.state;
 
-import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,5 +16,4 @@ public class StateMachineTest {
         Assert.assertEquals(StartState.class, machine.getState().getClass());
     }
 
-    
 }

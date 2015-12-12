@@ -13,13 +13,12 @@ import br.unb.shooter.entity.graphic.player.PlayerGdx;
 import br.unb.shooter.entity.graphic.shot.ShotGdx;
 import br.unb.shooter.entity.graphic.targetmark.TargetMarkGdx;
 import br.unb.shooter.entity.graphic.weapon.FireWeaponGdx;
-import br.unb.shooter.entity.graphic.weapon.WeaponGdx;
 
 public class GdxController {
     private static GdxController instance;
 
     private PlayerGdx playerGdx;
-    
+
     private EnemyGdx enemyGdx;
 
     private TargetMarkGdx markGdx;
@@ -59,7 +58,7 @@ public class GdxController {
     public void setPlayerGdx(PlayerGdx playerGdx) {
         this.playerGdx = playerGdx;
     }
-    
+
     /**
      * Add enemy to gdx controller.
      */
@@ -91,7 +90,7 @@ public class GdxController {
             weaponGdx = new FireWeaponGdx();
         }
     }
-    
+
     public TargetMarkGdx getMarkGdx() {
         if (markGdx == null) {
             markGdx = new TargetMarkGdx();
@@ -117,7 +116,7 @@ public class GdxController {
     public FireWeaponGdx getWeaponGdx() {
         if (weaponGdx == null) {
             weaponGdx = new FireWeaponGdx();
-        }        
+        }
         return weaponGdx;
     }
 

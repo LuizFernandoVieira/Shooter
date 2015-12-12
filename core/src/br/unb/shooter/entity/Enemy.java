@@ -82,7 +82,7 @@ public class Enemy extends Entity {
 
     public void update() {
         Player player = GameController.getInstance().getPlayer();
-        
+
         Float playerXCentered = player.getX();
         Float playerYCentered = player.getY();
 
@@ -92,17 +92,14 @@ public class Enemy extends Entity {
         Float deltaX = (enemyX - playerXCentered);
         Float deltaY = (enemyY - playerYCentered);
 
-        Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());        
-        
         Float distance = (float) Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
-        
-        if(distance < Constants.BEAR_ATTACK_RANGE) {
+
+        if (distance < Constants.BEAR_ATTACK_RANGE) {
             this.isMoving = true;
-        }
-        else {
+        } else {
             this.isMoving = false;
         }
-        
+
         if (moveUp) {
             setY(getY() + velocity);
         }

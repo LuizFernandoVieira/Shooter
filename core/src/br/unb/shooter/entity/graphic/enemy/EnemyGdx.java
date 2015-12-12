@@ -5,11 +5,6 @@ import java.util.HashMap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import br.unb.shooter.entity.Enemy;
-import br.unb.shooter.entity.Player;
-import br.unb.shooter.entity.graphic.player.IPlayerState;
-import br.unb.shooter.entity.graphic.player.IdlePlayerState;
-import br.unb.shooter.entity.graphic.player.PlayerTexture;
-import br.unb.shooter.entity.graphic.player.WalkingPlayerState;
 
 public class EnemyGdx {
 
@@ -91,6 +86,6 @@ public class EnemyGdx {
 
     public IdleEnemyState getDefaultState() {
         return idleRightState;
-    }    
-    
+    }
+
 }
