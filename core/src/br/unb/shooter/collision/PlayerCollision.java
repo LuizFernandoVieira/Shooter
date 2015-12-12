@@ -39,7 +39,6 @@ public class PlayerCollision {
             player.setY(oldPlayer.getY());
         }
 
-        // TODO: query for map borders
         if (player.getX() < 0) {
             player.setX(oldPlayer.getX());
         }
@@ -48,11 +47,14 @@ public class PlayerCollision {
             player.setY(oldPlayer.getY());
         }
 
-        if ((player.getX() + player.getWidth()) > 1600f) {
+        Float mapHeight = foreground.getTileHeight() * foreground.getHeight();
+        Float mapWidth = foreground.getTileWidth() * foreground.getWidth();
+
+        if ((player.getX() + player.getWidth()) > mapWidth) {
             player.setX(oldPlayer.getX());
         }
 
-        if ((player.getY() + player.getHeight()) > 1600f) {
+        if ((player.getY() + player.getHeight()) > mapHeight) {
             player.setY(oldPlayer.getY());
         }
 
