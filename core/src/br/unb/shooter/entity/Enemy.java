@@ -98,8 +98,14 @@ public class Enemy extends Entity {
         Float distance = (float) Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
 
         if (distance < Constants.BEAR_ATTACK_RANGE) {
+            if (!this.isMoving) {
+                stateTime = 0;
+            }
             this.isMoving = true;
         } else {
+            if (this.isMoving) {
+                stateTime = 0;
+            }
             this.isMoving = false;
         }
 

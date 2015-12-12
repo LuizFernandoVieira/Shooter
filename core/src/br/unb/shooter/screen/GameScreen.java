@@ -247,7 +247,7 @@ public class GameScreen extends Screen {
         batch.end();
 
         if (DebugController.getInstance().getActive()) {
-            debugGdx.draw(camera);
+            debugGdx.draw(camera, batch);
         }
 
     }

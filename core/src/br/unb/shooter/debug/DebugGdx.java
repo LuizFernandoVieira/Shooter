@@ -1,67 +1,61 @@
 package br.unb.shooter.debug;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
 
 import br.unb.shooter.controller.GameController;
+import br.unb.shooter.controller.GdxController;
+import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.Player;
+import br.unb.shooter.entity.graphic.enemy.IEnemyState;
 import br.unb.shooter.util.Constants;
 
 public class DebugGdx {
 
     private ShapeRenderer shapeRenderer;
-    private Stage stage;
-    private Skin skin;
     private boolean drawGrid = true;
     private boolean drawCircles = true;
     private boolean drawRectangles = true;
-
-    private String text;
-
-    private Label label;
 
     private Float mouseX;
     private Float mouseY;
 
     private Player player;
 
+    private BitmapFont font;
+
     public DebugGdx() {
         shapeRenderer = new ShapeRenderer();
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ARIAL.TTF"));
+        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+        parameter.size = 12;
+        parameter.color = Color.BLACK;
+        font = generator.generateFont(parameter);
+        generator.dispose();
     }
 
     public DebugGdx(Stage stage, Skin skin) {
         this.shapeRenderer = new ShapeRenderer();
-
-        this.stage = stage;
-
-        Table table = new Table();
-        table.setWidth(Constants.CAMERA_WIDTH);
-        table.setHeight(Constants.CAMERA_HEIGHT);
-        this.stage.addActor(table);
-
-        label = new Label(text, skin);
-
-        table.add(label).align(Align.topLeft);
     }
 
     public void update(Player player, Float mouseX, Float mouseY) {
-        // text = "Player x: " + player.getPositionX() + " y: " +
-        // player.getPositionY() + " Mouse x: " + mouseX + " y: "
-        // + (Constants.CAMERA_HEIGHT - mouseY);
-        // label.setText(text);
         this.mouseX = mouseX;
         this.mouseY = mouseY;
         this.player = player;
     }
 
-    public void draw(OrthographicCamera camera) {
+    public void draw(OrthographicCamera camera, SpriteBatch batch) {
         shapeRenderer.setProjectionMatrix(camera.combined);
         if (drawGrid) {
             drawGrid();
@@ -73,6 +67,10 @@ public class DebugGdx {
             drawRectangles();
         }
         drawTrajectory();
+
+        batch.begin();
+        drawEnemyState(batch);
+        batch.end();
     }
 
     public void dispose() {
@@ -80,11 +78,14 @@ public class DebugGdx {
     }
 
     private void drawGrid() {
+        int height = GdxController.getInstance().getMapGdx().getForeground().getHeight();
+        int width = GdxController.getInstance().getMapGdx().getForeground().getWidth();
+
         shapeRenderer.begin(ShapeType.Line);
         shapeRenderer.setColor(Color.RED);
         for (int i = 0; i < 50; i++) {
-            shapeRenderer.line(0.0f, i * 32.0f, 1024.0f, i * 32.0f);
-            shapeRenderer.line(i * 32.0f, 0.0f, i * 32.0f, 1024.0f);
+            shapeRenderer.line(0.0f, i * 32.0f, width * 32.0f, i * 32.0f);
+            shapeRenderer.line(i * 32.0f, 0.0f, i * 32.0f, height * 32.0f);
         }
         shapeRenderer.end();
     }
@@ -129,8 +130,18 @@ public class DebugGdx {
         shapeRenderer.end();
     }
 
-    public Skin getSkin() {
-        return skin;
+    private void drawEnemyState(SpriteBatch batch) {
+        for (Enemy enemy : GameController.getInstance().getEnemiesMap().values()) {
+            IEnemyState state = GdxController.getInstance().getEnemyGdx().getStateMap().get(enemy.getId());
+
+            GlyphLayout glyphLayout = new GlyphLayout();
+            String item = state.getClass().getSimpleName();
+            glyphLayout.setText(font, item);
+            Float fwidth = glyphLayout.width;
+
+            font.draw(batch, state.getClass().getSimpleName(), enemy.getX() + enemy.getWidth() / 2 - fwidth / 2,
+                    enemy.getY() + enemy.getHeight() + font.getCapHeight());
+        }
     }
 
 }

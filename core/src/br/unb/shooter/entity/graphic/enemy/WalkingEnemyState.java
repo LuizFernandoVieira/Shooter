@@ -8,8 +8,6 @@ import br.unb.shooter.entity.Enemy;
 
 public class WalkingEnemyState implements IEnemyState {
 
-    private float stateTime;
-
     private TextureRegion[] walkingFrames;
 
     private TextureRegion currentFrame;
@@ -19,7 +17,6 @@ public class WalkingEnemyState implements IEnemyState {
     @Override
     public void create() {
         walkingAnimation = new Animation(0.1f, walkingFrames);
-        stateTime = 0;
     }
 
     @Override
@@ -29,8 +26,8 @@ public class WalkingEnemyState implements IEnemyState {
 
     @Override
     public void update(float deltaTime, Enemy enemy) {
-        stateTime += deltaTime;
-        currentFrame = walkingAnimation.getKeyFrame(stateTime, true);
+        enemy.setStateTime(enemy.getStateTime() + deltaTime);
+        currentFrame = walkingAnimation.getKeyFrame(enemy.getStateTime(), true);
         enemy.setWidth((float) currentFrame.getRegionWidth());
         enemy.setHeight((float) currentFrame.getRegionHeight());
     }
