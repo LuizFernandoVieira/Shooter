@@ -37,9 +37,9 @@ public class DebugGdx {
     public DebugGdx() {
         shapeRenderer = new ShapeRenderer();
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ARIAL.TTF"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ARIBLK.TTF"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-        parameter.size = 12;
+        parameter.size = 10;
         parameter.color = Color.BLACK;
         font = generator.generateFont(parameter);
         generator.dispose();
@@ -139,7 +139,7 @@ public class DebugGdx {
             glyphLayout.setText(font, item);
             Float fwidth = glyphLayout.width;
 
-            font.draw(batch, state.getClass().getSimpleName(), enemy.getX() + enemy.getWidth() / 2 - fwidth / 2,
+            font.draw(batch, item, enemy.getX() + enemy.getWidth() / 2 - fwidth / 2,
                     enemy.getY() + enemy.getHeight() + font.getCapHeight());
         }
     }

@@ -30,15 +30,18 @@ public class MapGdx {
 
         foreground = (TiledMapTileLayer) tiledMap.getLayers().get("foreground");
 
+        int index = 1;
         MapObjects objects = tiledMap.getLayers().get("objects").getObjects();
         for (MapObject object : objects) {
             if (object.getName() != null) {
                 String name = object.getName();
                 if (name.equals("enemy")) {
                     Enemy enemy = new Enemy();
+                    enemy.setId(index);
                     enemy.setX((Float) object.getProperties().get("x"));
                     enemy.setY((Float) object.getProperties().get("y") + (Float) object.getProperties().get("height"));
                     GameController.getInstance().addEnemy(enemy);
+                    index++;
                 }
             }
         }
