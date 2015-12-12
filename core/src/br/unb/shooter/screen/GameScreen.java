@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import br.unb.shooter.collision.PlayerCollision;
+import br.unb.shooter.controller.DebugController;
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.GdxController;
 import br.unb.shooter.controller.MusicController;
@@ -75,10 +76,10 @@ public class GameScreen extends Screen {
         playerCollision = GameController.getInstance().getMovement();
         playerCollision.setPlayer(GameController.getInstance().getPlayer());
 
-        // debugGdx = new DebugGdx();
-
         MusicController.getInstance().stop();
         MusicController.getInstance().start("tela2intro.wav");
+
+        debugGdx = new DebugGdx();
     }
 
     /**
@@ -115,12 +116,12 @@ public class GameScreen extends Screen {
 
         playerCollision.update();
 
-        // Updates the weapon
+        // Updates the weapon.
         for (FireWeapon weapon : GameController.getInstance().getWeaponsMap().values()) {
             weapon.update();
         }
 
-        // Updates the enemies
+        // Updates the enemies.
         for (Enemy enemy : GameController.getInstance().getEnemiesMap().values()) {
             enemy.update();
             GdxController.getInstance().getEnemyGdx().update(enemy, Gdx.graphics.getDeltaTime());
@@ -162,6 +163,7 @@ public class GameScreen extends Screen {
             camera.position.y = oldCameraY;
         }
 
+        // Camera borders.
         float mapWidth = GdxController.getInstance().getMapGdx().getForeground().getTileWidth()
                 * GdxController.getInstance().getMapGdx().getForeground().getWidth();
         float mapHeight = GdxController.getInstance().getMapGdx().getForeground().getTileHeight()
@@ -182,8 +184,8 @@ public class GameScreen extends Screen {
 
         camera.update();
 
+        // Check collision shots and enemies.
         if (NetController.getInstance().getIsServer()) {
-            // Check collision shots and enemies
             for (Enemy enemy : GameController.getInstance().getEnemiesMap().values()) {
                 for (Shot shot : GameController.getInstance().getShotsMap().values()) {
                     Boolean collisionX = false;
@@ -203,12 +205,15 @@ public class GameScreen extends Screen {
             }
         }
 
-        // debugGdx.update(player, GameController.getInstance().getMouseX(),
-        // GameController.getInstance().getMouseY());
-
         if (!MusicController.getInstance().getMusic().isPlaying()) {
             MusicController.getInstance().start("tela2loop.wav");
             MusicController.getInstance().getMusic().setLooping(true);
+        }
+
+        // Update debug.
+        if (DebugController.getInstance().getActive()) {
+            debugGdx.update(GameController.getInstance().getPlayer(), GameController.getInstance().getMouseX(),
+                    GameController.getInstance().getMouseY());
         }
 
     }
@@ -241,7 +246,9 @@ public class GameScreen extends Screen {
         }
         batch.end();
 
-        // debugGdx.draw(camera);
+        if (DebugController.getInstance().getActive()) {
+            debugGdx.draw(camera);
+        }
 
     }
 

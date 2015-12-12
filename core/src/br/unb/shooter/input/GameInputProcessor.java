@@ -8,6 +8,7 @@ import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 
+import br.unb.shooter.controller.DebugController;
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.TargetMark;
@@ -30,6 +31,9 @@ public class GameInputProcessor implements InputProcessor, ControllerListener {
         }
         if (keycode == Keys.D) {
             player.setMoveRight(true);
+        }
+        if (keycode == Keys.X) {
+            DebugController.getInstance().changeActive();
         }
 
         player.setMovingState();
