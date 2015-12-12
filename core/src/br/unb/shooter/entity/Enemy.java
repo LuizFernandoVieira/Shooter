@@ -35,6 +35,8 @@ public class Enemy extends Entity {
 
     private Float startY;
 
+    private float stateTime;
+
     public Enemy() {
         moveUp = false;
         moveRight = false;
@@ -54,6 +56,7 @@ public class Enemy extends Entity {
         weapon = new FireWeapon();
         weapon.setOwner(this);
         startX = 0f;
+        stateTime = 0f;
     }
 
     public void setMovingState() {
@@ -251,4 +254,13 @@ public class Enemy extends Entity {
     public void setTargetY(Float targetY) {
         this.targetY = targetY;
     }
+
+    public float getStateTime() {
+        return stateTime;
+    }
+
+    public void setStateTime(float stateTime) {
+        this.stateTime = stateTime;
+    }
+
 }

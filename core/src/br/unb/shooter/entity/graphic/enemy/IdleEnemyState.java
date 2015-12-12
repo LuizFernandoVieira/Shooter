@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import br.unb.shooter.entity.Enemy;
 
 public class IdleEnemyState implements IEnemyState {
-    
-    private float stateTime;
 
     private TextureRegion[] idleFrames;
 
@@ -19,7 +17,6 @@ public class IdleEnemyState implements IEnemyState {
     @Override
     public void create() {
         idleAnimation = new Animation(0.15f, idleFrames);
-        stateTime = 0;
     }
 
     @Override
@@ -29,8 +26,8 @@ public class IdleEnemyState implements IEnemyState {
 
     @Override
     public void update(float deltaTime, Enemy enemy) {
-        stateTime += deltaTime;
-        currentFrame = idleAnimation.getKeyFrame(stateTime, true);
+        enemy.setStateTime(enemy.getStateTime() + deltaTime);
+        currentFrame = idleAnimation.getKeyFrame(enemy.getStateTime(), true);
         enemy.setWidth((float) currentFrame.getRegionWidth());
         enemy.setHeight((float) currentFrame.getRegionHeight());
     }
@@ -42,7 +39,7 @@ public class IdleEnemyState implements IEnemyState {
     public void setIdleFrames(TextureRegion[] idleFrames) {
         this.idleFrames = idleFrames;
     }
-    
+
     public TextureRegion getCurrentFrame() {
         return currentFrame;
     }
