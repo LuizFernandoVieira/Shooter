@@ -1,97 +1,90 @@
 package br.unb.shooter.entity;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import br.unb.shooter.util.Constants;
 
 public class FireWeapon extends Weapon {
 
-	private Double angle;
-	private Integer facing;
+    private Double angle;
+    private Integer facing;
 
-	private float xOffset = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT;
-	private float yOffset = Constants.WEAPON_OFFSET_FROM_PLAYER_Y;
+    private float xOffset = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT;
+    private float yOffset = Constants.WEAPON_OFFSET_FROM_PLAYER_Y;
 
-	public FireWeapon() {
-		setWidth(Constants.WEAPON_WIDTH);
-		setHeight(Constants.WEAPON_HEIGHT);
-		setAngle(0.0);
-		setFacing(0);
-	}
+    public FireWeapon() {
+        setWidth(Constants.WEAPON_WIDTH);
+        setHeight(Constants.WEAPON_HEIGHT);
+        setAngle(0.0);
+        setFacing(0);
+    }
 
-	@Override
-	public void update() {
+    @Override
+    public void update() {
 
-		if (getOwner() != null) {
+        if (getOwner() != null) {
 
-			if (getFacing() == 0) {
-				xOffset = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT;
-			} else {
-				xOffset = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_LEFT;
-			}
+            if (getFacing() == 0) {
+                xOffset = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT;
+            } else {
+                xOffset = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_LEFT;
+            }
 
-			setX(getOwner().getX() + xOffset);
-			setY(getOwner().getY() + yOffset);
+            setX(getOwner().getX() + xOffset);
+            setY(getOwner().getY() + yOffset);
 
-			Float deltaX = 0f;
-			Float deltaY = 0f;
+            Float deltaX = 0f;
+            Float deltaY = 0f;
 
-			if (getOwner() instanceof Player) {
-				Player p = (Player) getOwner();
-				Float playerXCentered = p.getX() + (p.getWidth() / 2);
-				Float playerYCentered = p.getY() + (p.getHeight() / 2);
+            if (getOwner() instanceof Player) {
+                Player p = (Player) getOwner();
+                Float playerXCentered = p.getX() + (p.getWidth() / 2);
+                Float playerYCentered = p.getY() + (p.getHeight() / 2);
 
-				Float mouseX = p.getTargetX();
-				Float mouseY = p.getTargetY();
+                Float mouseX = p.getTargetX();
+                Float mouseY = p.getTargetY();
 
-				deltaX = (mouseX - playerXCentered);
-				deltaY = (mouseY - playerYCentered);
+                deltaX = (mouseX - playerXCentered);
+                deltaY = (mouseY - playerYCentered);
 
-				setFacing(p.getFacing());
-			}
+                setFacing(p.getFacing());
+            }
 
-			Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
+            Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
 
-			setAngle(Math.toDegrees(angle));
+            setAngle(Math.toDegrees(angle));
 
-		}
-	}
+        }
+    }
 
-	@Override
-	public void render(SpriteBatch batch) {
+    public Double getAngle() {
+        return angle;
+    }
 
-	}
+    public void setAngle(Double angle) {
+        this.angle = angle;
+    }
 
-	public Double getAngle() {
-		return angle;
-	}
+    public Integer getFacing() {
+        return facing;
+    }
 
-	public void setAngle(Double angle) {
-		this.angle = angle;
-	}
+    public void setFacing(Integer facing) {
+        this.facing = facing;
+    }
 
-	public Integer getFacing() {
-		return facing;
-	}
+    public float getxOffset() {
+        return xOffset;
+    }
 
-	public void setFacing(Integer facing) {
-		this.facing = facing;
-	}
+    public void setxOffset(float xOffset) {
+        this.xOffset = xOffset;
+    }
 
-	public float getxOffset() {
-		return xOffset;
-	}
+    public float getyOffset() {
+        return yOffset;
+    }
 
-	public void setxOffset(float xOffset) {
-		this.xOffset = xOffset;
-	}
-
-	public float getyOffset() {
-		return yOffset;
-	}
-
-	public void setyOffset(float yOffset) {
-		this.yOffset = yOffset;
-	}
+    public void setyOffset(float yOffset) {
+        this.yOffset = yOffset;
+    }
 
 }

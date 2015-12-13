@@ -67,6 +67,7 @@ public class DebugGdx {
             drawRectangles();
         }
         drawTrajectory();
+        drawWeapon();
 
         batch.begin();
         drawEnemyState(batch);
@@ -106,6 +107,43 @@ public class DebugGdx {
         float y = player.getY();
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.rect(x, y, player.getWidth(), player.getHeight());
+        shapeRenderer.end();
+    }
+
+    private void drawWeapon() {
+        shapeRenderer.begin(ShapeType.Line);
+        Player player = GameController.getInstance().getPlayer();
+        float offsetX = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT;
+        float offsetY = Constants.WEAPON_OFFSET_FROM_PLAYER_Y;
+
+        if (player.getFacing() == 0) {
+            offsetX = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT;
+        } else {
+            offsetX = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_LEFT;
+        }
+
+        Float deltaX = 0f;
+        Float deltaY = 0f;
+
+        Player p = player;
+        Float playerXCentered = p.getX() + (p.getWidth() / 2);
+        Float playerYCentered = p.getY() + (p.getHeight() / 2);
+
+        Float mouseX = p.getTargetX();
+        Float mouseY = p.getTargetY();
+
+        deltaX = (mouseX - playerXCentered);
+        deltaY = (mouseY - playerYCentered);
+
+        Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
+
+        Double rotation = (Math.toDegrees(angle));
+
+        float x = player.getX() + offsetX;
+        float y = player.getY() + offsetY;
+        shapeRenderer.setColor(Color.ORANGE);
+        shapeRenderer.rect(x, y, Constants.WEAPON_ORIGIN_X, Constants.WEAPON_ORIGIN_Y, Constants.WEAPON_WIDTH,
+                Constants.WEAPON_HEIGHT, 1, player.getFacing() == 0 ? 1 : -1, rotation.intValue());
         shapeRenderer.end();
     }
 

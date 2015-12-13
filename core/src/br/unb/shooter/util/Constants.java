@@ -28,6 +28,8 @@ public class Constants {
 
     public static final float WEAPON_WIDTH = 39f;
     public static final float WEAPON_HEIGHT = 28f;
+    public static final float WEAPON_ORIGIN_X = 0f;
+    public static final float WEAPON_ORIGIN_Y = 16f;
 
     public static final float TARGET_MARK_WIDTH = 32f;
     public static final float TARGET_MARK_HEIGHT = 32f;

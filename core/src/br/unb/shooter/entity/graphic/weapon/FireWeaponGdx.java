@@ -3,6 +3,7 @@ package br.unb.shooter.entity.graphic.weapon;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import br.unb.shooter.entity.FireWeapon;
+import br.unb.shooter.util.Constants;
 
 public class FireWeaponGdx {
     private FireWeaponTexture weaponTexture;
@@ -14,12 +15,8 @@ public class FireWeaponGdx {
     public void draw(SpriteBatch batch, FireWeapon fireWeapon) {
         Double rotation = fireWeapon.getAngle();
 
-        if (fireWeapon.getFacing() == 0) {
-            batch.draw(weaponTexture.getFrame(), fireWeapon.getX(), fireWeapon.getY(), 0, 16, fireWeapon.getWidth(),
-                    fireWeapon.getHeight(), 1, 1, rotation.intValue());
-        } else {
-            batch.draw(weaponTexture.getFrame(), fireWeapon.getX(), fireWeapon.getY(), 0, 16, fireWeapon.getWidth(),
-                    fireWeapon.getHeight(), 1, -1, rotation.intValue());
-        }
+        batch.draw(weaponTexture.getFrame(), fireWeapon.getX(), fireWeapon.getY(), Constants.WEAPON_ORIGIN_X,
+                Constants.WEAPON_ORIGIN_Y, fireWeapon.getWidth(), fireWeapon.getHeight(), 1,
+                fireWeapon.getFacing() == 0 ? 1 : -1, rotation.intValue());
     }
 }

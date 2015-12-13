@@ -239,14 +239,6 @@ public class Player extends Entity {
         oldTargetY = targetY;
     }
 
-    // public Weapon getWeapon() {
-    // return weapon;
-    // }
-    //
-    // public void setWeapon(Weapon weapon) {
-    // this.weapon = weapon;
-    // }
-
     public Float getStartX() {
         return startX;
     }
