@@ -103,18 +103,16 @@ public class GameScreen extends Screen {
             GameController.getInstance().getPlayer().setTargetY(mousePosition.y);
         }
 
-        playerCollision.saveOldPosition();
-
         // Updates players.
         for (Player player : GameController.getInstance().getPlayersMap().values()) {
+            playerCollision.saveOldPosition(player);
             player.update();
             GdxController.getInstance().getPlayerGdx().update(player, Gdx.graphics.getDeltaTime());
             if (player.getIsShooting()) {
                 GameController.getInstance().createShot(player);
             }
+            playerCollision.update(player);
         }
-
-        playerCollision.update();
 
         // Updates the weapon.
         for (FireWeapon weapon : GameController.getInstance().getWeaponsMap().values()) {

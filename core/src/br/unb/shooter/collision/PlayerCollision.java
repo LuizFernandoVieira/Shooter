@@ -19,12 +19,12 @@ public class PlayerCollision {
         collision = new MapCollision();
     }
 
-    public void saveOldPosition() {
+    public void saveOldPosition(Player player) {
         oldPlayer.setX(player.getX());
         oldPlayer.setY(player.getY());
     }
 
-    public void update() {
+    public void update(Player player) {
         TiledMapTileLayer foreground = GdxController.getInstance().getMapGdx().getForeground();
 
         if (collision.checkMapCollisionX(foreground, player, oldPlayer)) {
