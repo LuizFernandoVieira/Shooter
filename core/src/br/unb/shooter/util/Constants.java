@@ -38,6 +38,7 @@ public class Constants {
     public static final float SHOT_HEIGHT = 12f;
     public static final float SHOT_VELOCITY = 12f;
     public static final float SHOT_DISTANCE = 400f;
+    public static final float SHOT_DISTANCE_FROM_ORIGIN = 39f;
 
     public static final Boolean CONTROLLER = false;
 

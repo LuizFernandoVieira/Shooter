@@ -68,6 +68,7 @@ public class DebugGdx {
         }
         drawTrajectory();
         drawWeapon();
+        drawShotCreation();
 
         batch.begin();
         drawEnemyState(batch);
@@ -112,7 +113,9 @@ public class DebugGdx {
 
     private void drawWeapon() {
         shapeRenderer.begin(ShapeType.Line);
+
         Player player = GameController.getInstance().getPlayer();
+
         float offsetX = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT;
         float offsetY = Constants.WEAPON_OFFSET_FROM_PLAYER_Y;
 
@@ -122,10 +125,11 @@ public class DebugGdx {
             offsetX = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_LEFT;
         }
 
+        Player p = player;
+
         Float deltaX = 0f;
         Float deltaY = 0f;
 
-        Player p = player;
         Float playerXCentered = p.getX() + (p.getWidth() / 2);
         Float playerYCentered = p.getY() + (p.getHeight() / 2);
 
@@ -144,27 +148,81 @@ public class DebugGdx {
         shapeRenderer.setColor(Color.ORANGE);
         shapeRenderer.rect(x, y, Constants.WEAPON_ORIGIN_X, Constants.WEAPON_ORIGIN_Y, Constants.WEAPON_WIDTH,
                 Constants.WEAPON_HEIGHT, 1, player.getFacing() == 0 ? 1 : -1, rotation.intValue());
+        shapeRenderer.setColor(Color.BLACK);
+        shapeRenderer.circle(x + Constants.WEAPON_ORIGIN_X, y + Constants.WEAPON_ORIGIN_Y, 2);
         shapeRenderer.end();
+
     }
 
-    private void drawTrajectory() {
+    public void drawShotCreation() {
+        float offsetX = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT;
+        float offsetY = Constants.WEAPON_OFFSET_FROM_PLAYER_Y;
 
-        Integer xOffset = 0;
         if (player.getFacing() == 0) {
-            xOffset = 15;
+            offsetX = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT;
         } else {
-            xOffset = 27;
+            offsetX = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_LEFT;
         }
 
-        Float playerXCentered = player.getX() + xOffset;
-        Float playerYCentered = player.getY() + 9 + 11;
+        Player p = player;
+
+        Float originX = p.getX() + offsetX + Constants.WEAPON_ORIGIN_X;
+        Float originY = p.getY() + offsetY + Constants.WEAPON_ORIGIN_Y;
 
         Float mouseX = player.getTargetX();
         Float mouseY = player.getTargetY();
 
+        Float deltaX = (mouseX - originX);
+        Float deltaY = (mouseY - originY);
+
+        Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
+
+        Float x = (float) Math.cos(angle.floatValue());
+        Float y = (float) Math.sin(angle.floatValue());
+
+        Float calculatedX = originX + x * Constants.SHOT_DISTANCE_FROM_ORIGIN;
+        Float calculatedY = originY + y * Constants.SHOT_DISTANCE_FROM_ORIGIN;
+
+        shapeRenderer.begin(ShapeType.Line);
+        shapeRenderer.setColor(Color.ORANGE);
+        shapeRenderer.circle(calculatedX, calculatedY, 2);
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.circle(originX, originY, 39);
+        shapeRenderer.end();
+    }
+
+    private void drawTrajectory() {
+        float offsetX = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT;
+        float offsetY = Constants.WEAPON_OFFSET_FROM_PLAYER_Y;
+
+        if (player.getFacing() == 0) {
+            offsetX = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT;
+        } else {
+            offsetX = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_LEFT;
+        }
+
+        Player p = player;
+
+        Float originX = p.getX() + offsetX + Constants.WEAPON_ORIGIN_X;
+        Float originY = p.getY() + offsetY + Constants.WEAPON_ORIGIN_Y;
+
+        Float mouseX = player.getTargetX();
+        Float mouseY = player.getTargetY();
+
+        Float deltaX = (mouseX - originX);
+        Float deltaY = (mouseY - originY);
+
+        Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
+
+        Float x = (float) Math.cos(angle.floatValue());
+        Float y = (float) Math.sin(angle.floatValue());
+
+        Float calculatedX = originX + x * Constants.SHOT_DISTANCE_FROM_ORIGIN;
+        Float calculatedY = originY + y * Constants.SHOT_DISTANCE_FROM_ORIGIN;
+
         shapeRenderer.begin(ShapeType.Line);
         shapeRenderer.setColor(Color.RED);
-        shapeRenderer.line(playerXCentered, playerYCentered, mouseX, mouseY);
+        shapeRenderer.line(calculatedX, calculatedY, mouseX, mouseY);
         shapeRenderer.end();
     }
 

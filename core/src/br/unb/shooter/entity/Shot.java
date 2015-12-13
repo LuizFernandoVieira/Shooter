@@ -36,21 +36,23 @@ public class Shot extends Entity {
 
     public void create(Player player, Integer sequence) {
 
-        Float xOffset = 0f;
+        float offsetX = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT;
+        float offsetY = Constants.WEAPON_OFFSET_FROM_PLAYER_Y;
+
         if (player.getFacing() == 0) {
-            xOffset = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT;
+            offsetX = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_RIGHT;
         } else {
-            xOffset = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_LEFT;
+            offsetX = Constants.WEAPON_OFFSET_FROM_PLAYER_X_FACING_LEFT;
         }
 
-        Float playerXCentered = player.getX() + xOffset;
-        Float playerYCentered = player.getY();
+        Float originX = player.getX() + offsetX + Constants.WEAPON_ORIGIN_X;
+        Float originY = player.getY() + offsetY + Constants.WEAPON_ORIGIN_Y;
 
         Float mouseX = player.getTargetX();
         Float mouseY = player.getTargetY();
 
-        Float deltaX = (mouseX - playerXCentered);
-        Float deltaY = (mouseY - playerYCentered);
+        Float deltaX = (mouseX - originX);
+        Float deltaY = (mouseY - originY);
 
         Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
 
@@ -58,8 +60,8 @@ public class Shot extends Entity {
         Float y = (float) Math.sin(angle.floatValue());
 
         setAngle(angle);
-        setX(playerXCentered + x * 39);
-        setY(playerYCentered + y * 39);
+        setX(originX + x * Constants.SHOT_DISTANCE_FROM_ORIGIN);
+        setY(originY + y * Constants.SHOT_DISTANCE_FROM_ORIGIN);
         setPlayer(player);
         setSequence(sequence);
         setStartX(getX());

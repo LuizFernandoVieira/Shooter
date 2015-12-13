@@ -34,19 +34,17 @@ public class FireWeapon extends Weapon {
             Float deltaX = 0f;
             Float deltaY = 0f;
 
-            if (getOwner() instanceof Player) {
-                Player p = (Player) getOwner();
-                Float playerXCentered = p.getX() + (p.getWidth() / 2);
-                Float playerYCentered = p.getY() + (p.getHeight() / 2);
+            Player p = (Player) getOwner();
+            Float playerXCentered = p.getX() + (p.getWidth() / 2);
+            Float playerYCentered = p.getY() + (p.getHeight() / 2);
 
-                Float mouseX = p.getTargetX();
-                Float mouseY = p.getTargetY();
+            Float mouseX = p.getTargetX();
+            Float mouseY = p.getTargetY();
 
-                deltaX = (mouseX - playerXCentered);
-                deltaY = (mouseY - playerYCentered);
+            deltaX = (mouseX - playerXCentered);
+            deltaY = (mouseY - playerYCentered);
 
-                setFacing(p.getFacing());
-            }
+            setFacing(p.getFacing());
 
             Double angle = Math.atan2(deltaY.doubleValue(), deltaX.doubleValue());
 
