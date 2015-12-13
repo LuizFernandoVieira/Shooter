@@ -21,11 +21,11 @@ public class MapCollision {
         this.player.setHeight(player.getHeight());
     }
 
-    public Boolean checkMapCollisionX(TiledMapTileLayer mapLayer, Player player) {
+    public Boolean checkMapCollisionX(TiledMapTileLayer mapLayer, Player player, Player oldPlayer) {
         Integer x1 = (int) (player.getX() / mapLayer.getTileWidth());
-        Integer y1 = (int) (player.getY() / mapLayer.getTileHeight());
+        Integer y1 = (int) (oldPlayer.getY() / mapLayer.getTileHeight());
         Integer x2 = (int) ((player.getX() + player.getWidth()) / mapLayer.getTileWidth());
-        Integer y2 = (int) ((player.getY() + player.getHeight()) / mapLayer.getTileHeight());
+        Integer y2 = (int) ((oldPlayer.getY() + player.getHeight()) / mapLayer.getTileHeight());
 
         Boolean retorno = false;
         for (int i = y1; i <= y2; i++) {
@@ -36,10 +36,10 @@ public class MapCollision {
         return retorno;
     }
 
-    public Boolean checkMapCollisionY(TiledMapTileLayer mapLayer, Player player) {
-        Integer x1 = (int) (player.getX() / mapLayer.getTileWidth());
+    public Boolean checkMapCollisionY(TiledMapTileLayer mapLayer, Player player, Player oldPlayer) {
+        Integer x1 = (int) (oldPlayer.getX() / mapLayer.getTileWidth());
         Integer y1 = (int) (player.getY() / mapLayer.getTileHeight());
-        Integer x2 = (int) ((player.getX() + player.getWidth()) / mapLayer.getTileWidth());
+        Integer x2 = (int) ((oldPlayer.getX() + player.getWidth()) / mapLayer.getTileWidth());
         Integer y2 = (int) ((player.getY() + player.getHeight()) / mapLayer.getTileHeight());
 
         Boolean retorno = false;

@@ -27,15 +27,11 @@ public class PlayerCollision {
     public void update() {
         TiledMapTileLayer foreground = GdxController.getInstance().getMapGdx().getForeground();
 
-        if (collision.checkMapCollisionX(foreground, player)) {
-            Float x = player.getX();
+        if (collision.checkMapCollisionX(foreground, player, oldPlayer)) {
             player.setX(oldPlayer.getX());
-            if (collision.checkMapCollisionY(foreground, player)) {
-                player.setX(x);
-            }
         }
 
-        if (collision.checkMapCollisionY(foreground, player)) {
+        if (collision.checkMapCollisionY(foreground, player, oldPlayer)) {
             player.setY(oldPlayer.getY());
         }
 
