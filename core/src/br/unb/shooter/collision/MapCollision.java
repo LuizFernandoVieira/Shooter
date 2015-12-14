@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 
 import br.unb.shooter.entity.Player;
+import br.unb.shooter.entity.Shot;
 
 public class MapCollision {
     private Player player;
@@ -46,6 +47,22 @@ public class MapCollision {
         for (int i = x1; i <= x2; i++) {
             retorno = checkCellBlocked(i, y1, mapLayer, retorno);
             retorno = checkCellBlocked(i, y2, mapLayer, retorno);
+        }
+
+        return retorno;
+    }
+
+    public Boolean checkMapCollision(TiledMapTileLayer mapLayer, Shot shot) {
+        Integer x1 = (int) (shot.getX() / mapLayer.getTileWidth());
+        Integer y1 = (int) (shot.getY() / mapLayer.getTileHeight());
+        Integer x2 = (int) ((shot.getX() + shot.getWidth()) / mapLayer.getTileWidth());
+        Integer y2 = (int) ((shot.getY() + shot.getHeight()) / mapLayer.getTileHeight());
+
+        Boolean retorno = false;
+        for (int i = y1; i <= y2; i++) {
+            for (int j = x1; j <= x2; j++) {
+                retorno = checkCellBlocked(j, i, mapLayer, retorno);
+            }
         }
 
         return retorno;

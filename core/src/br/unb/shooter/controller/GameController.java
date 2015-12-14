@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.unb.shooter.collision.PlayerCollision;
+import br.unb.shooter.collision.ShotCollision;
 import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.FireWeapon;
 import br.unb.shooter.entity.Player;
@@ -40,14 +41,17 @@ public class GameController {
 
     private Float mouseY;
 
-    private PlayerCollision movement;
+    private PlayerCollision playerCollision;
+
+    private ShotCollision shotCollision;
 
     public GameController() {
         shotsMap = new HashMap<Integer, Shot>();
         mouseX = 0f;
         mouseY = 0f;
         removedShots = new ArrayList<Integer>();
-        movement = new PlayerCollision();
+        playerCollision = new PlayerCollision();
+        shotCollision = new ShotCollision();
         targetMark = new TargetMark();
     }
 
@@ -324,12 +328,12 @@ public class GameController {
         this.removedShots = removedShots;
     }
 
-    public PlayerCollision getMovement() {
-        return movement;
+    public PlayerCollision getPlayerCollision() {
+        return playerCollision;
     }
 
-    public void setMovement(PlayerCollision movement) {
-        this.movement = movement;
+    public void setPlayerCollision(PlayerCollision playerCollision) {
+        this.playerCollision = playerCollision;
     }
 
     public HashMap<Integer, FireWeapon> getWeaponsMap() {
@@ -346,6 +350,14 @@ public class GameController {
 
     public void setTargetMark(TargetMark targetMark) {
         this.targetMark = targetMark;
+    }
+
+    public ShotCollision getShotCollision() {
+        return shotCollision;
+    }
+
+    public void setShotCollision(ShotCollision shotCollision) {
+        this.shotCollision = shotCollision;
     }
 
 }

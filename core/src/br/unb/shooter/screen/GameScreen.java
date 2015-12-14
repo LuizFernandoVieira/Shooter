@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import br.unb.shooter.collision.PlayerCollision;
+import br.unb.shooter.collision.ShotCollision;
 import br.unb.shooter.controller.DebugController;
 import br.unb.shooter.controller.GameController;
 import br.unb.shooter.controller.GdxController;
@@ -34,6 +35,8 @@ public class GameScreen extends Screen {
     private DebugGdx debugGdx;
 
     private PlayerCollision playerCollision;
+
+    private ShotCollision shotCollision;
 
     /**
      * Constructor.
@@ -73,8 +76,10 @@ public class GameScreen extends Screen {
             Gdx.input.setCursorImage(GdxController.getInstance().getMarkGdx().getPixmap(), 16, 13);
         }
 
-        playerCollision = GameController.getInstance().getMovement();
+        playerCollision = GameController.getInstance().getPlayerCollision();
         playerCollision.setPlayer(GameController.getInstance().getPlayer());
+
+        shotCollision = GameController.getInstance().getShotCollision();
 
         MusicController.getInstance().stop();
         MusicController.getInstance().start("tela2intro.wav");
@@ -138,6 +143,7 @@ public class GameScreen extends Screen {
                 ids.add(shot.getId());
                 GameController.getInstance().getRemovedShots().add(shot.getId());
             }
+            shotCollision.update(shot);
         }
         for (Integer id : ids) {
             GameController.getInstance().getShotsMap().remove(id);
