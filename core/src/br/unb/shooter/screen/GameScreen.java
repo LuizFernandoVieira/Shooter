@@ -64,6 +64,8 @@ public class GameScreen extends Screen {
 
         GdxController.getInstance().getMapGdx().initGraphics();
 
+        GdxController.getInstance().getExplosionGdx().initGraphics();
+
         GameInputProcessor input = new GameInputProcessor();
 
         Gdx.input.setInputProcessor(input);
@@ -143,7 +145,9 @@ public class GameScreen extends Screen {
                 ids.add(shot.getId());
                 GameController.getInstance().getRemovedShots().add(shot.getId());
             }
-            shotCollision.update(shot);
+            if (shotCollision.update(shot)) {
+                GdxController.getInstance().getExplosionGdx().create(shot.getX(), shot.getY());
+            }
         }
         for (Integer id : ids) {
             GameController.getInstance().getShotsMap().remove(id);
@@ -248,6 +252,7 @@ public class GameScreen extends Screen {
         if (Constants.CONTROLLER) {
             GdxController.getInstance().getMarkGdx().draw(batch, GameController.getInstance().getTargetMark());
         }
+        GdxController.getInstance().getExplosionGdx().draw(batch, Gdx.graphics.getDeltaTime());
         batch.end();
 
         if (DebugController.getInstance().getActive()) {
@@ -259,6 +264,7 @@ public class GameScreen extends Screen {
     public void dispose() {
         batch.dispose();
         debugGdx.dispose();
+        GdxController.getInstance().getExplosionGdx().reset();
     }
 
     @Override

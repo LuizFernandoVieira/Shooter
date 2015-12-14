@@ -7,6 +7,7 @@ import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Weapon;
 import br.unb.shooter.entity.graphic.enemy.EnemyGdx;
 import br.unb.shooter.entity.graphic.enemy.IEnemyState;
+import br.unb.shooter.entity.graphic.explosion.ExplosionGdx;
 import br.unb.shooter.entity.graphic.map.MapGdx;
 import br.unb.shooter.entity.graphic.player.IPlayerState;
 import br.unb.shooter.entity.graphic.player.PlayerGdx;
@@ -28,6 +29,8 @@ public class GdxController {
     private FireWeaponGdx weaponGdx;
 
     private MapGdx mapGdx;
+
+    private ExplosionGdx explosionGdx;
 
     public static GdxController getInstance() {
         if (instance == null) {
@@ -134,6 +137,18 @@ public class GdxController {
 
     public void setMapGdx(MapGdx mapGdx) {
         this.mapGdx = mapGdx;
+    }
+
+    public ExplosionGdx getExplosionGdx() {
+        if (explosionGdx == null) {
+            explosionGdx = new ExplosionGdx();
+        }
+
+        return explosionGdx;
+    }
+
+    public void setExplosionGdx(ExplosionGdx explosionGdx) {
+        this.explosionGdx = explosionGdx;
     }
 
 }

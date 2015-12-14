@@ -13,12 +13,17 @@ public class ShotCollision {
         mapCollision = new MapCollision();
     }
 
-    public void update(Shot shot) {
+    public Boolean update(Shot shot) {
+        Boolean collide = false;
+
         TiledMapTileLayer foreground = GdxController.getInstance().getMapGdx().getForeground();
 
         if (mapCollision.checkMapCollision(foreground, shot)) {
             shot.setFinish(true);
+            collide = true;
         }
+
+        return collide;
     }
 
 }
