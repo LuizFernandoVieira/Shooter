@@ -143,12 +143,12 @@ public class GameScreen extends Screen {
 		List<Integer> ids = new ArrayList<Integer>();
 		for (Shot shot : GameController.getInstance().getShotsMap().values()) {
 			shot.update();
+			if (shotCollision.update(shot)) {
+				GdxController.getInstance().getExplosionGdx().create(shot.getX(), shot.getY());
+			}
 			if (shot.getFinish()) {
 				ids.add(shot.getId());
 				GameController.getInstance().getRemovedShots().add(shot.getId());
-			}
-			if (shotCollision.update(shot)) {
-				GdxController.getInstance().getExplosionGdx().create(shot.getX(), shot.getY());
 			}
 		}
 		for (Integer id : ids) {
@@ -210,6 +210,7 @@ public class GameScreen extends Screen {
 					}
 					if (collisionX && collisionY) {
 						shot.setFinish(true);
+						GdxController.getInstance().getExplosionGdx().create(shot.getX(), shot.getY());
 					}
 				}
 			}

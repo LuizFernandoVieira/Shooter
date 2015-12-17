@@ -8,88 +8,88 @@ import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
 
 public class MapCollision {
-    private Player player;
+	private Player player;
 
-    public MapCollision() {
-    }
+	public MapCollision() {
+	}
 
-    public void setOldPlayerState(Player player) {
-        this.player = new Player();
+	public void setOldPlayerState(Player player) {
+		this.player = new Player();
 
-        this.player.setX(player.getX());
-        this.player.setY(player.getY());
-        this.player.setWidth(player.getWidth());
-        this.player.setHeight(player.getHeight());
-    }
+		this.player.setX(player.getX());
+		this.player.setY(player.getY());
+		this.player.setWidth(player.getWidth());
+		this.player.setHeight(player.getHeight());
+	}
 
-    public Boolean checkMapCollisionX(TiledMapTileLayer mapLayer, Player player, Player oldPlayer) {
-        Integer x1 = (int) (player.getX() / mapLayer.getTileWidth());
-        Integer y1 = (int) (oldPlayer.getY() / mapLayer.getTileHeight());
-        Integer x2 = (int) ((player.getX() + player.getWidth()) / mapLayer.getTileWidth());
-        Integer y2 = (int) ((oldPlayer.getY() + player.getHeight()) / mapLayer.getTileHeight());
+	public Boolean checkMapCollisionX(TiledMapTileLayer mapLayer, Player player, Player oldPlayer) {
+		Integer x1 = (int) (player.getX() / mapLayer.getTileWidth());
+		Integer y1 = (int) (oldPlayer.getY() / mapLayer.getTileHeight());
+		Integer x2 = (int) ((player.getX() + player.getWidth()) / mapLayer.getTileWidth());
+		Integer y2 = (int) ((oldPlayer.getY() + player.getHeight()) / mapLayer.getTileHeight());
 
-        Boolean retorno = false;
-        for (int i = y1; i <= y2; i++) {
-            retorno = checkCellBlocked(x1, i, mapLayer, retorno);
-            retorno = checkCellBlocked(x2, i, mapLayer, retorno);
-        }
+		Boolean retorno = false;
+		for (int i = y1; i <= y2; i++) {
+			retorno = checkCellBlocked(x1, i, mapLayer, retorno);
+			retorno = checkCellBlocked(x2, i, mapLayer, retorno);
+		}
 
-        return retorno;
-    }
+		return retorno;
+	}
 
-    public Boolean checkMapCollisionY(TiledMapTileLayer mapLayer, Player player, Player oldPlayer) {
-        Integer x1 = (int) (oldPlayer.getX() / mapLayer.getTileWidth());
-        Integer y1 = (int) (player.getY() / mapLayer.getTileHeight());
-        Integer x2 = (int) ((oldPlayer.getX() + player.getWidth()) / mapLayer.getTileWidth());
-        Integer y2 = (int) ((player.getY() + player.getHeight()) / mapLayer.getTileHeight());
+	public Boolean checkMapCollisionY(TiledMapTileLayer mapLayer, Player player, Player oldPlayer) {
+		Integer x1 = (int) (oldPlayer.getX() / mapLayer.getTileWidth());
+		Integer y1 = (int) (player.getY() / mapLayer.getTileHeight());
+		Integer x2 = (int) ((oldPlayer.getX() + player.getWidth()) / mapLayer.getTileWidth());
+		Integer y2 = (int) ((player.getY() + player.getHeight()) / mapLayer.getTileHeight());
 
-        Boolean retorno = false;
-        for (int i = x1; i <= x2; i++) {
-            retorno = checkCellBlocked(i, y1, mapLayer, retorno);
-            retorno = checkCellBlocked(i, y2, mapLayer, retorno);
-        }
+		Boolean retorno = false;
+		for (int i = x1; i <= x2; i++) {
+			retorno = checkCellBlocked(i, y1, mapLayer, retorno);
+			retorno = checkCellBlocked(i, y2, mapLayer, retorno);
+		}
 
-        return retorno;
-    }
+		return retorno;
+	}
 
-    public Boolean checkMapCollision(TiledMapTileLayer mapLayer, Shot shot) {
-        Integer x1 = (int) (shot.getX() / mapLayer.getTileWidth());
-        Integer y1 = (int) (shot.getY() / mapLayer.getTileHeight());
-        Integer x2 = (int) ((shot.getX() + shot.getWidth()) / mapLayer.getTileWidth());
-        Integer y2 = (int) ((shot.getY() + shot.getHeight()) / mapLayer.getTileHeight());
+	public Boolean checkMapCollision(TiledMapTileLayer mapLayer, Shot shot) {
+		Integer x1 = (int) (shot.getX() / mapLayer.getTileWidth());
+		Integer y1 = (int) (shot.getY() / mapLayer.getTileHeight());
+		Integer x2 = (int) ((shot.getX() + shot.getWidth()) / mapLayer.getTileWidth());
+		Integer y2 = (int) ((shot.getY() + shot.getHeight()) / mapLayer.getTileHeight());
 
-        Boolean retorno = false;
-        for (int i = y1; i <= y2; i++) {
-            for (int j = x1; j <= x2; j++) {
-                retorno = checkCellBlocked(j, i, mapLayer, retorno);
-            }
-        }
+		Boolean retorno = false;
+		for (int i = y1; i <= y2; i++) {
+			for (int j = x1; j <= x2; j++) {
+				retorno = checkCellBlocked(j, i, mapLayer, retorno);
+			}
+		}
 
-        return retorno;
-    }
+		return retorno;
+	}
 
-    private Boolean checkCellBlocked(int x, int y, TiledMapTileLayer mapLayer, Boolean retorno) {
-        if (retorno) {
-            return true;
-        }
-        Cell cell = mapLayer.getCell(x, y);
-        if (cell != null) {
-            TiledMapTile tile = cell.getTile();
-            if (tile != null) {
-                if (((String) tile.getProperties().get("blocked")).equals("1")) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+	private Boolean checkCellBlocked(int x, int y, TiledMapTileLayer mapLayer, Boolean retorno) {
+		if (retorno) {
+			return true;
+		}
+		Cell cell = mapLayer.getCell(x, y);
+		if (cell != null) {
+			TiledMapTile tile = cell.getTile();
+			if (tile != null) {
+				if (((String) tile.getProperties().get("blocked")).equals("1")) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
-    public Player getPlayer() {
-        return player;
-    }
+	public Player getPlayer() {
+		return player;
+	}
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
 
 }

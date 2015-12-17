@@ -167,7 +167,7 @@ public class Shot extends Entity {
     }
 
     public void setEndY(Float endY) {
-        this.endY = endY;
-    }
+		this.endY = endY;
+	}
 
 }
