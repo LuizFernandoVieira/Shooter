@@ -38,6 +38,7 @@ public class Enemy extends Entity {
     private float stateTime;
 
     public Enemy() {
+        health = 100;
         moveUp = false;
         moveRight = false;
         moveDown = false;

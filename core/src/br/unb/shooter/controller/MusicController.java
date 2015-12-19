@@ -23,7 +23,7 @@ public class MusicController {
     
     public void start(String path) {
         music = Gdx.audio.newMusic(Gdx.files.internal(path));
-        music.play();
+//        music.play();
     }
     
     public void pause() {
