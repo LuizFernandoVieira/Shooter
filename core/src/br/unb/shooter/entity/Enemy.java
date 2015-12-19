@@ -38,7 +38,7 @@ public class Enemy extends Entity {
     private float stateTime;
 
     public Enemy() {
-        health = 100;
+        health = Constants.BEAR_HEALTH;
         moveUp = false;
         moveRight = false;
         moveDown = false;
@@ -85,11 +85,11 @@ public class Enemy extends Entity {
     }
 
     public void update() {
-        
+
         if (health <= 0) {
-            //GameController.getInstance().getEnemiesMap().remo;
+            // GameController.getInstance().getEnemiesMap().remo;
         }
-        
+
         Player player = GameController.getInstance().getPlayer();
 
         Float playerXCentered = player.getX();
