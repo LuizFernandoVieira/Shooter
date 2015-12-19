@@ -8,6 +8,7 @@ import br.unb.shooter.entity.Weapon;
 import br.unb.shooter.entity.graphic.enemy.EnemyGdx;
 import br.unb.shooter.entity.graphic.enemy.IEnemyState;
 import br.unb.shooter.entity.graphic.explosion.ExplosionGdx;
+import br.unb.shooter.entity.graphic.healthbar.HealthBarGdx;
 import br.unb.shooter.entity.graphic.map.MapGdx;
 import br.unb.shooter.entity.graphic.player.IPlayerState;
 import br.unb.shooter.entity.graphic.player.PlayerGdx;
@@ -31,6 +32,8 @@ public class GdxController {
     private MapGdx mapGdx;
 
     private ExplosionGdx explosionGdx;
+
+    private HealthBarGdx healthBarGdx;
 
     public static GdxController getInstance() {
         if (instance == null) {
@@ -149,6 +152,17 @@ public class GdxController {
 
     public void setExplosionGdx(ExplosionGdx explosionGdx) {
         this.explosionGdx = explosionGdx;
+    }
+
+    public HealthBarGdx getHealthBarGdx() {
+        if (healthBarGdx == null) {
+            healthBarGdx = new HealthBarGdx();
+        }
+        return healthBarGdx;
+    }
+
+    public void setHealthBarGdx(HealthBarGdx healthBarGdx) {
+        this.healthBarGdx = healthBarGdx;
     }
 
 }

@@ -9,6 +9,7 @@ import br.unb.shooter.collision.ShotCollision;
 import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.Explosion;
 import br.unb.shooter.entity.FireWeapon;
+import br.unb.shooter.entity.HealthBar;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
 import br.unb.shooter.entity.TargetMark;
@@ -31,6 +32,8 @@ public class GameController {
     private HashMap<Integer, Shot> shotsMap;
 
     private HashMap<Integer, Explosion> explosionsMap;
+
+    private HashMap<Integer, HealthBar> healthBarsMap;
 
     private List<Integer> removedShots;
 
@@ -254,9 +257,18 @@ public class GameController {
         if (this.enemiesMap == null) {
             this.enemiesMap = new HashMap<Integer, Enemy>();
         }
-        Integer cellX = Math.round((enemy.getX()));
-        Integer cellY = Math.round(enemy.getY());
-        this.enemiesMap.put(cellX + cellY, enemy);
+        this.enemiesMap.put(enemy.getId(), enemy);
+    }
+
+    public void addHealthBar(Enemy enemy) {
+        if (this.healthBarsMap == null) {
+            this.healthBarsMap = new HashMap<Integer, HealthBar>();
+        }
+        HealthBar healthBar = new HealthBar();
+        healthBar.setX(enemy.getX() + Constants.BEAR_HEALTH_OFFSET_X);
+        healthBar.setY(enemy.getY() + Constants.BEAR_HEALTH_OFFSET_Y);
+        healthBar.setWidth((Constants.BEAR_HEALTH_WIDTH * enemy.getHealth()) / Constants.BEAR_HEALTH);
+        this.healthBarsMap.put(enemy.getId(), healthBar);
     }
 
     public void createExplosion(Integer id, Float x, Float y) {
@@ -286,6 +298,9 @@ public class GameController {
     }
 
     public HashMap<Integer, Enemy> getEnemiesMap() {
+        if (enemiesMap == null) {
+            enemiesMap = new HashMap<Integer, Enemy>();
+        }
         return enemiesMap;
     }
 
@@ -382,6 +397,17 @@ public class GameController {
 
     public void setExplosionsMap(HashMap<Integer, Explosion> explosionsMap) {
         this.explosionsMap = explosionsMap;
+    }
+
+    public HashMap<Integer, HealthBar> getHealthBarsMap() {
+        if (healthBarsMap == null) {
+            healthBarsMap = new HashMap<Integer, HealthBar>();
+        }
+        return healthBarsMap;
+    }
+
+    public void setHealthBarsMap(HashMap<Integer, HealthBar> healthBarsMap) {
+        this.healthBarsMap = healthBarsMap;
     }
 
 }

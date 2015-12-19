@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.unb.shooter.controller.GameController;
+import br.unb.shooter.entity.Enemy;
 import br.unb.shooter.entity.Explosion;
+import br.unb.shooter.entity.HealthBar;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
 import br.unb.shooter.util.Constants;
@@ -29,6 +31,10 @@ public class ServerUpdateMessage extends Message {
     private Integer explosionsLength;
 
     private List<Explosion> explosions;
+
+    private Integer enemiesLength;
+
+    private List<Enemy> enemies;
 
     /**
      * Constructor.
@@ -55,7 +61,7 @@ public class ServerUpdateMessage extends Message {
      * @param playersMap Player's map
      */
     public ServerUpdateMessage(HashMap<Integer, Player> playersMap, HashMap<Integer, Shot> shotsMap, Long lastInput,
-            List<Integer> removedShots, HashMap<Integer, Explosion> explosionsMap) {
+            List<Integer> removedShots, HashMap<Integer, Explosion> explosionsMap, HashMap<Integer, Enemy> enemiesMap) {
         super();
         this.id = MessageEnum.SERVER_UPDATE.getId();
         this.playersLength = playersMap.size();
@@ -71,6 +77,9 @@ public class ServerUpdateMessage extends Message {
         this.explosionsLength = explosionsMap.size();
         this.explosions = new ArrayList<Explosion>();
         this.explosions.addAll(explosionsMap.values());
+        this.enemiesLength = enemiesMap.size();
+        this.enemies = new ArrayList<Enemy>();
+        this.enemies.addAll(enemiesMap.values());
     }
 
     private void translate(String message) {
@@ -164,6 +173,30 @@ public class ServerUpdateMessage extends Message {
 
             this.explosions.add(explosion);
         }
+
+        this.enemiesLength = Integer.valueOf(slices[offset]);
+
+        if (enemies == null) {
+            enemies = new ArrayList<Enemy>();
+        }
+
+        offset += 1;
+
+        for (int i = 0; i < enemiesLength; i++) {
+            Enemy enemy = new Enemy();
+
+            enemy.setId(Integer.valueOf(slices[offset + 0]));
+            enemy.setName(slices[offset + 1]);
+            enemy.setX(Float.valueOf(slices[offset + 2]));
+            enemy.setY(Float.valueOf(slices[offset + 3]));
+            enemy.setIsMoving(slices[offset + 4].equals("1") ? true : false);
+            enemy.setFacing(Integer.valueOf(slices[offset + 5]));
+            enemy.setHealth(Integer.valueOf(slices[offset + 6]));
+
+            offset += 7;
+
+            this.enemies.add(enemy);
+        }
     }
 
     @Override
@@ -202,6 +235,15 @@ public class ServerUpdateMessage extends Message {
                     + explosion.getY());
         }
 
+        message += Constants.SPACE + this.enemiesLength;
+
+        for (Enemy enemy : enemies) {
+            message += (Constants.SPACE + enemy.getId() + Constants.SPACE + enemy.getName() + Constants.SPACE
+                    + enemy.getX() + Constants.SPACE + enemy.getY() + Constants.SPACE
+                    + (enemy.getIsMoving() ? "1" : "0") + Constants.SPACE + enemy.getFacing() + Constants.SPACE
+                    + enemy.getHealth());
+        }
+
         return message;
     }
 
@@ -210,6 +252,8 @@ public class ServerUpdateMessage extends Message {
         // Set current server player status
         for (Player player : players) {
             Player playerOnClient = GameController.getInstance().getPlayersMap().get(player.getId());
+            playerOnClient.setId(player.getId());
+            playerOnClient.setName(player.getName());
             playerOnClient.setX(player.getX());
             playerOnClient.setY(player.getY());
             playerOnClient.setTargetX(player.getTargetX());
@@ -224,6 +268,7 @@ public class ServerUpdateMessage extends Message {
                 shotOnClient = new Shot();
                 GameController.getInstance().getShotsMap().put(shot.getId(), shot);
             }
+            shotOnClient.setId(shot.getId());
             shotOnClient.setX(shot.getX());
             shotOnClient.setY(shot.getY());
             shotOnClient.setAngle(shot.getAngle());
@@ -238,6 +283,25 @@ public class ServerUpdateMessage extends Message {
 
         for (Explosion explosion : explosions) {
             GameController.getInstance().createExplosion(explosion.getId(), explosion.getX(), explosion.getY());
+        }
+
+        for (Enemy enemy : enemies) {
+            Enemy enemyOnClient = GameController.getInstance().getEnemiesMap().get(enemy.getId());
+            HealthBar healthBarOnClient = GameController.getInstance().getHealthBarsMap().get(enemy.getId());
+            if (enemyOnClient == null) {
+                enemyOnClient = new Enemy();
+                GameController.getInstance().getEnemiesMap().put(enemy.getId(), enemy);
+            }
+            if (healthBarOnClient == null) {
+                GameController.getInstance().addHealthBar(enemyOnClient);
+            }
+            enemyOnClient.setId(enemy.getId());
+            enemyOnClient.setName(enemy.getName());
+            enemyOnClient.setX(enemy.getX());
+            enemyOnClient.setY(enemy.getY());
+            enemyOnClient.setIsMoving(enemy.getIsMoving());
+            enemyOnClient.setFacing(enemy.getFacing());
+            enemyOnClient.setHealth(enemy.getHealth());
         }
     }
 

@@ -1,7 +1,6 @@
 package br.unb.shooter.screen;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -25,7 +24,6 @@ import br.unb.shooter.entity.Explosion;
 import br.unb.shooter.entity.FireWeapon;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
-import br.unb.shooter.gui.HealthBar;
 import br.unb.shooter.input.GameInputProcessor;
 import br.unb.shooter.util.Constants;
 
@@ -41,8 +39,6 @@ public class GameScreen extends Screen {
     private PlayerCollision playerCollision;
 
     private ShotCollision shotCollision;
-
-    private HashMap<Enemy, HealthBar> enemiesHealthBarMap;
 
     /**
      * Constructor.
@@ -73,6 +69,8 @@ public class GameScreen extends Screen {
 
         GdxController.getInstance().getExplosionGdx().initGraphics();
 
+        GdxController.getInstance().getHealthBarGdx().initGraphics();
+
         GameInputProcessor input = new GameInputProcessor();
 
         Gdx.input.setInputProcessor(input);
@@ -92,13 +90,6 @@ public class GameScreen extends Screen {
 
         MusicController.getInstance().stop();
         MusicController.getInstance().start("tela2intro.wav");
-
-        for (Enemy enemy : GameController.getInstance().getEnemiesMap().values()) {
-            if (this.enemiesHealthBarMap == null) {
-                this.enemiesHealthBarMap = new HashMap<Enemy, HealthBar>();
-            }
-            this.enemiesHealthBarMap.put(enemy, new HealthBar());
-        }
 
         debugGdx = new DebugGdx();
     }
@@ -142,7 +133,10 @@ public class GameScreen extends Screen {
 
         // Updates the enemies.
         for (Enemy enemy : GameController.getInstance().getEnemiesMap().values()) {
-            enemy.update();
+            if (NetController.getInstance().getIsServer()) {
+                enemy.update();
+            }
+            GameController.getInstance().getHealthBarsMap().get(enemy.getId()).update(enemy);
             GdxController.getInstance().getEnemyGdx().update(enemy, Gdx.graphics.getDeltaTime());
         }
 
@@ -261,7 +255,6 @@ public class GameScreen extends Screen {
         batch.begin();
         for (Enemy enemy : GameController.getInstance().getEnemiesMap().values()) {
             GdxController.getInstance().getEnemyGdx().draw(batch, enemy);
-            enemiesHealthBarMap.get(enemy).draw(batch, enemy);
         }
         for (Player player : GameController.getInstance().getPlayersMap().values()) {
             GdxController.getInstance().getPlayerGdx().draw(batch, player);
@@ -276,6 +269,11 @@ public class GameScreen extends Screen {
             GdxController.getInstance().getMarkGdx().draw(batch, GameController.getInstance().getTargetMark());
         }
         batch.end();
+
+        for (Enemy enemy : GameController.getInstance().getEnemiesMap().values()) {
+            GdxController.getInstance().getHealthBarGdx().draw(camera,
+                    GameController.getInstance().getHealthBarsMap().get(enemy.getId()));
+        }
 
         particleBatch.setProjectionMatrix(camera.combined);
         particleBatch.begin();

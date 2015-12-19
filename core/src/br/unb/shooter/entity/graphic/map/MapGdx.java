@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import br.unb.shooter.controller.GameController;
+import br.unb.shooter.controller.NetController;
 import br.unb.shooter.entity.Enemy;
 
 public class MapGdx {
@@ -30,18 +31,22 @@ public class MapGdx {
 
         foreground = (TiledMapTileLayer) tiledMap.getLayers().get("foreground");
 
-        int index = 1;
-        MapObjects objects = tiledMap.getLayers().get("objects").getObjects();
-        for (MapObject object : objects) {
-            if (object.getName() != null) {
-                String name = object.getName();
-                if (name.equals("enemy")) {
-                    Enemy enemy = new Enemy();
-                    enemy.setId(index);
-                    enemy.setX((Float) object.getProperties().get("x"));
-                    enemy.setY((Float) object.getProperties().get("y") + (Float) object.getProperties().get("height"));
-                    GameController.getInstance().addEnemy(enemy);
-                    index++;
+        if (NetController.getInstance().getIsServer()) {
+            int index = 1;
+            MapObjects objects = tiledMap.getLayers().get("objects").getObjects();
+            for (MapObject object : objects) {
+                if (object.getName() != null) {
+                    String name = object.getName();
+                    if (name.equals("enemy")) {
+                        Enemy enemy = new Enemy();
+                        enemy.setId(index);
+                        enemy.setX((Float) object.getProperties().get("x"));
+                        enemy.setY(
+                                (Float) object.getProperties().get("y") + (Float) object.getProperties().get("height"));
+                        GameController.getInstance().addEnemy(enemy);
+                        GameController.getInstance().addHealthBar(enemy);
+                        index++;
+                    }
                 }
             }
         }

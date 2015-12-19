@@ -167,7 +167,8 @@ public class NetController {
     public void updateGame() {
         ServerUpdateMessage msg = new ServerUpdateMessage(GameController.getInstance().getPlayersMap(),
                 GameController.getInstance().getShotsMap(), lastInputTime,
-                GameController.getInstance().getRemovedShots(), GameController.getInstance().getExplosionsMap());
+                GameController.getInstance().getRemovedShots(), GameController.getInstance().getExplosionsMap(),
+                GameController.getInstance().getEnemiesMap());
 
         server.sendToAllTCP(msg.toString());
 
