@@ -222,6 +222,7 @@ public class GameScreen extends Screen {
 					if (collisionX && collisionY) {
 						shot.setFinish(true);
 						GdxController.getInstance().getExplosionGdx().create(shot.getX(), shot.getY());
+						enemy.setHealth(enemy.getHealth() - 10);
 					}
 				}
 			}

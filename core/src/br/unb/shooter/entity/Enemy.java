@@ -85,6 +85,11 @@ public class Enemy extends Entity {
     }
 
     public void update() {
+        
+        if (health <= 0) {
+            //GameController.getInstance().getEnemiesMap().remo;
+        }
+        
         Player player = GameController.getInstance().getPlayer();
 
         Float playerXCentered = player.getX();
