@@ -7,6 +7,7 @@ import java.util.List;
 import br.unb.shooter.collision.PlayerCollision;
 import br.unb.shooter.collision.ShotCollision;
 import br.unb.shooter.entity.Enemy;
+import br.unb.shooter.entity.Explosion;
 import br.unb.shooter.entity.FireWeapon;
 import br.unb.shooter.entity.Player;
 import br.unb.shooter.entity.Shot;
@@ -28,6 +29,8 @@ public class GameController {
     private HashMap<Integer, FireWeapon> weaponsMap;
 
     private HashMap<Integer, Shot> shotsMap;
+
+    private HashMap<Integer, Explosion> explosionsMap;
 
     private List<Integer> removedShots;
 
@@ -256,6 +259,16 @@ public class GameController {
         this.enemiesMap.put(cellX + cellY, enemy);
     }
 
+    public void createExplosion(Integer id, Float x, Float y) {
+        Integer newId = null;
+        if (id == null) {
+            newId = getExplosionsMap().size() + 1;
+        } else {
+            newId = id;
+        }
+        getExplosionsMap().put(newId, new Explosion(newId, x, y));
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -358,6 +371,17 @@ public class GameController {
 
     public void setShotCollision(ShotCollision shotCollision) {
         this.shotCollision = shotCollision;
+    }
+
+    public HashMap<Integer, Explosion> getExplosionsMap() {
+        if (explosionsMap == null) {
+            explosionsMap = new HashMap<Integer, Explosion>();
+        }
+        return explosionsMap;
+    }
+
+    public void setExplosionsMap(HashMap<Integer, Explosion> explosionsMap) {
+        this.explosionsMap = explosionsMap;
     }
 
 }

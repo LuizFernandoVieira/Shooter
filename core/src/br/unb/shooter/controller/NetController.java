@@ -167,11 +167,12 @@ public class NetController {
     public void updateGame() {
         ServerUpdateMessage msg = new ServerUpdateMessage(GameController.getInstance().getPlayersMap(),
                 GameController.getInstance().getShotsMap(), lastInputTime,
-                GameController.getInstance().getRemovedShots());
+                GameController.getInstance().getRemovedShots(), GameController.getInstance().getExplosionsMap());
 
         server.sendToAllTCP(msg.toString());
 
         GameController.getInstance().setRemovedShots(new ArrayList<Integer>());
+        GameController.getInstance().getExplosionsMap().clear();
     }
 
     /**
