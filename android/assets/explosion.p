@@ -74,7 +74,7 @@ active: true
 lowMin: 0.0
 lowMax: 0.0
 highMin: 10.0
-highMax: 30.0
+highMax: 100.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -126,7 +126,7 @@ timeline3: 1.0
 attached: false
 continuous: false
 aligned: false
-additive: true
+additive: false
 behind: false
 - Image Path -
 shot.png
